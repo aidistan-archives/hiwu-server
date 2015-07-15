@@ -3,7 +3,7 @@ module.exports = function(HiwuUser) {
     var self = this;
 
     self.login({ username: username, password: username }, function (err, token) {
-      if (err) self.create({ username: username, email: 'no-reply@hiwu.ren', password: username }, function (err, obj) {
+      if (err) self.create({ username: username, email: username + '@example.com', password: username }, function (err, obj) {
           if (err) return fn(err);
           self.login({ username: username, password: username }, function (err, token) { fn(err, token); })
         });
