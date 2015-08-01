@@ -2,10 +2,10 @@ module.exports = function(HiwuUser) {
   HiwuUser.simpleLogin = function(username, include, fn) {
     var self = this;
 
-    self.login({ username: username, password: username }, function (err, token) {
+    self.login({ username: username, password: username }, include, function (err, token) {
       if (err) self.create({ username: username, email: username + '@example.com', password: username }, function (err, obj) {
           if (err) return fn(err);
-          self.login({ username: username, password: username }, function (err, token) { fn(err, token); })
+          self.login({ username: username, password: username }, include, function (err, token) { fn(err, token); })
         });
       else
         fn(err, token)
