@@ -5,7 +5,14 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "nickname": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "string"
+    }
+  },
   "validations": [],
   "relations": {
     "galleries": {
