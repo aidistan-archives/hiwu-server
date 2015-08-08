@@ -44,5 +44,9 @@
   "Item": {
     "dataSource": "db",
     "public": false
+  },
+  "Photo": {
+    "dataSource": "db",
+    "public": true
   }
 }
