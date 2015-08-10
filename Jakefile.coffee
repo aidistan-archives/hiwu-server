@@ -1,109 +1,205 @@
+api =
+  accessToken: null
+  debugger:
+    border: true
+    api: true
+    status: true
+    header: true
+    body: true
+  hostname: '0.0.0.0'
+  port: 3000
 http        = require('http')
 querystring = require('querystring')
 
-# Global variables
-access_token = null
-
-# Entrance
 desc 'Run all test tasks in a pre-defined order'
 task 'default', ->
-  jake.Task['test:login:simple'].invoke()
-
-# Exit
-task 'test', ->
-  console.log('====================')
-
-# All subtasks
-namespace 'test', ->
-  namespace 'login', ->
-    task 'simple', ->
-      console.log('====================')
-      console.log('API: POST /HiwuUsers/simpleLogin')
-
-      options =
-        hostname: '0.0.0.0'
-        port: 3000
-        path: '/api/HiwuUsers/simpleLogin?username=aidistan'
-        method: 'POST'
-        headers:
-          'Content-Type': 'application/x-www-form-urlencoded'
-
-      req = http.request options, (res) ->
-        console.log('STATUS: ' + res.statusCode)
-        console.log('HEADERS: ' + JSON.stringify(res.headers))
-
-        res.setEncoding('utf8');
-        res.on 'data', (chunk) ->
-          console.log('BODY: ' + chunk)
-
-          access_token = JSON.parse(chunk).id
-          jake.Task['test:gallery'].invoke()
-
-      req.on 'error', (e) ->
-        console.log('problem with request: ' + e.message)
-
-      req.end();
-
-  task 'gallery', ->
-    console.log('====================')
-    console.log('API: POST /HiwuUsers/{id}/galleries')
-
-    postData = querystring.stringify
+  api.simpleLogin 'aidistan', (user) ->
+    api.addGalleryToUser
       name: 'Gallery1'
+    , user, (gallery) ->
+      api.addItemToGallery
+        name: 'Item1'
+      , gallery, (item) ->
+        api.addPhotoToItem
+          data: '123'
+        , item, (photo) ->
+          api.deletePhotoFromItem photo, item
 
-    options =
-      hostname: '0.0.0.0'
-      port: 3000
-      path: '/api/HiwuUsers/1/galleries?access_token=' + access_token
-      method: 'POST'
-      headers:
-        'Content-Type': 'application/x-www-form-urlencoded'
-        'Content-Length': postData.length
+#
+# Definitions of APIs
+#
 
-    req = http.request options, (res) ->
-      console.log('STATUS: ' + res.statusCode);
-      console.log('HEADERS: ' + JSON.stringify(res.headers));
+api.simpleLogin = (username, next) ->
+  console.log('====================') if api.debugger.border
 
-      res.setEncoding('utf8');
-      res.on 'data', (chunk) ->
-        console.log('BODY: ' + chunk);
-        jake.Task['test:item'].invoke()
+  options =
+    hostname: api.hostname
+    port: api.port
+    path: "/api/HiwuUsers/simpleLogin?username=#{username}&include=user"
+    method: 'POST'
+  console.log("API: #{options.method} #{options.path}") if api.debugger.api
 
-    req.on 'error', (e) ->
-      console.log('problem with request: ' + e.message);
+  req = http.request options, (res) ->
+    console.log('STATUS: ' + res.statusCode) if api.debugger.status
+    console.log('HEADERS: ' + JSON.stringify(res.headers)) if api.debugger.header
 
-    # write data to request body
-    req.write(postData);
-    req.end();
+    res.setEncoding('utf8');
+    res.on 'data', (chunk) ->
+      console.log('BODY: ' + chunk) if api.debugger.body
+      accessToken = JSON.parse(chunk)
+      api.accessToken = accessToken.id
+      if next then next(accessToken.user) else api.end()
 
-  task 'item', ->
-    console.log('====================')
-    console.log('API: post /Galleries/{id}/items')
+  req.on 'error', (e) ->
+    console.log('problem with request: ' + e.message)
 
-    postData = querystring.stringify
-      name: 'Item1'
+  req.end();
 
-    options =
-      hostname: '0.0.0.0'
-      port: 3000
-      path: '/api/Galleries/1/items?access_token=' + access_token
-      method: 'POST'
-      headers:
-        'Content-Type': 'application/x-www-form-urlencoded'
-        'Content-Length': postData.length
+api.addGalleryToUser = (data, user, next)->
+  console.log('====================') if api.debugger.border
+  data = JSON.stringify(data)
 
-    req = http.request options, (res) ->
-      console.log('STATUS: ' + res.statusCode);
-      console.log('HEADERS: ' + JSON.stringify(res.headers));
+  options =
+    hostname: api.hostname
+    port: api.port
+    path: "/api/HiwuUsers/#{user.id}/galleries"
+    method: 'POST'
+    headers:
+      'Content-Type': 'application/json'
+      'Content-Length': data.length
+  console.log("API: #{options.method} #{options.path}") if api.debugger.api
+  options.path += "?access_token=#{api.accessToken}"
 
-      res.setEncoding('utf8');
-      res.on 'data', (chunk) ->
-        console.log('BODY: ' + chunk);
-        jake.Task['test'].invoke()
+  req = http.request options, (res) ->
+    console.log('STATUS: ' + res.statusCode) if api.debugger.status
+    console.log('HEADERS: ' + JSON.stringify(res.headers)) if api.debugger.header
 
-    req.on 'error', (e) ->
-      console.log('problem with request: ' + e.message);
+    res.setEncoding('utf8');
+    res.on 'data', (chunk) ->
+      console.log('BODY: ' + chunk) if api.debugger.body
+      gallery = JSON.parse(chunk)
+      if next then next(gallery) else api.end()
 
-    # write data to request body
-    req.write(postData);
-    req.end();
+  req.on 'error', (e) ->
+    console.log('problem with request: ' + e.message);
+
+  # write data to request body
+  req.write(data);
+  req.end();
+
+api.addItemToGallery = (data, gallery, next) ->
+  console.log('====================') if api.debugger.border
+  data = JSON.stringify(data)
+
+  options =
+    hostname: api.hostname
+    port: api.port
+    path: "/api/Galleries/#{gallery.id}/items"
+    method: 'POST'
+    headers:
+      'Content-Type': 'application/json'
+      'Content-Length': data.length
+  console.log("API: #{options.method} #{options.path}") if api.debugger.api
+  options.path += "?access_token=#{api.accessToken}"
+
+  req = http.request options, (res) ->
+    console.log('STATUS: ' + res.statusCode) if api.debugger.status
+    console.log('HEADERS: ' + JSON.stringify(res.headers)) if api.debugger.header
+
+    res.setEncoding('utf8');
+    res.on 'data', (chunk) ->
+      console.log('BODY: ' + chunk) if api.debugger.body
+      item = JSON.parse(chunk)
+      if next then next(item) else api.end()
+
+  req.on 'error', (e) ->
+    console.log('problem with request: ' + e.message);
+
+  # write data to request body
+  req.write(data);
+  req.end();
+
+api.addPhotoToItem = (data, item, next) ->
+  console.log('====================') if api.debugger.border
+  data = JSON.stringify(data)
+
+  options =
+    hostname: api.hostname
+    port: api.port
+    path: "/api/Items/#{item.id}/photos"
+    method: 'POST'
+    headers:
+      'Content-Type': 'application/json'
+      'Content-Length': data.length
+  console.log("API: #{options.method} #{options.path}") if api.debugger.api
+  options.path += "?access_token=#{api.accessToken}"
+
+  req = http.request options, (res) ->
+    console.log('STATUS: ' + res.statusCode) if api.debugger.status
+    console.log('HEADERS: ' + JSON.stringify(res.headers)) if api.debugger.header
+
+    res.setEncoding('utf8');
+    res.on 'data', (chunk) ->
+      console.log('BODY: ' + chunk) if api.debugger.body
+      photo = JSON.parse(chunk)
+      if next then next(photo) else api.end()
+
+  req.on 'error', (e) ->
+    console.log('problem with request: ' + e.message);
+
+  # write data to request body
+  req.write(data);
+  req.end();
+
+api.deletePhotoFromItem = (photo, item, next) ->
+  console.log('====================') if api.debugger.border
+  data = JSON.stringify(data)
+
+  options =
+    hostname: api.hostname
+    port: api.port
+    path: "/api/Items/#{item.id}/photos/#{photo.id}"
+    method: 'DELETE'
+  console.log("API: #{options.method} #{options.path}") if api.debugger.api
+  options.path += "?access_token=#{api.accessToken}"
+
+  req = http.request options, (res) ->
+    console.log('STATUS: ' + res.statusCode) if api.debugger.status
+    console.log('HEADERS: ' + JSON.stringify(res.headers)) if api.debugger.header
+
+    res.setEncoding('utf8');
+    res.resume();
+    if next then next() else api.end()
+
+  req.on 'error', (e) ->
+    console.log('problem with request: ' + e.message);
+
+  req.end();
+
+api.deleteAllPhotosFromItem = (item, next) ->
+  console.log('====================') if api.debugger.border
+  data = JSON.stringify(data)
+
+  options =
+    hostname: api.hostname
+    port: api.port
+    path: "/api/Items/#{item.id}/photos"
+    method: 'DELETE'
+  console.log("API: #{options.method} #{options.path}") if api.debugger.api
+  options.path += "?access_token=#{api.accessToken}"
+
+  req = http.request options, (res) ->
+    console.log('STATUS: ' + res.statusCode) if api.debugger.status
+    console.log('HEADERS: ' + JSON.stringify(res.headers)) if api.debugger.header
+
+    res.setEncoding('utf8');
+    res.resume();
+    if next then next() else api.end()
+
+  req.on 'error', (e) ->
+    console.log('problem with request: ' + e.message);
+
+  req.end();
+
+api.end = ->
+  console.log('====================') if api.debugger.border

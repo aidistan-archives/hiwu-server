@@ -43,10 +43,10 @@
   },
   "Item": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "Photo": {
     "dataSource": "db",
-    "public": true
+    "public": false
   }
 }

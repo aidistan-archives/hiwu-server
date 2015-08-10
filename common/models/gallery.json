@@ -16,6 +16,11 @@
   },
   "validations": [],
   "relations": {
+    "hiwuUser": {
+      "type": "belongsTo",
+      "model": "HiwuUser",
+      "foreignKey": "userId"
+    },
     "items": {
       "type": "hasMany",
       "model": "Item",

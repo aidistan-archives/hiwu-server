@@ -24,13 +24,37 @@
     },
     "city": {
       "type": "string"
-    },
-    "image": {
-      "type": "string"
     }
   },
   "validations": [],
-  "relations": {},
-  "acls": [],
+  "relations": {
+    "hiwuUser": {
+      "type": "belongsTo",
+      "model": "HiwuUser",
+      "foreignKey": "userId"
+    },
+    "gallery": {
+      "type": "belongsTo",
+      "model": "Gallery",
+      "foreignKey": "galleryId"
+    },
+    "photos": {
+      "type": "hasMany",
+      "model": "Photo",
+      "foreignKey": "itemId"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": []
 }
