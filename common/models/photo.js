@@ -5,7 +5,7 @@ module.exports = function(Photo) {
   Photo.on('dataSourceAttached', function(obj){
     var create = Photo.create;
     Photo.create = function(data, options, cb) {
-      var app = Photo.app;
+      var oss = Photo.app.aliyun.oss;
 
       if (data.data) {
         var bin = new Buffer(data.data, 'binary');
@@ -24,12 +24,11 @@ module.exports = function(Photo) {
       create.apply(this, [data, options, function(err, obj) {
         if (!err) {
           // Update the url
-          var path = app.get('env') + '/' + obj.id;
-          obj.updateAttribute('url', 'http://hiwu.oss-cn-beijing.aliyuncs.com/' + path);
+          obj.updateAttribute('url', oss.makeUrl('photo', obj.id));
           // Save the image
-          app.aliyun.oss.putObject({
+          oss.putObject({
             Bucket: 'hiwu',
-            Key: path,
+            Key: oss.makeKey('photo', obj.id),
             Body: bin,
             ContentType: type,
           }, function (err, data) {

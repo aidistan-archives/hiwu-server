@@ -18,5 +18,6 @@ task 'default', ->
         api.addPhotoToItem
           data: '123'
           type: 'text/plain'
-        , item, (photo) ->
-          api.deletePhotoFromItem photo, item
+        , item
+        # , item, (photo) ->
+        #   api.deletePhotoFromItem photo, item
