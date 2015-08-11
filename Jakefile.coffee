@@ -2,6 +2,12 @@ api = require('./jakelib/api')
 
 desc 'Run a quick test for APIs'
 task 'default', ->
+  api.debugger.border = true
+  api.debugger.api    = true
+  api.debugger.status = true
+  api.debugger.header = true
+  api.debugger.body   = true
+
   api.simpleLogin 'aidistan', (user) ->
     api.addGalleryToUser
       name: 'Gallery1'

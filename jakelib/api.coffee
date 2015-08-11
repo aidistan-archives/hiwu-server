@@ -3,11 +3,11 @@ http = require('http')
 api = module.exports =
   accessToken: null
   debugger:
-    border: true
-    api: true
-    status: true
-    header: true
-    body: true
+    border: false
+    api:    false
+    status: false
+    header: false
+    body:   false
   hostname: '0.0.0.0'
   port: 3000
 

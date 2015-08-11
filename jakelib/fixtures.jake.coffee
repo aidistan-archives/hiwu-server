@@ -2,16 +2,13 @@ api = require('./api')
 fs  = require('fs')
 yml = require('js-yaml')
 
-api.hostname = '0.0.0.0'
-api.port = 3000
-api.debugger.border = false
-api.debugger.status = false
-api.debugger.header = false
-api.debugger.body = false
-
 namespace 'fixtures', ->
   desc 'Load fixtures'
   task 'load', ->
+    api.hostname = '0.0.0.0'
+    api.port = 3000
+    api.debugger.api = true
+
     fixtures = yml.load(fs.readFileSync('jakelib/fixtures/fixtures.yml').toString())
     for username of fixtures
       api.simpleLogin username, (user) ->
