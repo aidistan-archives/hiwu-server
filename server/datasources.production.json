@@ -1,0 +1,11 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "mysql",
+    "debug": "false",
+    "host": "rdsr3a07k7e72883m39n.mysql.rds.aliyuncs.com",
+    "user": "hiwu_production",
+    "password": "dcucuHly5ztregrtmejviintI-lvzyr3",
+    "database": "hiwu_production"
+  }
+}
