@@ -3,6 +3,9 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+// Specify the environment
+app.env = process.env.NODE_ENV || 'development';
+
 app.start = function() {
   // start the web server
   return app.listen(function() {
