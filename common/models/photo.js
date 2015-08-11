@@ -6,10 +6,22 @@ module.exports = function(Photo) {
     var create = Photo.create;
     Photo.create = function(data, options, cb) {
       var app = Photo.app;
-      var bin = data.data;
-      delete data.data;
 
-      return(create.apply(this, [data, function(err, obj) {
+      if (data.data) {
+        var bin = new Buffer(data.data, 'binary');
+        delete data.data;
+      } else {
+        cb(new Error('photo.data not given'), data);
+      }
+
+      if (data.type) {
+        var type = data.type;
+        delete data.type;
+      } else {
+        cb(new Error('photo.type not given'), data);
+      }
+
+      create.apply(this, [data, options, function(err, obj) {
         if (!err) {
           // Update the url
           var path = app.env + '/' + obj.id;
@@ -19,13 +31,7 @@ module.exports = function(Photo) {
             Bucket: 'hiwu',
             Key: path,
             Body: bin,
-            // AccessControlAllowOrigin: '',
-            ContentType: 'image/jpeg',
-            // CacheControl: 'no-cache',
-            // ContentDisposition: '',
-            ContentEncoding: 'utf-8',
-            ServerSideEncryption: 'AES256'
-            // Expires: ''
+            ContentType: type,
           }, function (err, data) {
             if (err) {
               console.log('Error raised when uploading a photo to Aliyun OSS:', err);
@@ -33,7 +39,7 @@ module.exports = function(Photo) {
           });
         }
         return(cb(err,obj));
-      }]));
+      }]);
     };
   });
 

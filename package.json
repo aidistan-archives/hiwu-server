@@ -6,21 +6,22 @@
     "pretest": "jshint ."
   },
   "dependencies": {
+    "aliyun-sdk": "^1.5.7",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "errorhandler": "^1.1.1",
     "loopback": "^2.14.0",
     "loopback-boot": "^2.6.5",
     "loopback-datasource-juggler": "^2.19.0",
-    "serve-favicon": "^2.0.1",
-    "aliyun-sdk": "~1.5.7"
+    "serve-favicon": "^2.0.1"
   },
   "optionalDependencies": {
-    "loopback-explorer": "^1.1.0",
-    "jake": "^8.0.12"
+    "loopback-explorer": "^1.1.0"
   },
   "devDependencies": {
-    "jshint": "^2.5.6"
+    "js-yaml": "^3.3.1",
+    "jshint": "^2.5.6",
+    "jake": "^8.0.12"
   },
   "repository": {
     "type": "",
