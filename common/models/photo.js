@@ -24,7 +24,7 @@ module.exports = function(Photo) {
       create.apply(this, [data, options, function(err, obj) {
         if (!err) {
           // Update the url
-          var path = app.env + '/' + obj.id;
+          var path = app.get('env') + '/' + obj.id;
           obj.updateAttribute('url', 'http://hiwu.oss-cn-beijing.aliyuncs.com/' + path);
           // Save the image
           app.aliyun.oss.putObject({
