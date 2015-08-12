@@ -5,8 +5,6 @@ yml = require('js-yaml')
 namespace 'fixtures', ->
   desc 'Load fixtures'
   task 'load', ->
-    api.hostname = '0.0.0.0'
-    api.port = 3000
     api.debugger.api = true
 
     fixtures = yml.load(fs.readFileSync('jakelib/fixtures/fixtures.yml').toString())
