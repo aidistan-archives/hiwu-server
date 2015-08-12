@@ -16,11 +16,11 @@ module.exports = function(app) {
 
   app.aliyun.oss.makeKey = function() {
     for (k in arguments) arguments[k] = arguments[k].toString();
-    return(app.get('env') + '/' + Path.join.apply(this, arguments))
+    return(app.get('env') + '/' + Path.join.apply(this, arguments));
   }
 
   app.aliyun.oss.makeUrl = function() {
     for (k in arguments) arguments[k] = arguments[k].toString();
-    return('http://hiwu.oss-cn-beijing.aliyuncs.com/' + app.get('env') + '/' + Path.join.apply(this, arguments))
+    return(Path.join(app.aliyun.oss.config.endpoint, app.get('env'), Path.join.apply(this, arguments)));
   }
 };
