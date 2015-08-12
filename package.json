@@ -1,5 +1,5 @@
 {
-  "name": "hiwu",
+  "name": "hiwu-server",
   "version": "0.3.0",
   "main": "server/server.js",
   "scripts": {
@@ -20,13 +20,11 @@
     "loopback-explorer": "^1.1.0"
   },
   "devDependencies": {
-    "js-yaml": "^3.3.1",
-    "jshint": "^2.5.6",
-    "jake": "^8.0.12"
+    "jshint": "^2.5.6"
   },
   "repository": {
     "type": "",
     "url": ""
   },
-  "description": "hiwu"
+  "description": "Hiwu API server"
 }
