@@ -21,6 +21,6 @@ module.exports = function(app) {
 
   app.aliyun.oss.makeUrl = function() {
     for (k in arguments) arguments[k] = arguments[k].toString();
-    return(Path.join('http://oss-cn-beijing.aliyuncs.com', app.get('env'), Path.join.apply(this, arguments)));
+    return('http://hiwu.oss-cn-beijing.aliyuncs.com/' + app.get('env') + '/' + Path.join.apply(this, arguments));
   }
 };
