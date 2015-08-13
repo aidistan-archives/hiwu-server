@@ -24,7 +24,6 @@ module.exports = function(Item) {
   // Cancel the built-in `__create__photos` method
   Item.disableRemoteMethod('__create__photos', false);
 
-  // Define the `create_photo` method
   Item.prototype.create_photo = function(req, cb) {
     new multiparty.Form().parse(req, function(err, data, files) {
       if (err) cb(err, null);
@@ -56,9 +55,8 @@ module.exports = function(Item) {
         cb(err, photo);
       });
     });
-  }
+  };
 
-  // Register the `upload_photo` method
   Item.remoteMethod(
     'create_photo',
     {
