@@ -24,41 +24,45 @@ module.exports = function(Item) {
   // Cancel the built-in `__create__photos` method
   Item.disableRemoteMethod('__create__photos', false);
 
-  Item.prototype.create_photo = function(req, cb) {
+  Item.prototype.createPhoto = function(req, cb) {
     new multiparty.Form().parse(req, function(err, data, files) {
-      if (err) cb(err, null);
+      if (err) return cb(err);
 
       data.itemId = req.remotingContext.instance.id;
       Item.app.models.Photo.create(data, function(err, photo) {
+        if (err) return cb(err);
+
         var oss  = Item.app.aliyun.oss;
         var file = files.data[0];
-        if (!err) {
-          // Update the url
-          photo.updateAttribute('url', oss.makeUrl('photo', photo.id));
 
-          // Save the image
-          oss.putObject({
-            Bucket: 'hiwu',
-            Key: oss.makeKey('photo', photo.id),
-            Body: fs.readFileSync(file.path),
-            ContentType: file.headers['content-type'],
-          }, function (err, data) {
-            if (err) {
-              console.log('Error raised when uploading a photo to Aliyun OSS:', err);
-            }
+        // Update the url
+        photo.updateAttribute('url', oss.makeUrl('photo', photo.id));
 
-            // Cleanup after uploading
-            for (i in files) for (j in files[i])
-              fs.unlink(files[i][j].path, function (err) { if (err) throw err; });
-          });
-        }
+        // Save the image
+        oss.putObject({
+          Bucket: 'hiwu',
+          Key: oss.makeKey('photo', photo.id),
+          Body: fs.readFileSync(file.path),
+          ContentType: file.headers['content-type'],
+        }, function (err, data) {
+          if (err) {
+            console.log('Failed to upload to Aliyun OSS:', err);
+          }
+
+          // Cleanup after uploading
+          for (var i in files) for (var j in files[i])
+            fs.unlink(files[i][j].path, function (err) {
+              if (err) throw err;
+            });
+        });
+
         cb(err, photo);
       });
     });
   };
 
   Item.remoteMethod(
-    'create_photo',
+    'createPhoto',
     {
       description: 'Upload a new photo to this item.',
       accepts: {arg: 'req', type: 'object', http: { source: 'req' }},

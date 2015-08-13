@@ -7,7 +7,7 @@ module.exports = function(app) {
       accessKeyId: 'xkrwvJXnndncswCK',
       secretAccessKey: 'GbDaWhOMsKvhRFRBAv4aHYBmreArQZ',
       securityToken: '',
-      endpoint: app.get('env') == 'development' ?
+      endpoint: app.get('env') === 'development' ?
         'http://oss-cn-beijing.aliyuncs.com' :
         'http://oss-cn-beijing-internal.aliyuncs.com',
       apiVersion: '2013-10-15'
@@ -15,12 +15,17 @@ module.exports = function(app) {
   };
 
   app.aliyun.oss.makeKey = function() {
-    for (k in arguments) arguments[k] = arguments[k].toString();
-    return(app.get('env') + '/' + Path.join.apply(this, arguments));
-  }
+    var segs = [app.get('env')];
+    for (var k in arguments) segs.push(arguments[k].toString());
+    return(segs.join('/'));
+  };
 
   app.aliyun.oss.makeUrl = function() {
-    for (k in arguments) arguments[k] = arguments[k].toString();
-    return('http://hiwu.oss-cn-beijing.aliyuncs.com/' + app.get('env') + '/' + Path.join.apply(this, arguments));
-  }
+    var segs = [
+      'http://hiwu.oss-cn-beijing.aliyuncs.com',
+      app.get('env')
+    ];
+    for (var k in arguments) segs.push(arguments[k].toString());
+    return(segs.join('/'));
+  };
 };
