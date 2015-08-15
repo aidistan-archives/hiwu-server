@@ -15,17 +15,18 @@ module.exports = function(app) {
   };
 
   app.aliyun.oss.makeKey = function() {
-    var segs = [app.get('env')];
-    for (var k in arguments) segs.push(arguments[k].toString());
+    var segs = [];
+    if (app.get('env') !== 'production')
+      segs.push(app.get('env'));
+    for (var k in arguments)
+      segs.push(arguments[k].toString());
     return(segs.join('/'));
   };
 
   app.aliyun.oss.makeUrl = function() {
-    var segs = [
-      'http://hiwu.oss-cn-beijing.aliyuncs.com',
-      app.get('env')
-    ];
-    for (var k in arguments) segs.push(arguments[k].toString());
-    return(segs.join('/'));
+    return(
+      'http://hiwu.oss-cn-beijing.aliyuncs.com/' +
+      app.aliyun.oss.makeKey.apply(this, arguments)
+    );
   };
 };
