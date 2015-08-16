@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+known_hosts = %w(palace)
+given_host = ARGV.shift
+if given_host
+  (given_host == 'all' ? known_hosts : [given_host]).each do |host|
+    cmd = [
+      'slc deploy',
+      '-s', ARGV.first || 'hiwu',
+      "http://#{host}:hiwu-#{host}@#{host}.server.hiwu.ren",
+      'master'
+    ].join(' ')
+    puts "Command: #{cmd}"
+    puts `#{cmd}`
+  end
+else
+  puts <<-END_OF_DOC
+usage: slc-deploy host [service]
+
+Service: default is "hiwu"
+Known hosts:
+    all       iterate over all known hosts
+  END_OF_DOC
+  known_hosts.each do |host|
+    puts <<-END_OF_DOC
+    #{host}
+    END_OF_DOC
+  end
+end
