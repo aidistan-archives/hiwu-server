@@ -6,18 +6,17 @@ module.exports = function(HiwuUser) {
     var self = this;
 
     self.login({
-      username: username,
+      email: username + '@example.com',
       password: username
     }, include, function (err, token) {
       if (err) {
         self.create({
-          username: username,
           email: username + '@example.com',
           password: username
         }, function (err, obj) {
           if (err) return cb(err);
           self.login({
-            username: username,
+            email: username + '@example.com',
             password: username
           }, include, function (err, token) {
             cb(err, token);
