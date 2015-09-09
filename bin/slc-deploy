@@ -2,15 +2,16 @@
 known_hosts = %w(palace)
 given_host = ARGV.shift
 if given_host
+  system('slc build')
   (given_host == 'all' ? known_hosts : [given_host]).each do |host|
     cmd = [
       'slc deploy',
       '-s', ARGV.first || 'hiwu',
       "http://#{host}:hiwu-#{host}@#{host}.server.hiwu.ren",
-      'master'
+      'deploy'
     ].join(' ')
     puts "Command: #{cmd}"
-    puts `#{cmd}`
+    system(cmd)
   end
 else
   puts <<-END_OF_DOC
