@@ -1,5 +1,17 @@
 # Hiwu API 服务器
 
+## API 路由
+
+API 基于主版本号进行路由，主版本号为 0 时保持默认值。
+
+    # v0.5.0
+    GET http://localhost:3000/api/Users
+    -> GET http://localhost:3000/api/Users
+
+    # v2.0.2
+    GET http://localhost:3000/api/Users
+    -> GET http://localhost:3000/api/v2/Users
+
 ## 登陆方式
 
 目前支持下列登陆方法：
