@@ -1,0 +1,32 @@
+{
+  "name": "Today",
+  "plural": "Today",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "gallery": {
+      "type": "belongsTo",
+      "model": "Gallery",
+      "foreignKey": "galleryId"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    }
+  ],
+  "methods": []
+}

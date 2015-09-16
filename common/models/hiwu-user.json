@@ -5,6 +5,16 @@
   "options": {
     "validateUpsert": true
   },
+  "hidden": [
+    "realm",
+    "username",
+    "email",
+    "credentials",
+    "challenges",
+    "emailVerified",
+    "verificationToken",
+    "status"
+  ],
   "properties": {
     "nickname": {
       "type": "string"
@@ -13,7 +23,7 @@
       "type": "string"
     }
   },
-  "hidden": ["realm", "username", "email", "credentials", "challenges", "emailVerified", "verificationToken", "status"],
+  "validations": [],
   "relations": {
     "galleries": {
       "type": "hasMany",

@@ -48,5 +48,9 @@
   "Photo": {
     "dataSource": "db",
     "public": false
+  },
+  "Today": {
+    "dataSource": "db",
+    "public": true
   }
 }
