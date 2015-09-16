@@ -13,7 +13,7 @@
       "type": "string"
     }
   },
-  "validations": [],
+  "hidden": ["realm", "username", "email", "credentials", "challenges", "emailVerified", "verificationToken", "status"],
   "relations": {
     "galleries": {
       "type": "hasMany",
@@ -22,6 +22,18 @@
     }
   },
   "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "DENY",
+      "property": "deleteById"
+    },
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
@@ -45,30 +57,6 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__get__galleries"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__delete__galleries"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__findById__galleries"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__updateById__galleries"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__destroyById__galleries"
     },
     {
       "principalType": "ROLE",

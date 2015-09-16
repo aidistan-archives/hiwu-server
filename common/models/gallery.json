@@ -12,6 +12,10 @@
     },
     "description": {
       "type": "string"
+    },
+    "public": {
+      "type": "boolean",
+      "default": true
     }
   },
   "validations": [],
@@ -32,6 +36,12 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
     },
     {
       "principalType": "ROLE",

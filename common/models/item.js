@@ -1,3 +1,4 @@
+var loopback = require('loopback');
 var multiparty = require('multiparty');
 var fs = require('fs');
 
@@ -9,15 +10,29 @@ module.exports = function(Item) {
     var create  = Item.create;
     Item.create = function(data, options, cb) {
       Item.app.models.Gallery.findById(data.galleryId, function(err, obj) {
-        if (err || obj == null) {
+        if (err) return cb(err);
+        data.userId = obj.userId;
+        create.apply(Item, [data, options, cb]);
+      });
+    };
+
+    var findById = Item.findById;
+    Item.findById = function () {
+      var id = arguments[0];
+      var cb = arguments[arguments.length - 1];
+      var filter = arguments.length > 2 ? arguments[1] : undefined;
+
+      findById.apply(Item, [id, filter, function (err, obj) {
+        if (err) return cb(err);
+        if (obj == null) return cb(err, obj); // obj == null where not exists
+
+        var accessToken = loopback.getCurrentContext().active.accessToken;
+        if (obj.public || (accessToken && accessToken.userId === obj.userId)) {
           cb(err, obj);
         } else {
-          data.userId = obj.userId;
-          create.apply(Item, [data, options, function(err, obj) {
-            return(cb(err, obj));
-          }]);
+          cb(err, null); // mimic a not-exists error
         }
-      });
+      }]);
     };
   });
 
