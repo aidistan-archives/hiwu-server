@@ -1,3 +1,9 @@
+# Ignore node modules
+/node_modules
+
+# Ignore our seed data
+/seeds
+
 *.csv
 *.dat
 *.iml
@@ -14,6 +20,5 @@
 .idea
 .project
 .strong-pm
-coverage
-node_modules
-npm-debug.log
+# coverage
+# npm-debug.log
