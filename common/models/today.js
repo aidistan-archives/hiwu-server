@@ -1,8 +1,26 @@
 module.exports = function(Today) {
   Today.public = function(cb) {
     Today.find({
+      include: {
+        relation: 'gallery',
+        scope: {
+          where: { public: true },
+          include: {
+            relation: 'items',
+            scope: { where: { public: true } }
+          }
+        }
+      }
+    }, function(err, entries) {
+      var galleries = [];
 
-    }, function(err, galleries) {
+      entries.forEach(function(entry) {
+        var gallery = entry.gallery();
+        if (gallery) {
+          galleries.push(gallery);
+        }
+      });
+
       cb(err, galleries);
     });
   };

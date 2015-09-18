@@ -42,12 +42,16 @@ describe('HiwuApi', function() {
                   name: 'Public Gallery'
                 }, function(err, gallery) {
                   api.Gallery.createItem(gallery.id, {
-                    name: 'Private Item',
-                    public: false
+                    name: 'Public Item',
                   }, function(err, item) {
-                    api.Today.create({
-                      galleryId: gallery.id
-                    }, cb);
+                    api.Gallery.createItem(gallery.id, {
+                      name: 'Private Item',
+                      public: false
+                    }, function(err, item) {
+                      api.Today.create({
+                        galleryId: gallery.id
+                      }, cb);
+                    });
                   });
                 });
               },
@@ -67,7 +71,8 @@ describe('HiwuApi', function() {
           api.Today.public(function(err, galleries) {
             assert.equal(1, galleries.length);
             assert(galleries[0].public);
-            assert.equal(0, galleries[0].items);
+            assert.equal(1, galleries[0].items.length);
+            assert(galleries[0].items[0].public);
             done();
           });
         });
