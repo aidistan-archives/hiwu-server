@@ -5,10 +5,13 @@ module.exports = function(Today) {
         relation: 'gallery',
         scope: {
           where: { public: true },
-          include: {
+          include: [{
+            relation: 'hiwuUser'
+          },
+          {
             relation: 'items',
             scope: { where: { public: true } }
-          }
+          }]
         }
       }
     }, function(err, entries) {

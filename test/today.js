@@ -24,7 +24,7 @@ describe('HiwuApi', function() {
       done();
     });
 
-    describe('#get', function () {
+    describe('#public', function () {
       it('should not return private galleries and private items', function(done) {
         var api = new HiwuApi();
 
@@ -71,6 +71,7 @@ describe('HiwuApi', function() {
           api.Today.public(function(err, galleries) {
             assert.equal(1, galleries.length);
             assert(galleries[0].public);
+            assert(galleries[0].hiwuUser);
             assert.equal(1, galleries[0].items.length);
             assert(galleries[0].items[0].public);
             done();
