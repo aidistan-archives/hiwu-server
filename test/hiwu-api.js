@@ -2,8 +2,27 @@ var HiwuApi = require('./hiwu-api-lib');
 var async = require('async');
 var assert = require('assert');
 var needle = require('needle');
+var spawn = require('child_process').spawn;
 
 describe('HiwuApi', function() {
+  var server;
+
+  before(function(done) {
+    server = spawn('node', ['.']);
+
+    function complete(data) {
+      server.stdout.removeListener('data', complete);
+      done();
+    }
+
+    server.stdout.on('data', complete);
+  });
+
+  after(function(done) {
+    server.kill();
+    done();
+  });
+
   describe('#url', function () {
     it('should return the root of a Hiwu API server', function(done) {
       var api = new HiwuApi();
