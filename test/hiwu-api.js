@@ -1,4 +1,5 @@
 var HiwuApi = require('./hiwu-api-lib');
+var async = require('async');
 var assert = require('assert');
 var needle = require('needle');
 
@@ -16,36 +17,48 @@ describe('HiwuApi', function() {
 
   it('should basically work', function(done) {
     var api = new HiwuApi();
+    var item;
 
-    api.HiwuUser.simpleLogin('aidistan', 'user', function(err, accessToken) {
-      api.HiwuUser.updateAttributes(accessToken.user.id, {
-        nickname: 'Aidi Stan'
-      }, function(err, user) {
-        api.HiwuUser.updateAvatar(user.id, {
+    async.series([
+      function(cb) {
+        api.HiwuUser.simpleLogin('aidistan', 'user', cb);
+      },
+      function(cb) {
+        api.HiwuUser.updateAttributes(api.lastResult.user.id, {
+          nickname: 'Aidi Stan'
+        }, cb);
+      },
+      function(cb) {
+        api.HiwuUser.updateAvatar(api.lastResult.id, {
           nickname: 'Aidi Stan',
           avatar: {
             file: 'seeds/chunranbeijing/chunranicon.jpg',
             content_type: 'image/jpeg'
           }
-        }, function(err, user) {
-          api.HiwuUser.createGallery(user.id, {
-            name: 'Gallery'
-          }, function(err, gallery) {
-            api.Gallery.createItem(gallery.id, {
-              name: 'Item'
-            }, function(err, item) {
-              api.Item.createPhoto(item.id, {
-                data: {
-                  file: 'seeds/chunranbeijing/chunranicon.jpg',
-                  content_type: 'image/jpeg'
-                }
-              }, function(err, photo) {
-                api.Item.deletePhoto(item.id, photo.id, done);
-              });
-            });
-          });
-        });
-      });
-    });
+        }, cb);
+      },
+      function(cb) {
+        api.HiwuUser.createGallery(api.lastResult.id, {
+          name: 'Gallery'
+        }, cb);
+      },
+      function(cb) {
+        api.Gallery.createItem(api.lastResult.id, {
+          name: 'Item'
+        }, cb);
+      },
+      function(cb) {
+        item = api.lastResult;
+        api.Item.createPhoto(api.lastResult.id, {
+          data: {
+            file: 'seeds/chunranbeijing/chunranicon.jpg',
+            content_type: 'image/jpeg'
+          }
+        }, cb);
+      },
+      function(cb) {
+        api.Item.deletePhoto(item.id, api.lastResult.id, cb);
+      }
+    ], done);
   });
 });
