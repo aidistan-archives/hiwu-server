@@ -101,6 +101,14 @@ describe('HiwuApi', function () {
           done();
         });
       });
+
+      it('should return with public items', function(done) {
+        api.Gallery.publicView(publicGallery.id, function(err, gallery) {
+          assert.equal(1, gallery.items.length);
+          assert.equal('Public Item', gallery.items[0].name);
+          done();
+        });
+      });
     });
   });
 

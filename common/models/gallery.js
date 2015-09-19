@@ -4,7 +4,13 @@ module.exports = function(Gallery) {
   Gallery.prototype.publicView = function(cb) {
     if (this.public) {
       Gallery.findById(this.id, {
-        include: ['hiwuUser', { items: 'photos' }]
+        include: ['hiwuUser', {
+          relation: 'items',
+          scope: {
+            include: 'photos',
+            where: { public: true }
+          }
+        }]
       }, cb);
     } else {
       var err = new Error('the model you visited is private');
