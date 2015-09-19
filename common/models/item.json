@@ -43,6 +43,12 @@
       "foreignKey": "galleryId",
       "through": "GalleryItem"
     },
+    "collections": {
+      "type": "hasMany",
+      "model": "Collection",
+      "foreignKey": "collectionId",
+      "through": "CollectionItem"
+    },
     "photos": {
       "type": "hasMany",
       "model": "Photo",
