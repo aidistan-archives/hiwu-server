@@ -28,7 +28,8 @@
     "items": {
       "type": "hasMany",
       "model": "Item",
-      "foreignKey": "galleryId"
+      "foreignKey": "galleryId",
+      "through": "GalleryItem"
     }
   },
   "acls": [

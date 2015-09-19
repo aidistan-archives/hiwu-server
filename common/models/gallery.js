@@ -1,5 +1,3 @@
-var loopback = require('loopback');
-
 module.exports = function(Gallery) {
   Gallery.prototype.publicView = function(cb) {
     if (this.public) {

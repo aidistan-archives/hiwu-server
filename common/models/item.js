@@ -9,11 +9,8 @@ module.exports = function(Item) {
   Item.on('dataSourceAttached', function(obj){
     var create  = Item.create;
     Item.create = function(data, options, cb) {
-      Item.app.models.Gallery.findById(data.galleryId, function(err, obj) {
-        if (err) return cb(err);
-        data.userId = obj.userId;
-        create.apply(Item, [data, options, cb]);
-      });
+      data.userId = loopback.getCurrentContext().get('accessToken').userId;
+      create.apply(Item, [data, options, cb]);
     };
   });
 

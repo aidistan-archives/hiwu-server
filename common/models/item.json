@@ -37,10 +37,11 @@
       "model": "HiwuUser",
       "foreignKey": "userId"
     },
-    "gallery": {
-      "type": "belongsTo",
+    "galleries": {
+      "type": "hasMany",
       "model": "Gallery",
-      "foreignKey": "galleryId"
+      "foreignKey": "galleryId",
+      "through": "GalleryItem"
     },
     "photos": {
       "type": "hasMany",

@@ -1,0 +1,16 @@
+{
+  "name": "GalleryItem",
+  "base": "PersistedModel",
+  "relations": {
+    "gallery": {
+      "type": "belongsTo",
+      "model": "Gallery",
+      "foreignKey": "galleryId"
+    },
+    "item": {
+      "type": "belongsTo",
+      "model": "Item",
+      "foreignKey": "itemId"
+    }
+  }
+}
