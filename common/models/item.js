@@ -19,7 +19,7 @@ module.exports = function(Item) {
   Item.prototype.publicView = function(cb) {
     if (this.public) {
       Item.findById(this.id, {
-        include: ['hiwuUser', 'photos']
+        include: ['hiwuUser', 'comments', 'photos']
       }, function(err, item) {
         async.parallel([
           function(cb) {

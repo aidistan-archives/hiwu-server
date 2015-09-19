@@ -87,6 +87,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "publicView"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__create__comments"
     }
   ],
   "methods": []

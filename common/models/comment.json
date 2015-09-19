@@ -17,15 +17,32 @@
       "model": "Item",
       "foreignKey": "itemId"
     },
-    "from": {
+    "hiwuUser": {
       "type": "belongsTo",
       "model": "HiwuUser",
-      "foreignKey": "fromId"
+      "foreignKey": "userId"
     },
-    "to": {
+    "toUser": {
       "type": "belongsTo",
       "model": "HiwuUser",
       "foreignKey": "toId"
     }
-  }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    }
+  ]
 }
