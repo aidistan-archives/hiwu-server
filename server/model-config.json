@@ -61,6 +61,10 @@
     "dataSource": "db",
     "public": false
   },
+  "Comment": {
+    "dataSource": "db",
+    "public": false
+  },
   "Photo": {
     "dataSource": "db",
     "public": false
