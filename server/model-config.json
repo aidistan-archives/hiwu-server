@@ -37,6 +37,10 @@
     "dataSource": "db",
     "public": true
   },
+  "Notification": {
+    "dataSource": "db",
+    "public": true
+  },
   "Item": {
     "dataSource": "db",
     "public": true
@@ -63,7 +67,7 @@
   },
   "Comment": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "Photo": {
     "dataSource": "db",
