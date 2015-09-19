@@ -20,7 +20,7 @@ module.exports = function(Item) {
   Item.prototype.publicView = function(cb) {
     if (this.public) {
       Item.findById(this.id, {
-        include: 'photos'
+        include: ['hiwuUser', 'photos']
       }, cb);
     } else {
       var err = new Error('the model you visited is private');

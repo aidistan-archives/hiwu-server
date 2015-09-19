@@ -78,6 +78,7 @@ describe('HiwuApi', function() {
           api.Item.publicView(api.lastResult.id, function(err, item) {
             assert(item.id);
             assert.equal('Item', item.name);
+            assert(item.hiwuUser.id);
             done();
           });
         });
