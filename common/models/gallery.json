@@ -46,7 +46,7 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "findById"
+      "property": "publicView"
     },
     {
       "principalType": "ROLE",
