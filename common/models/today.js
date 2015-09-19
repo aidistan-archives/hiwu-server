@@ -1,5 +1,5 @@
 module.exports = function(Today) {
-  Today.public = function(cb) {
+  Today.publicView = function(cb) {
     Today.find({
       include: {
         relation: 'gallery',
@@ -29,7 +29,7 @@ module.exports = function(Today) {
   };
 
   Today.remoteMethod(
-    'public',
+    'publicView',
     {
       description: 'Get Today\'s selected galleries.',
       accepts: [],

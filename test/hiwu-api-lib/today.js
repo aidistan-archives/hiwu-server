@@ -27,9 +27,9 @@ Today.prototype = {
     });
   },
 
-  public: function(cb) {
+  publicView: function(cb) {
     var api = this.api;
-    var path = '/api/Today/public';
+    var path = '/api/Today/publicView';
 
     if (api.debugger.border)
       console.log('====================');
