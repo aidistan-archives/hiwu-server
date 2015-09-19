@@ -10,7 +10,10 @@ module.exports = function(Today) {
           },
           {
             relation: 'items',
-            scope: { where: { public: true } }
+            scope: {
+              where: { public: true },
+              include: 'photos'
+            }
           }]
         }
       }
