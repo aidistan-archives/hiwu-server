@@ -49,6 +49,14 @@
     "dataSource": "db",
     "public": false
   },
+  "Collection": {
+    "dataSource": "db",
+    "public": true
+  },
+  "CollectionItem": {
+    "dataSource": "db",
+    "public": false
+  },
   "Photo": {
     "dataSource": "db",
     "public": false

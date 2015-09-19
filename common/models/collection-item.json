@@ -1,0 +1,16 @@
+{
+  "name": "CollectionItem",
+  "base": "PersistedModel",
+  "relations": {
+    "collection": {
+      "type": "belongsTo",
+      "model": "Collection",
+      "foreignKey": "collectionId"
+    },
+    "item": {
+      "type": "belongsTo",
+      "model": "Item",
+      "foreignKey": "itemId"
+    }
+  }
+}
