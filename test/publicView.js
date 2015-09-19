@@ -8,6 +8,7 @@ describe('HiwuApi', function () {
   var api;
   var server;
 
+  var hiwuUser;
   var privateGallery;
   var publicGallery;
   var privateItem;
@@ -27,6 +28,7 @@ describe('HiwuApi', function () {
           }, 'user', cb);
         },
         function(cb) {
+          hiwuUser = api.lastResult.user;
           async.parallel([
             function(cb) {
               api.HiwuUser.createGallery(api.lastResult.user.id, {
@@ -84,17 +86,10 @@ describe('HiwuApi', function () {
 
   describe('HiwuUser', function() {
     describe('#publicView', function () {
-      var hiwuUser;
-
       before(function(done) {
-        api.HiwuUser.login({
-          username: 'hiwu.ren',
-          password: 'duludou!'
-        }, 'user', function(err, accessToken) {
-          api.HiwuUser.publicView(accessToken.user.id, function(err, res) {
-            hiwuUser = res;
-            done();
-          });
+        api.HiwuUser.publicView(hiwuUser.id, function(err, res) {
+          hiwuUser = res;
+          done();
         });
       });
 
