@@ -1,3 +1,5 @@
+var needle = require('needle');
+
 function HiwuApi(host, port) {
   this.host = host || '0.0.0.0';
   this.port = port || '3000';
@@ -43,10 +45,131 @@ HiwuApi.prototype = {
     return 'http://' + this.host + ':' + this.port + path;
   },
 
-  end: function() {
-    if (this.debugger.border)
+  post: function(path, data, cb) {
+    var api = this;
+
+    if (api.debugger.border)
       console.log('====================');
-  }
+    if (api.debugger.api)
+      console.log('POST: ' + path);
+    if (api.accessToken)
+      path += '?access_token=' + api.accessToken.id;
+
+    needle.post(api.url(path), data, function(err, res) {
+      if (err) throw err;
+      if (api.debugger.status)
+        console.log('STATUS: ' + res.statusCode);
+      if (api.debugger.body)
+        console.log('BODY: ' + JSON.stringify(res.body));
+      api.lastResult = res.body;
+      if (cb) cb(err, res.body);
+    });
+  },
+
+  multipost: function(path, data, cb) {
+    var api = this;
+
+    if (api.debugger.border)
+      console.log('====================');
+    if (api.debugger.api)
+      console.log('POST: ' + path);
+    if (api.accessToken)
+      path += '?access_token=' + api.accessToken.id;
+
+    needle.post(api.url(path), data, {multipart: true}, function(err, res) {
+      if (err) throw err;
+      if (api.debugger.status)
+        console.log('STATUS: ' + res.statusCode);
+      if (api.debugger.body)
+        console.log('BODY: ' + JSON.stringify(res.body));
+      api.lastResult = res.body;
+      if (cb) cb(err, res.body);
+    });
+  },
+
+  get: function(path, cb) {
+    var api = this;
+
+    if (api.debugger.border)
+      console.log('====================');
+    if (api.debugger.api)
+      console.log('GET: ' + path);
+    if (api.accessToken)
+      path += '?access_token=' + api.accessToken.id;
+
+    needle.get(api.url(path), null, function(err, res) {
+      if (err) throw err;
+      if (api.debugger.status)
+        console.log('STATUS: ' + res.statusCode);
+      if (api.debugger.body)
+        console.log('BODY: ' + JSON.stringify(res.body));
+      api.lastResult = res.body;
+      if (cb) cb(err, res.body);
+    });
+  },
+
+  put: function(path, data, cb) {
+    var api = this;
+
+    if (api.debugger.border)
+      console.log('====================');
+    if (api.debugger.api)
+      console.log('PUT: ' + path);
+    if (api.accessToken)
+      path += '?access_token=' + api.accessToken.id;
+
+    needle.put(api.url(path), data, function(err, res) {
+      if (err) throw err;
+      if (api.debugger.status)
+        console.log('STATUS: ' + res.statusCode);
+      if (api.debugger.body)
+        console.log('BODY: ' + JSON.stringify(res.body));
+      api.lastResult = res.body;
+      if (cb) cb(err, res.body);
+    });
+  },
+
+  multiput: function(path, data, cb) {
+    var api = this;
+
+    if (api.debugger.border)
+      console.log('====================');
+    if (api.debugger.api)
+      console.log('PUT: ' + path);
+    if (api.accessToken)
+      path += '?access_token=' + api.accessToken.id;
+
+    needle.put(api.url(path), data, {multipart: true}, function(err, res) {
+      if (err) throw err;
+      if (api.debugger.status)
+        console.log('STATUS: ' + res.statusCode);
+      if (api.debugger.body)
+        console.log('BODY: ' + JSON.stringify(res.body));
+      api.lastResult = res.body;
+      if (cb) cb(err, res.body);
+    });
+  },
+
+  delete: function(path, cb) {
+    var api = this;
+
+    if (api.debugger.border)
+      console.log('====================');
+    if (api.debugger.api)
+      console.log('DELETE: ' + path);
+    if (api.accessToken)
+      path += '?access_token=' + api.accessToken.id;
+
+    needle.delete(api.url(path), null, function(err, res) {
+      if (err) throw err;
+      if (api.debugger.status)
+        console.log('STATUS: ' + res.statusCode);
+      api.lastResult = res.body;
+      if (cb) cb(err, res.body);
+    });
+  },
+
+  end: function() {}
 };
 
 module.exports = HiwuApi;
