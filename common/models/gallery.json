@@ -44,14 +44,14 @@
     },
     {
       "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "publicView"
+      "principalId": "$owner",
+      "permission": "ALLOW"
     },
     {
       "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW"
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "publicView"
     }
   ],
   "methods": []
