@@ -1,0 +1,16 @@
+{
+  "name": "Like",
+  "base": "PersistedModel",
+  "relations": {
+    "liker": {
+      "type": "belongsTo",
+      "model": "HiwuUser",
+      "foreignKey": "likerId"
+    },
+    "item": {
+      "type": "belongsTo",
+      "model": "Item",
+      "foreignKey": "itemId"
+    }
+  }
+}

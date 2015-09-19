@@ -154,6 +154,8 @@ describe('HiwuApi', function () {
           assert.equal(publicItem.id, item.id);
           assert.equal('Public Item', item.name);
           assert(item.hiwuUser);
+          assert(item.likes === 0);
+          assert(!item.liked);
           assert(item.photos);
           done();
         });

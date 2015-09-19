@@ -57,6 +57,10 @@
     "dataSource": "db",
     "public": false
   },
+  "Like": {
+    "dataSource": "db",
+    "public": false
+  },
   "Photo": {
     "dataSource": "db",
     "public": false

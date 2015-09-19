@@ -49,6 +49,12 @@
       "foreignKey": "collectionId",
       "through": "CollectionItem"
     },
+    "likers": {
+      "type": "hasMany",
+      "model": "HiwuUser",
+      "foreignKey": "likterId",
+      "through": "Like"
+    },
     "photos": {
       "type": "hasMany",
       "model": "Photo",

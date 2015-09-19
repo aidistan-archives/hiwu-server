@@ -1,6 +1,8 @@
+var async = require('async');
+var fs = require('fs');
 var loopback = require('loopback');
 var multiparty = require('multiparty');
-var fs = require('fs');
+
 
 module.exports = function(Item) {
   // Wrap the built-in `create` method to add userId attribute
@@ -18,7 +20,27 @@ module.exports = function(Item) {
     if (this.public) {
       Item.findById(this.id, {
         include: ['hiwuUser', 'photos']
-      }, cb);
+      }, function(err, item) {
+        async.parallel([
+          function(cb) {
+            item.__count__likers(function(err, count) {
+              item.likes = count;
+              cb(err, count);
+            });
+          },
+          function(cb) {
+            item.__exists__likers(
+              loopback.getCurrentContext().get('accessToken').userId,
+              function(err, liked) {
+                item.liked = liked;
+                cb(err, liked);
+              }
+            );
+          }
+        ], function(err, results) {
+          cb(err, item);
+        });
+      });
     } else {
       var err = new Error('the model you visited is private');
       err.statusCode = 404;
