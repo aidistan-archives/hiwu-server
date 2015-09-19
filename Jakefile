@@ -1,6 +1,53 @@
+var HiwuApi = require('./test/hiwu-api-lib');
+var async = require('async');
 // var fs = require('fs');
 // var yml = require('js-yaml');
-// var HiwuApi = require('./test/hiwu-api-lib');
+
+task('default', function(done) {
+  var api = new HiwuApi();
+  api.debugger.border = true
+  api.debugger.api    = true
+  api.debugger.status = true
+  api.debugger.body   = true
+
+  async.series([
+    function(cb) {
+      api.HiwuUser.simpleLogin('aidistan', 'user', cb);
+    },
+    function(cb) {
+      api.HiwuUser.updateAttributes(api.lastResult.user.id, {
+        nickname: 'Aidi Stan'
+      }, cb);
+    },
+    function(cb) {
+      api.HiwuUser.updateAvatar(api.lastResult.id, {
+        nickname: 'Aidi Stan',
+        avatar: {
+          file: 'seeds/chunranbeijing/chunranicon.jpg',
+          content_type: 'image/jpeg'
+        }
+      }, cb);
+    },
+    function(cb) {
+      api.HiwuUser.createGallery(api.lastResult.id, {
+        name: 'Gallery'
+      }, cb);
+    },
+    function(cb) {
+      api.Gallery.createItem(api.lastResult.id, {
+        name: 'Item'
+      }, cb);
+    },
+    function(cb) {
+      api.Item.createPhoto(api.lastResult.id, {
+        data: {
+          file: 'seeds/chunranbeijing/chunranicon.jpg',
+          content_type: 'image/jpeg'
+        }
+      }, cb);
+    },
+  ], done);
+});
 
 // namespace 'seeds', ->
 //   desc 'Check yaml files of all seeds'
