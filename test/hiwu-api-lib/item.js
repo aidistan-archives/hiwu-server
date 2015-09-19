@@ -6,6 +6,27 @@ function Item(api) {
 }
 
 Item.prototype = {
+  publicView: function(itemId, cb) {
+    var api = this.api;
+    var path = '/api/Items/' + itemId + '/publicView';
+
+    if (api.debugger.border)
+      console.log('====================');
+    if (api.debugger.api)
+      console.log('GET: ' + path);
+    path += '?access_token=' + api.accessToken.id;
+
+    needle.get(api.url(path), null, function(err, res) {
+      if (err) throw err;
+      if (api.debugger.status)
+        console.log('STATUS: ' + res.statusCode);
+      if (api.debugger.body)
+        console.log('BODY: ' + JSON.stringify(res.body));
+      api.lastResult = res.body;
+      if (cb) cb(err, res.body); else api.end();
+    });
+  },
+
   createPhoto: function(itemId, data, cb) {
     var api = this.api;
     var path = '/api/Items/' + itemId + '/photos';

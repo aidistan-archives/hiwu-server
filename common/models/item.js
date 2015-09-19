@@ -15,26 +15,30 @@ module.exports = function(Item) {
         create.apply(Item, [data, options, cb]);
       });
     };
-
-    var findById = Item.findById;
-    Item.findById = function () {
-      var id = arguments[0];
-      var cb = arguments[arguments.length - 1];
-      var filter = arguments.length > 2 ? arguments[1] : undefined;
-
-      findById.apply(Item, [id, filter, function (err, obj) {
-        if (err) return cb(err);
-        if (obj == null) return cb(err, obj); // obj == null where not exists
-
-        var accessToken = loopback.getCurrentContext().active.accessToken;
-        if (obj.public || (accessToken && accessToken.userId === obj.userId)) {
-          cb(err, obj);
-        } else {
-          cb(err, null); // mimic a not-exists error
-        }
-      }]);
-    };
   });
+
+  Item.prototype.publicView = function(cb) {
+    if (this.public) {
+      Item.findById(this.id, {
+        include: 'photos'
+      }, cb);
+    } else {
+      var err = new Error('the model you visited is private');
+      err.statusCode = 404;
+      err.code = 'PRIVATE_MODEL_VISITED';
+      cb(err);
+    }
+  };
+
+  Item.remoteMethod(
+    'publicView',
+    {
+      description: 'View a public item.',
+      returns: {arg: 'item', type: 'Item', root: true},
+      http: {verb: 'get'},
+      isStatic: false
+    }
+  );
 
   // Cancel the built-in `__create__photos` method
   Item.disableRemoteMethod('__create__photos', false);
