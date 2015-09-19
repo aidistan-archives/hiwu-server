@@ -35,26 +35,13 @@
     {
       "principalType": "ROLE",
       "principalId": "admin",
-      "permission": "ALLOW",
-      "property": "find"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "findById"
+      "permission": "ALLOW"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "DENY",
       "property": "deleteById"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "simpleLogin"
     },
     {
       "principalType": "ROLE",
@@ -79,6 +66,18 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__count__galleries"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "simpleLogin"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "publicView"
     }
   ],
   "methods": []

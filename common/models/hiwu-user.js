@@ -94,4 +94,32 @@ module.exports = function(HiwuUser) {
       isStatic: false
     }
   );
+
+  HiwuUser.prototype.publicView = function(cb) {
+    HiwuUser.findById(this.id, {
+      include: {
+        relation: 'galleries',
+        scope: {
+          where: { public: true },
+          include: {
+            relation: 'items',
+            scope: {
+              where: { public: true },
+              include: 'photos'
+            }
+          }
+        }
+      }
+    }, cb);
+  };
+
+  HiwuUser.remoteMethod(
+    'publicView',
+    {
+      description: 'View a public profile.',
+      returns: {arg: 'hiwuUser', type: 'HiwuUser', root: true},
+      http: {verb: 'get'},
+      isStatic: false
+    }
+  );
 };

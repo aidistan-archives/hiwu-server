@@ -82,6 +82,38 @@ describe('HiwuApi', function () {
     done();
   });
 
+  describe('HiwuUser', function() {
+    describe('#publicView', function () {
+      var hiwuUser;
+
+      before(function(done) {
+        api.HiwuUser.login({
+          username: 'hiwu.ren',
+          password: 'duludou!'
+        }, 'user', function(err, accessToken) {
+          api.HiwuUser.publicView(accessToken.user.id, function(err, res) {
+            hiwuUser = res;
+            done();
+          });
+        });
+      });
+
+      it('should return public galleries', function() {
+        assert.equal(1, hiwuUser.galleries.length);
+        assert(hiwuUser.galleries[0].public);
+        assert(hiwuUser.galleries[0].items);
+      });
+
+      it('should return public items', function() {
+        var items = hiwuUser.galleries[0].items;
+
+        assert.equal(1, items.length);
+        assert(items[0].public);
+        assert(items[0].photos);
+      });
+    });
+  });
+
   describe('Gallery', function() {
     describe('#publicView', function () {
       it('should not return if private', function(done) {
