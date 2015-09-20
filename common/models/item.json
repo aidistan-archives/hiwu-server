@@ -40,19 +40,19 @@
     "galleries": {
       "type": "hasMany",
       "model": "Gallery",
-      "foreignKey": "galleryId",
+      "foreignKey": "itemId",
       "through": "GalleryItem"
     },
     "collections": {
       "type": "hasMany",
       "model": "Collection",
-      "foreignKey": "collectionId",
+      "foreignKey": "itemId",
       "through": "CollectionItem"
     },
     "likers": {
       "type": "hasMany",
       "model": "HiwuUser",
-      "foreignKey": "likerId",
+      "foreignKey": "itemId",
       "through": "Like"
     },
     "comments": {

@@ -34,6 +34,12 @@
       "type": "hasMany",
       "model": "Gallery",
       "foreignKey": "userId"
+    },
+    "likes": {
+      "type": "hasMany",
+      "model": "Item",
+      "foreignKey": "userId",
+      "through": "Like"
     }
   },
   "acls": [
@@ -65,6 +71,18 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__get__galleries"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__link__likes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__likes"
     },
     {
       "principalType": "ROLE",

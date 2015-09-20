@@ -5,9 +5,9 @@
     "liker": {
       "type": "belongsTo",
       "model": "HiwuUser",
-      "foreignKey": "likerId"
+      "foreignKey": "userId"
     },
-    "item": {
+    "like": {
       "type": "belongsTo",
       "model": "Item",
       "foreignKey": "itemId"
