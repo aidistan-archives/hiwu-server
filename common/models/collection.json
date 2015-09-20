@@ -37,6 +37,12 @@
     },
     {
       "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__create__items"
+    },
+    {
+      "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "find"
@@ -46,12 +52,6 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "findById"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "__create__items"
     }
   ],
   "methods": []

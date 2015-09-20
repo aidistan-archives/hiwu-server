@@ -37,11 +37,10 @@
       "model": "HiwuUser",
       "foreignKey": "userId"
     },
-    "galleries": {
-      "type": "hasMany",
+    "gallery": {
+      "type": "belongsTo",
       "model": "Gallery",
-      "foreignKey": "itemId",
-      "through": "GalleryItem"
+      "foreignKey": "galleryId"
     },
     "collections": {
       "type": "hasMany",
@@ -84,15 +83,15 @@
     },
     {
       "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "publicView"
-    },
-    {
-      "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "__create__comments"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "publicView"
     }
   ],
   "methods": []

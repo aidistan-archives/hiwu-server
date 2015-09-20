@@ -30,7 +30,7 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "public"
+      "property": "publicView"
     }
   ],
   "methods": []
