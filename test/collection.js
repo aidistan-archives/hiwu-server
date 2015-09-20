@@ -4,58 +4,56 @@ var assert = require('assert');
 var needle = require('needle');
 var spawn = require('child_process').spawn;
 
-describe('HiwuApi', function () {
-  describe('Collection', function() {
-    var api;
-    var server;
+describe('Unit Test: Collection', function () {
+  var server;
 
+  before(function(done) {
+    server = spawn('node', ['.']);
+
+    function complete(data) {
+      server.stdout.removeListener('data', complete);
+      done();
+    }
+
+    server.stdout.on('data', complete);
+  });
+
+  after(function(done) {
+    server.kill();
+    done();
+  });
+
+  describe('Collection', function() {
+    var api = new HiwuApi();
     var collection;
 
     before(function(done) {
-      server = spawn('node', ['.']);
-
-      function init(cb) {
-        api = new HiwuApi();
-
-        async.series([
-          function(cb) {
-            api.HiwuUser.login({
-              username: 'hiwu.ren',
-              password: 'duludou!'
-            }, 'user', cb);
-          },
-          function(cb) {
-            api.Collection.create({
-              name: 'Collection',
-              description: 'This is a collection.'
-            }, cb);
-          },
-          function(cb) {
-            collection = api.lastResult;
-            api.Collection.createItem(collection.id, {
-              name: 'Public Item'
-            }, cb);
-          },
-          function(cb) {
-            api.Collection.createItem(collection.id, {
-              name: 'Private Item',
-              public: false
-            }, cb);
-          }
-        ], cb);
-      }
-
-      function complete(data) {
-        server.stdout.removeListener('data', complete);
-        init(done);
-      }
-
-      server.stdout.on('data', complete);
-    });
-
-    after(function(done) {
-      server.kill();
-      done();
+      async.series([
+        function(cb) {
+          api.HiwuUser.login({
+            username: 'hiwu.ren',
+            password: 'duludou!'
+          }, 'user', cb);
+        },
+        function(cb) {
+          api.Collection.create({
+            name: 'Collection',
+            description: 'This is a collection.'
+          }, cb);
+        },
+        function(cb) {
+          collection = api.lastResult;
+          api.Collection.createItem(collection.id, {
+            name: 'Public Item'
+          }, cb);
+        },
+        function(cb) {
+          api.Collection.createItem(collection.id, {
+            name: 'Private Item',
+            public: false
+          }, cb);
+        }
+      ], done);
     });
 
     describe('#find', function () {
