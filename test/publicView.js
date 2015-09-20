@@ -4,7 +4,7 @@ var assert = require('assert');
 var needle = require('needle');
 var spawn = require('child_process').spawn;
 
-describe('HiwuApi', function () {
+describe('Integration Test: views from public', function () {
   var api;
   var server;
 
@@ -14,62 +14,62 @@ describe('HiwuApi', function () {
   var privateItem;
   var publicItem;
 
-  before(function(done) {
-    server = spawn('node', ['.']);
+  function init(cb) {
+    api = new HiwuApi();
 
-    function init(cb) {
-      api = new HiwuApi();
+    async.series([
+      function(cb) {
+        api.HiwuUser.login({
+          username: 'hiwu.ren',
+          password: 'duludou!'
+        }, 'user', cb);
+      },
+      function(cb) {
+        hiwuUser = api.lastResult.user;
+        async.parallel([
+          function(cb) {
+            api.HiwuUser.createGallery(api.lastResult.user.id, {
+              name: 'Public Gallery'
+            }, function(err, gallery) {
+              publicGallery = gallery;
 
-      async.series([
-        function(cb) {
-          api.HiwuUser.login({
-            username: 'hiwu.ren',
-            password: 'duludou!'
-          }, 'user', cb);
-        },
-        function(cb) {
-          hiwuUser = api.lastResult.user;
-          async.parallel([
-            function(cb) {
-              api.HiwuUser.createGallery(api.lastResult.user.id, {
-                name: 'Public Gallery'
-              }, function(err, gallery) {
-                publicGallery = gallery;
+              api.Gallery.createItem(gallery.id, {
+                name: 'Public Item',
+              }, function(err, item) {
+                publicItem = item;
 
                 api.Gallery.createItem(gallery.id, {
-                  name: 'Public Item',
+                  name: 'Private Item',
+                  public: false
                 }, function(err, item) {
-                  publicItem = item;
+                  privateItem = item;
 
-                  api.Gallery.createItem(gallery.id, {
-                    name: 'Private Item',
-                    public: false
-                  }, function(err, item) {
-                    privateItem = item;
-
-                    api.Today.create({
-                      galleryId: gallery.id
-                    }, cb);
-                  });
+                  api.Today.create({
+                    galleryId: gallery.id
+                  }, cb);
                 });
               });
-            },
-            function(cb) {
-              api.HiwuUser.createGallery(api.lastResult.user.id, {
-                name: 'Private Gallery',
-                public: false
-              }, function(err, gallery) {
-                privateGallery = gallery;
+            });
+          },
+          function(cb) {
+            api.HiwuUser.createGallery(api.lastResult.user.id, {
+              name: 'Private Gallery',
+              public: false
+            }, function(err, gallery) {
+              privateGallery = gallery;
 
-                api.Today.create({
-                  galleryId: gallery.id
-                }, cb);
-              });
-            }
-          ], cb);
-        }
-      ], cb);
-    }
+              api.Today.create({
+                galleryId: gallery.id
+              }, cb);
+            });
+          }
+        ], cb);
+      }
+    ], cb);
+  }
+
+  before(function(done) {
+    server = spawn('node', ['.']);
 
     function complete(data) {
       server.stdout.removeListener('data', complete);
