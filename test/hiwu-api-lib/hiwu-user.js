@@ -53,7 +53,19 @@ HiwuUser.prototype = {
 
   unlinkLike: function(userId, itemId, cb) {
     this.api.delete('/api/HiwuUsers/' + userId + '/likes/rel/' + itemId, cb);
-  }
+  },
+
+  getNotifications: function(userId, cb) {
+    this.api.get('/api/HiwuUsers/' + userId + '/notifications', cb);
+  },
+
+  deleteNotification: function(userId, notificationId, cb) {
+    this.api.delete('/api/HiwuUsers/' + userId + '/notifications/' + notificationId, cb);
+  },
+
+  deleteNotifications: function(userId, cb) {
+    this.api.delete('/api/HiwuUsers/' + userId + '/notifications', cb);
+  },
 };
 
 module.exports = HiwuUser;

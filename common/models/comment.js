@@ -4,14 +4,15 @@ module.exports = function(Comment) {
   Comment.on('dataSourceAttached', function(obj){
     var create  = Comment.create;
     Comment.create = function(data, options, cb) {
+      var fromId = loopback.getCurrentContext().get('accessToken').userId;
+      data.userId = fromId;
+
       create.apply(Comment, [data, options, function(err, comment) {
         if (err) cb(err);
         Comment.app.models.Item.findById(comment.itemId, {
            fields: ['userId']
         }, function(err, item) {
           if (err) cb(err);
-
-          var fromId = loopback.getCurrentContext().get('accessToken').userId;
           var userId = comment.toId || item.userId;
 
           if (fromId === userId) {

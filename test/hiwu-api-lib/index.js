@@ -168,9 +168,7 @@ HiwuApi.prototype = {
       api.lastResult = res.body;
       if (cb) cb(err, res.body);
     });
-  },
-
-  end: function() {}
+  }
 };
 
 module.exports = HiwuApi;
