@@ -6,7 +6,7 @@
     "validateUpsert": true
   },
   "properties": {
-    "content": {
+    "type": {
       "type": "string",
       "required": true
     }
@@ -21,6 +21,16 @@
       "type": "belongsTo",
       "model": "HiwuUser",
       "foreignKey": "fromId"
+    },
+    "item": {
+      "type": "belongsTo",
+      "model": "Item",
+      "foreignKey": "itemId"
+    },
+    "comment": {
+      "type": "belongsTo",
+      "model": "Comment",
+      "foreignKey": "commentId"
     }
   }
 }
