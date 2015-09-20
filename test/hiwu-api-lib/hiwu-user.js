@@ -46,6 +46,14 @@ HiwuUser.prototype = {
   publicView: function(userId, cb) {
     this.api.get('/api/HiwuUsers/' + userId + '/publicView', cb);
   },
+
+  linkLike: function(userId, itemId, cb) {
+    this.api.put('/api/HiwuUsers/' + userId + '/likes/rel/' + itemId, null, cb);
+  },
+
+  unlinkLike: function(userId, itemId, cb) {
+    this.api.delete('/api/HiwuUsers/' + userId + '/likes/rel/' + itemId, cb);
+  }
 };
 
 module.exports = HiwuUser;

@@ -20,6 +20,10 @@ Item.prototype = {
 
   deletePhotos: function(itemId, cb) {
     this.api.delete('/api/Items/' + itemId + '/photos', cb);
+  },
+
+  createComment: function(itemId, data, cb) {
+    this.api.post('/api/Items/' + itemId + '/comments', data, cb);
   }
 };
 
