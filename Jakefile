@@ -3,13 +3,13 @@ var async = require('async');
 // var fs = require('fs');
 // var yml = require('js-yaml');
 
-task('default', function(done) {
-  var api = new HiwuApi();
-  api.debugger.border = true
-  api.debugger.api    = true
-  api.debugger.status = true
-  api.debugger.body   = true
+var api = new HiwuApi();
+api.debugger.border = true;
+api.debugger.api    = true;
+api.debugger.status = true;
+api.debugger.body   = true;
 
+task('avatar', function(done) {
   async.series([
     function(cb) {
       api.HiwuUser.simpleLogin('aidistan', 'user', cb);
@@ -27,9 +27,17 @@ task('default', function(done) {
           content_type: 'image/jpeg'
         }
       }, cb);
+    }
+  ], done);
+});
+
+task('photo', function(done) {
+  async.series([
+    function(cb) {
+      api.HiwuUser.simpleLogin('aidistan', 'user', cb);
     },
     function(cb) {
-      api.HiwuUser.createGallery(api.lastResult.id, {
+      api.HiwuUser.createGallery(api.lastResult.user.id, {
         name: 'Gallery'
       }, cb);
     },
@@ -46,6 +54,53 @@ task('default', function(done) {
         }
       }, cb);
     },
+  ], done);
+});
+
+task('comment', function(done) {
+  async.series([
+    function(cb) {
+      api.HiwuUser.simpleLogin('aidistan', 'user', cb);
+    },
+    function(cb) {
+      api.HiwuUser.createGallery(api.lastResult.user.id, {
+        name: 'Gallery'
+      }, cb);
+    },
+    function(cb) {
+      api.Gallery.createItem(api.lastResult.id, {
+        name: 'Item'
+      }, cb);
+    },
+    function(cb) {
+      api.Item.createComment(api.lastResult.id, {
+        content: 'Fabulours!'
+      }, cb);
+    }
+  ], done);
+});
+
+task('like', function(done) {
+  var user;
+
+  async.series([
+    function(cb) {
+      api.HiwuUser.simpleLogin('aidistan', 'user', cb);
+    },
+    function(cb) {
+      user = api.lastResult.user;
+      api.HiwuUser.createGallery(user.id, {
+        name: 'Gallery'
+      }, cb);
+    },
+    function(cb) {
+      api.Gallery.createItem(api.lastResult.id, {
+        name: 'Item'
+      }, cb);
+    },
+    function(cb) {
+      api.HiwuUser.linkLike(user.id, api.lastResult.id, cb);
+    }
   ], done);
 });
 
