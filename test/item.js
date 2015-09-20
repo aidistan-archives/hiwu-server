@@ -25,12 +25,21 @@ describe('Unit Test: Item', function() {
 
   describe('Item',function() {
     var api = new HiwuApi();
+
+    var ownerToken;
+    var guestToken;
     var item;
 
     before(function(done) {
       async.series([
         function(cb) {
-          api.HiwuUser.simpleLogin('aidistan', 'user', cb);
+          api.HiwuUser.login({
+            username: 'hiwu.ren',
+            password: 'duludou!'
+          }, 'user', function(err, accessToken) {
+            ownerToken = accessToken;
+            cb();
+          });
         },
         function(cb) {
           api.HiwuUser.createGallery(api.lastResult.user.id, {
@@ -40,52 +49,132 @@ describe('Unit Test: Item', function() {
         function(cb) {
           api.Gallery.createItem(api.lastResult.id, {
             name: 'Item'
-          }, cb);
+          }, function(err, res) {
+            item = res;
+            cb();
+          });
+        },
+        function(cb) {
+          api.accessToken = null;
+          api.HiwuUser.simpleLogin('aidistan', 'user', function(err, accessToken) {
+            guestToken = accessToken;
+            done();
+          });
         }
-      ], function() {
-        item = api.lastResult;
-        done();
-      });
+      ], done);
     });
 
     describe('#createPhoto', function() {
-      before(function(done) {
-        api.Item.createPhoto(item.id, {
-          data: {
-            file: 'seeds/chunranbeijing/chunranicon.jpg',
-            content_type: 'image/jpeg'
-          }
-        }, done);
-      });
-
-      it('should add photo', function() {
-        assert(api.lastResult.url);
-      });
-    });
-
-    describe('#deletePhoto', function() {
-      before(function(done) {
+      it('should add photo', function(done) {
+        api.accessToken = ownerToken;
         api.Item.createPhoto(item.id, {
           data: {
             file: 'seeds/chunranbeijing/chunranicon.jpg',
             content_type: 'image/jpeg'
           }
         }, function(err, photo) {
-          api.Item.deletePhoto(item.id, api.lastResult.id, done);
+          assert(photo.url);
+          done();
         });
       });
+    });
 
-      it('should delete photo', function() {
-        assert({}, api.lastResult);
+    describe('#deletePhoto', function() {
+      it('should delete photo', function(done) {
+        api.accessToken = ownerToken;
+        api.Item.createPhoto(item.id, {
+          data: {
+            file: 'seeds/chunranbeijing/chunranicon.jpg',
+            content_type: 'image/jpeg'
+          }
+        }, function(err, photo) {
+          api.Item.deletePhoto(item.id, api.lastResult.id, function(err, res) {
+            assert({}, res);
+            done();
+          });
+        });
       });
     });
 
     describe('#deletePhotos', function() {
-      before(function(done) {
+      it('should delete all photos', function(done) {
+        api.accessToken = ownerToken;
         api.Item.deletePhotos(item.id, done);
       });
+    });
 
-      it('should delete all photos', function() {
+    describe('#linkLike', function() {
+      before(function() {
+        api.accessToken = guestToken;
+      });
+
+      it('should not link if unauthorized', function(done) {
+        api.HiwuUser.linkLike(ownerToken.user.id, item.id, function(err, res) {
+          assert.equal(401, res.error.statusCode);
+          assert.equal('AUTHORIZATION_REQUIRED', res.error.code);
+          done();
+        });
+      });
+
+      it('should link if authorized', function(done) {
+        api.HiwuUser.linkLike(guestToken.user.id, item.id, function(err, res) {
+          api.Item.publicView(item.id, function(err, item) {
+            assert.equal(1, item.likes);
+            assert(item.liked);
+            done();
+          });
+        });
+      });
+    });
+
+    describe('#unlinkLike', function() {
+      before(function(done) {
+        api.accessToken = guestToken;
+        api.HiwuUser.linkLike(guestToken.user.id, item.id, done);
+      });
+
+      it('should not unlink if unauthorized', function(done) {
+        api.HiwuUser.unlinkLike(ownerToken.user.id, item.id, function(err, res) {
+          assert.equal(401, res.error.statusCode);
+          assert.equal('AUTHORIZATION_REQUIRED', res.error.code);
+          done();
+        });
+      });
+
+      it('should unlink if authorized', function(done) {
+        api.HiwuUser.unlinkLike(guestToken.user.id, item.id, function(err, res) {
+          api.Item.publicView(item.id, function(err, item) {
+            assert.equal(0, item.likes);
+            assert(!item.liked);
+            done();
+          });
+        });
+      });
+    });
+
+    describe('#createComment', function() {
+      it('should create comment for authenticated users', function(done) {
+        api.accessToken = guestToken;
+        api.Item.createComment(item.id, {
+          content: 'Fabulours!'
+        }, function(err, comment) {
+          api.Item.publicView(item.id, function(err, item) {
+            assert.equal(1, item.comments.length);
+            done();
+          });
+        });
+      });
+
+      it('should note create comment for unauthenticated users', function(done) {
+        api.accessToken = null
+        api.Item.createComment(item.id, {
+          content: 'Fabulours!'
+        }, function(err, res) {
+          api.accessToken = guestToken;
+          assert.equal(401, res.error.statusCode);
+          assert.equal('AUTHORIZATION_REQUIRED', res.error.code);
+          done();
+        });
       });
     });
   });
