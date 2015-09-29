@@ -22,21 +22,23 @@ function HiwuApi(host, port) {
 
 HiwuApi.prototype = {
   config: function(cb) {
+    var api = this;
+
     var rl = require('readline').createInterface({
       input: process.stdin,
       output:process.stdout
     });
 
-    rl.question('Which host? (' + this.host + ')', function(host) {
+    rl.question('Which host? (' + api.host + ')', function(host) {
       if (host.length > 0)
-        this.host = host;
+        api.host = host;
 
-      rl.question('Which port? (' + this.port + ')', function(port) {
+      rl.question('Which port? (' + api.port + ')', function(port) {
         if (port.length > 0)
-          this.port = port;
+          api.port = port;
 
         rl.close();
-        cb(null);
+        cb(api);
       });
     });
   },
