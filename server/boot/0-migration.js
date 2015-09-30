@@ -12,5 +12,7 @@ module.exports = function(app, cb) {
         cb();
       }
     });
+  } else {
+    cb();
   }
 };
