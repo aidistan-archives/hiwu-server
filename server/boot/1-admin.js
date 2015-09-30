@@ -1,5 +1,4 @@
 module.exports = function(app) {
-
   app.models.HiwuUser.create({
     username: 'hiwu.ren', email: 'hiwu.ren@hiwu.ren', password: 'duludou!'
   }, function(err, user) {
