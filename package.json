@@ -1,6 +1,6 @@
 {
   "name": "hiwu-server",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "main": "server/server.js",
   "scripts": {
     "pretest": "jshint ."
