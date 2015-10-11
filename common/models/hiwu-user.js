@@ -12,7 +12,8 @@ module.exports = function(HiwuUser) {
       if (err) {
         self.create({
           email: username + '@simple.hiwu.ren',
-          password: username
+          password: username,
+          nickname: username
         }, function (err, obj) {
           if (err) return cb(err);
           self.login({

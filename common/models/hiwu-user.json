@@ -17,10 +17,12 @@
   ],
   "properties": {
     "nickname": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     "avatar": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     }
   },
   "validations": [],

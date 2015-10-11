@@ -11,19 +11,24 @@
       "required": true
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     "date_y": {
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "date_m": {
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "date_d": {
-      "type": "number"
+      "type": "number",
+      "default": 0
     },
     "city": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     "public": {
       "type": "boolean",

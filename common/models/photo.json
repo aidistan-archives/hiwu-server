@@ -7,10 +7,12 @@
   },
   "properties": {
     "description": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     "url": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     }
   },
   "validations": [],
