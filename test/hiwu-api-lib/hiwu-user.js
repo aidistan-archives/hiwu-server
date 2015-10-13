@@ -11,7 +11,7 @@ HiwuUser.prototype = {
     api.post(
       '/api/HiwuUsers/login' + (include ? '?include=' + include : ''),
       data, function(err, accessToken) {
-        api.accessToken = accessToken;
+        if (accessToken.error === undefined) api.accessToken = accessToken;
         if (cb) cb(err, accessToken);
       }
     );
@@ -23,7 +23,7 @@ HiwuUser.prototype = {
       '/api/HiwuUsers/simpleLogin?username=' + username +
           (include ? '&include=' + include : ''),
       null, function(err, accessToken) {
-        api.accessToken = accessToken;
+        if (accessToken.error === undefined) api.accessToken = accessToken;
         if (cb) cb(err, accessToken);
       }
     );
