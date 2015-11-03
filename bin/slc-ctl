@@ -19,7 +19,7 @@ if given_host
       ARGV
     ].join(' ')
     puts "Command: #{cmd}"
-    puts `#{cmd}`
+    system(cmd)
   end
 else
   puts <<-END_OF_DOC
