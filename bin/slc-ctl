@@ -1,8 +1,18 @@
 #!/usr/bin/env ruby
 known_hosts = %w(palace)
 given_host = ARGV.shift
+
+if given_host == 'all'
+  given_host = known_hosts
+elsif known_hosts.include?(given_host)
+  given_host = [given_host]
+else
+  puts "Unknown host '#{given_host}'"
+  given_host = nil
+end
+
 if given_host
-  (given_host == 'all' ? known_hosts : [given_host]).each do |host|
+  given_host.each do |host|
     cmd = [
       'slc ctl',
       '-C', "http://#{host}:hiwu-#{host}@#{host}.server.hiwu.ren",

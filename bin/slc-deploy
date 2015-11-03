@@ -1,9 +1,19 @@
 #!/usr/bin/env ruby
 known_hosts = %w(palace)
 given_host = ARGV.shift
+
+if given_host == 'all'
+  given_host = known_hosts
+elsif known_hosts.include?(given_host)
+  given_host = [given_host]
+else
+  puts "Unknown host '#{given_host}'"
+  given_host = nil
+end
+
 if given_host
   system('slc build')
-  (given_host == 'all' ? known_hosts : [given_host]).each do |host|
+  given_host.each do |host|
     cmd = [
       'slc deploy',
       '-s', ARGV.first || 'hiwu',
@@ -15,7 +25,7 @@ if given_host
   end
 else
   puts <<-END_OF_DOC
-usage: slc-deploy host [service]
+Usage: slc-deploy host [service]
 
 Service: default is "hiwu"
 Known hosts:
