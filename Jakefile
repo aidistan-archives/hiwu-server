@@ -104,6 +104,19 @@ task('like', function(done) {
   ], done);
 });
 
+namespace('client', function() {
+  desc('Update static files in /client');
+  task('update', function() {
+    fs.readdirSync('client').forEach(function(filename) {
+      fs.unlink('client/' + filename);
+    });
+    fs.readdirSync('../hiwu-spa/static').forEach(function(filename) {
+      console.log(filename);
+      fs.writeFileSync('client/' + filename, fs.readFileSync('../hiwu-spa/static/' + filename));
+    });
+  });
+});
+
 namespace('seeds', function() {
   desc('Check yaml files of all seeds');
   task('check', function() {
@@ -124,8 +137,8 @@ namespace('seeds', function() {
     });
   });
 
-  desc('Load all seed');
-  task('load', function() {
+  desc('Upload all seeds to the server');
+  task('upload', function() {
     api.config(function(_api) {
       fs.readdirSync('seeds').forEach(function(username) {
         var api = new HiwuApi(_api.host, _api.port);
