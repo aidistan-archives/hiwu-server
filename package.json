@@ -2,6 +2,7 @@
   "name": "hiwu-server",
   "version": "0.9.1",
   "description": "Hiwu API server",
+  "license": "MIT",
   "repository": {
     "type": "",
     "url": ""
@@ -12,25 +13,18 @@
   },
   "dependencies": {
     "aliyun-sdk": "^1.5.7",
+    "async": "^1.5.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
-    "errorhandler": "^1.1.1",
-    "loopback": "^2.14.0",
+    "loopback": "^2.22.0",
     "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^2.1.0",
     "loopback-connector-mysql": "^2.2.0",
-    "loopback-datasource-juggler": "^2.19.0",
+    "loopback-datasource-juggler": "^2.39.0",
     "multiparty": "^4.1.2",
     "serve-favicon": "^2.0.1"
   },
-  "optionalDependencies": {
-    "loopback-explorer": "^1.1.0"
-  },
   "devDependencies": {
-    "async": "^1.4.2",
-    "jake": "^8.0.12",
-    "js-yaml": "^3.4.3",
-    "jshint": "^2.5.6",
-    "mocha": "^2.3.2",
-    "needle": "^0.10.0"
+    "jshint": "^2.5.6"
   }
 }
