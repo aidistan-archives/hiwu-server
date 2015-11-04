@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'json'
+system("pm2-dev run #{JSON.parse(File.read('package.json'))['main']}")
