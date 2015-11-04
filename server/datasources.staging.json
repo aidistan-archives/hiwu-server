@@ -1,0 +1,10 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "mysql",
+    "host": "rdsr3a07k7e72883m39n.mysql.rds.aliyuncs.com",
+    "username": "staging",
+    "password": "2ztsvsk9FttCcxxgpqgucpgtfjiawctm",
+    "database": "staging"
+  }
+}

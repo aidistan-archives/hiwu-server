@@ -1,0 +1,10 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "mysql",
+    "host": "rdsr3a07k7e72883m39n.mysql.rds.aliyuncs.com",
+    "username": "production",
+    "password": "tcdxlmn4nwcOizbtJvlnvc7ahvuwvnxa",
+    "database": "production"
+  }
+}

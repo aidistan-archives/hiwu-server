@@ -3,31 +3,19 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
-// Define the data source
-if (process.env.DATABASE_URL) {
-  var databaseUrlSegs = process.env.DATABASE_URL.split(/[\/:@]+/);
-  app.dataSource('db', {
-    name: 'db',
-    connector: 'mysql',
-    host: databaseUrlSegs[3],
-    username: databaseUrlSegs[1],
-    password: databaseUrlSegs[2],
-    database: databaseUrlSegs[4]
-  });
-}
-else {
-  app.dataSource('db', {
-    name: 'db',
-    connector: 'memory'
-  });
-}
-
 app.start = function() {
   // start the web server
   return app.listen(function() {
     app.emit('started');
     console.log('Environment: %s', app.get('env'));
-    console.log('Listening at: %s', app.get('url'));
+
+    var baseUrl = app.get('url').replace(/\/$/, '');
+    console.log('Web server listening at: %s', baseUrl);
+
+    if (app.get('loopback-component-explorer')) {
+      var explorerPath = app.get('loopback-component-explorer').mountPath;
+      console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
+    }
   });
 };
 
