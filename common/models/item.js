@@ -29,13 +29,17 @@ module.exports = function(Item) {
             });
           },
           function(cb) {
-            item.__exists__likers(
-              loopback.getCurrentContext().get('accessToken').userId,
-              function(err, liked) {
-                item.liked = liked;
-                cb(err, liked);
-              }
-            );
+            if (loopback.getCurrentContext().get('accessToken') === undefined) {
+              cb(null);
+            } else {
+              item.__exists__likers(
+                loopback.getCurrentContext().get('accessToken').userId,
+                function(err, liked) {
+                  item.liked = liked;
+                  cb(err, liked);
+                }
+              );
+            }
           }
         ], function(err, results) {
           cb(err, item);

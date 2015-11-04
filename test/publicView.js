@@ -4,7 +4,7 @@ var assert = require('assert');
 var needle = require('needle');
 var spawn = require('child_process').spawn;
 
-describe('Integration Test: public views', function () {
+describe('Integration Test: Public Views', function () {
   this.timeout(3000);
 
   var api;
@@ -78,13 +78,27 @@ describe('Integration Test: public views', function () {
         });
       });
 
-      it('should return if public', function(done) {
+      it('should return for logined users if public', function(done) {
         api.Item.publicView(publicItem.id, function(err, item) {
           assert(item.hiwuUser);
           testPublicItem(item);
           assert(item.likes !== undefined);
           assert(item.liked !== undefined);
           assert(item.comments);
+          done();
+        });
+      });
+
+      it('should return for anonymous users if public', function(done) {
+        var accessToken = api.accessToken;
+        api.accessToken = null;
+        api.Item.publicView(publicItem.id, function(err, item) {
+          assert(item.hiwuUser);
+          testPublicItem(item);
+          assert(item.likes !== undefined);
+          assert(item.liked === undefined);
+          assert(item.comments);
+          api.accessToken = accessToken;
           done();
         });
       });

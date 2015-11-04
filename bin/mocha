@@ -1,2 +1,2 @@
 #!/usr/bin/env ruby
-system('mocha')
+system('mocha ' + ARGV.map(&:inspect).join(' '))
