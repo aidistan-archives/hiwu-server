@@ -1,0 +1,19 @@
+{
+  "apps": [{
+    "name": "staging",
+    "script": "server/server.js",
+  }],
+  "deploy": {
+    "staging": {
+      "user": "root",
+      "host": "palace.server.hiwu.ren",
+      "ref": "origin/master",
+      "repo": "git@bitbucket.org:hiwu/hiwu-server.git",
+      "path": "/var/www/staging",
+      "post-deploy": "cnpm install ; pm2 startOrRestart pm2.staging.json --env staging",
+      "env": {
+        "NODE_ENV": "staging"
+      }
+    }
+  }
+}

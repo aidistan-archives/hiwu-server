@@ -1,0 +1,19 @@
+{
+  "apps": [{
+    "name": "production",
+    "script": "server/server.js",
+  }],
+  "deploy": {
+    "production": {
+      "user": "root",
+      "host": "palace.server.hiwu.ren",
+      "ref": "origin/master",
+      "repo": "git@bitbucket.org:hiwu/hiwu-server.git",
+      "path": "/var/www/production",
+      "post-deploy": "cnpm install ; pm2 startOrRestart pm2.production.json --env production",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
