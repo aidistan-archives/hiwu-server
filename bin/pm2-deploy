@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+cmd = "pm2 deploy pm2.json #{ARGV.map(&:inspect).join(' ')}"
+puts "Command: #{cmd}"
+system(cmd)
+
+# known_hosts = %w(palace)
+# given_host = ARGV.shift
+#
+# if given_host == 'all'
+#   given_host = known_hosts
+# elsif known_hosts.include?(given_host)
+#   given_host = [given_host]
+# else
+#   puts "Unknown host '#{given_host}'"
+#   given_host = nil
+# end
+#
+# if given_host
+#   system('slc build')
+#   given_host.each do |host|
+#     cmd = [
+#       'slc deploy',
+#       '-s', ARGV.first || 'hiwu',
+#       "http://#{host}:hiwu-#{host}@#{host}.server.hiwu.ren",
+#       'deploy'
+#     ].join(' ')
+#     puts "Command: #{cmd}"
+#     system(cmd)
+#   end
+# else
+#   puts <<-END_OF_DOC
+# Usage: slc-deploy host [service]
+#
+# Service: default is "hiwu"
+# Known hosts:
+#     all       iterate over all known hosts
+#   END_OF_DOC
+#   known_hosts.each do |host|
+#     puts <<-END_OF_DOC
+#     #{host}
+#     END_OF_DOC
+#   end
+# end
