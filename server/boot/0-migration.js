@@ -9,18 +9,26 @@ module.exports = function(app, cb) {
 
   function migrate() {
     if (app.get('env') === 'staging') {
-      db.automigrate(cb);
+      autoupdate();
     }
     else if (app.get('env') === 'production') {
-      db.isActual(function(err, actual) {
-        if (!actual) {
-          db.autoupdate(cb);
-        } else {
-          cb();
-        }
-      });
+      automigrate();
     } else {
       cb();
     }
+  }
+
+  function automigrate() {
+    db.automigrate(cb);
+  }
+
+  function autoupdate() {
+    db.isActual(function(err, actual) {
+      if (!actual) {
+        db.autoupdate(cb);
+      } else {
+        cb();
+      }
+    });
   }
 };
