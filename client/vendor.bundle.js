@@ -1,6 +1,37 @@
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonp"];
+/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, callbacks = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId])
+/******/ 				callbacks.push.apply(callbacks, installedChunks[chunkId]);
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			modules[moduleId] = moreModules[moduleId];
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules);
+/******/ 		while(callbacks.length)
+/******/ 			callbacks.shift().call(null, __webpack_require__);
+/******/ 		if(moreModules[0]) {
+/******/ 			installedModules[0] = 0;
+/******/ 			return __webpack_require__(0);
+/******/ 		}
+/******/ 	};
+
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// "0" means "already loaded"
+/******/ 	// Array means "loading", array contains callbacks
+/******/ 	var installedChunks = {
+/******/ 		1:0
+/******/ 	};
 
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -26,6 +57,29 @@
 /******/ 		return module.exports;
 /******/ 	}
 
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId, callback) {
+/******/ 		// "0" is the signal for "already loaded"
+/******/ 		if(installedChunks[chunkId] === 0)
+/******/ 			return callback.call(null, __webpack_require__);
+
+/******/ 		// an array means "currently loading".
+/******/ 		if(installedChunks[chunkId] !== undefined) {
+/******/ 			installedChunks[chunkId].push(callback);
+/******/ 		} else {
+/******/ 			// start chunk loading
+/******/ 			installedChunks[chunkId] = [callback];
+/******/ 			var head = document.getElementsByTagName('head')[0];
+/******/ 			var script = document.createElement('script');
+/******/ 			script.type = 'text/javascript';
+/******/ 			script.charset = 'utf-8';
+/******/ 			script.async = true;
+
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + ".bundle.js";
+/******/ 			head.appendChild(script);
+/******/ 		}
+/******/ 	};
 
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -44,43 +98,19 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vue = __webpack_require__(4);
-	var Router = __webpack_require__(72);
-
-	var App = __webpack_require__(105);
-	var HomeView = __webpack_require__(111);
-	var LoginView = __webpack_require__(115);
-
-	// Install router
-	Vue.use(Router);
-
-	// Routing
-	var router = new Router();
-
-	router.map({
-	  '/':      { component: HomeView  },
-	  '/login': { component: LoginView }
-	});
-
-	router.beforeEach(function() {
-	  window.scrollTo(0, 0);
-	});
-
-	// router.redirect({
-	//   '*': '/'
-	// });
-
-	router.start(App, '#app');
+	__webpack_require__(3);
+	__webpack_require__(71);
+	__webpack_require__(104);
+	module.exports = __webpack_require__(122);
 
 
 /***/ },
 /* 1 */,
 /* 2 */,
-/* 3 */,
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
 	var extend = _.extend
 
 	/**
@@ -105,7 +135,7 @@
 	 * Mixin global API
 	 */
 
-	extend(Vue, __webpack_require__(18))
+	extend(Vue, __webpack_require__(17))
 
 	/**
 	 * Vue and every constructor that extends Vue has an
@@ -118,9 +148,9 @@
 
 	Vue.options = {
 	  replace: true,
-	  directives: __webpack_require__(21),
-	  elementDirectives: __webpack_require__(55),
-	  filters: __webpack_require__(58),
+	  directives: __webpack_require__(20),
+	  elementDirectives: __webpack_require__(54),
+	  filters: __webpack_require__(57),
 	  transitions: {},
 	  components: {},
 	  partials: {}
@@ -152,20 +182,20 @@
 	 * Mixin internal instance methods
 	 */
 
+	extend(p, __webpack_require__(59))
 	extend(p, __webpack_require__(60))
 	extend(p, __webpack_require__(61))
-	extend(p, __webpack_require__(62))
-	extend(p, __webpack_require__(65))
-	extend(p, __webpack_require__(67))
+	extend(p, __webpack_require__(64))
+	extend(p, __webpack_require__(66))
 
 	/**
 	 * Mixin public API methods
 	 */
 
+	extend(p, __webpack_require__(67))
 	extend(p, __webpack_require__(68))
 	extend(p, __webpack_require__(69))
 	extend(p, __webpack_require__(70))
-	extend(p, __webpack_require__(71))
 
 	Vue.version = '1.0.4'
 	module.exports = _.Vue = Vue
@@ -177,10 +207,10 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -277,22 +307,22 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var lang = __webpack_require__(7)
+	var lang = __webpack_require__(6)
 	var extend = lang.extend
 
 	extend(exports, lang)
+	extend(exports, __webpack_require__(7))
 	extend(exports, __webpack_require__(8))
-	extend(exports, __webpack_require__(9))
+	extend(exports, __webpack_require__(14))
 	extend(exports, __webpack_require__(15))
 	extend(exports, __webpack_require__(16))
-	extend(exports, __webpack_require__(17))
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**
@@ -688,7 +718,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	// can we use __proto__?
@@ -779,12 +809,12 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var config = __webpack_require__(10)
-	var transition = __webpack_require__(14)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var config = __webpack_require__(9)
+	var transition = __webpack_require__(13)
 
 	/**
 	 * Query an element selector if it's not an element already.
@@ -1145,10 +1175,10 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = {
@@ -1234,7 +1264,7 @@
 
 	var delimiters = ['{{', '}}']
 	var unsafeDelimiters = ['{{{', '}}}']
-	var textParser = __webpack_require__(11)
+	var textParser = __webpack_require__(10)
 
 	Object.defineProperty(module.exports, 'delimiters', {
 	  get: function () {
@@ -1258,12 +1288,12 @@
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Cache = __webpack_require__(12)
-	var config = __webpack_require__(10)
-	var dirParser = __webpack_require__(13)
+	var Cache = __webpack_require__(11)
+	var config = __webpack_require__(9)
+	var dirParser = __webpack_require__(12)
 	var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g
 	var cache, tagRE, htmlRE
 
@@ -1424,7 +1454,7 @@
 
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports) {
 
 	/**
@@ -1542,11 +1572,11 @@
 
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var Cache = __webpack_require__(12)
+	var _ = __webpack_require__(5)
+	var Cache = __webpack_require__(11)
 	var cache = new Cache(1000)
 	var filterTokenRE = /[^\s'"]+|'[^']*'|"[^"]*"/g
 	var reservedArgRE = /^in$|^-?\d+/
@@ -1682,10 +1712,10 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	/**
 	 * Append with transition.
@@ -1767,11 +1797,11 @@
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var config = __webpack_require__(10)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var config = __webpack_require__(9)
 	var extend = _.extend
 
 	/**
@@ -2125,13 +2155,13 @@
 	    assets[camelizedId.charAt(0).toUpperCase() + camelizedId.slice(1)]
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
 
 	/**
 	 * Check if an element is a component, if yes return its
@@ -2282,10 +2312,10 @@
 	  return Object.prototype.toString.call(val).slice(8, -1)
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -2294,7 +2324,7 @@
 
 	if (process.env.NODE_ENV !== 'production') {
 
-	  var config = __webpack_require__(10)
+	  var config = __webpack_require__(9)
 	  var hasConsole = typeof console !== 'undefined'
 
 	  /**
@@ -2336,14 +2366,14 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var config = __webpack_require__(10)
+	var _ = __webpack_require__(5)
+	var config = __webpack_require__(9)
 
 	/**
 	 * Expose useful internals
@@ -2359,15 +2389,15 @@
 	 * The following are exposed for advanced usage / plugins
 	 */
 
-	exports.compiler = __webpack_require__(19)
-	exports.FragmentFactory = __webpack_require__(26)
-	exports.internalDirectives = __webpack_require__(41)
+	exports.compiler = __webpack_require__(18)
+	exports.FragmentFactory = __webpack_require__(25)
+	exports.internalDirectives = __webpack_require__(40)
 	exports.parsers = {
-	  path: __webpack_require__(48),
-	  text: __webpack_require__(11),
-	  template: __webpack_require__(24),
-	  directive: __webpack_require__(13),
-	  expression: __webpack_require__(47)
+	  path: __webpack_require__(47),
+	  text: __webpack_require__(10),
+	  template: __webpack_require__(23),
+	  directive: __webpack_require__(12),
+	  expression: __webpack_require__(46)
 	}
 
 	/**
@@ -2497,26 +2527,26 @@
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
-	_.extend(exports, __webpack_require__(20))
-	_.extend(exports, __webpack_require__(54))
+	_.extend(exports, __webpack_require__(19))
+	_.extend(exports, __webpack_require__(53))
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var publicDirectives = __webpack_require__(21)
-	var internalDirectives = __webpack_require__(41)
-	var compileProps = __webpack_require__(53)
-	var textParser = __webpack_require__(11)
-	var dirParser = __webpack_require__(13)
-	var templateParser = __webpack_require__(24)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var publicDirectives = __webpack_require__(20)
+	var internalDirectives = __webpack_require__(40)
+	var compileProps = __webpack_require__(52)
+	var textParser = __webpack_require__(10)
+	var dirParser = __webpack_require__(12)
+	var templateParser = __webpack_require__(23)
 	var resolveAsset = _.resolveAsset
 
 	// special binding prefixes
@@ -3224,43 +3254,43 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// text & html
+	exports.text = __webpack_require__(21)
+	exports.html = __webpack_require__(22)
+
+	// logic control
+	exports['for'] = __webpack_require__(24)
+	exports['if'] = __webpack_require__(27)
+	exports.show = __webpack_require__(28)
+
+	// two-way binding
+	exports.model = __webpack_require__(29)
+
+	// event handling
+	exports.on = __webpack_require__(34)
+
+	// attributes
+	exports.bind = __webpack_require__(35)
+
+	// ref & el
+	exports.el = __webpack_require__(37)
+	exports.ref = __webpack_require__(38)
+
+	// cloak
+	exports.cloak = __webpack_require__(39)
+
 
 /***/ },
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// text & html
-	exports.text = __webpack_require__(22)
-	exports.html = __webpack_require__(23)
-
-	// logic control
-	exports['for'] = __webpack_require__(25)
-	exports['if'] = __webpack_require__(28)
-	exports.show = __webpack_require__(29)
-
-	// two-way binding
-	exports.model = __webpack_require__(30)
-
-	// event handling
-	exports.on = __webpack_require__(35)
-
-	// attributes
-	exports.bind = __webpack_require__(36)
-
-	// ref & el
-	exports.el = __webpack_require__(38)
-	exports.ref = __webpack_require__(39)
-
-	// cloak
-	exports.cloak = __webpack_require__(40)
-
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	module.exports = {
 
@@ -3277,11 +3307,11 @@
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var templateParser = __webpack_require__(24)
+	var _ = __webpack_require__(5)
+	var templateParser = __webpack_require__(23)
 
 	module.exports = {
 
@@ -3323,11 +3353,11 @@
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var Cache = __webpack_require__(12)
+	var _ = __webpack_require__(5)
+	var Cache = __webpack_require__(11)
 	var templateCache = new Cache(1000)
 	var idSelectorCache = new Cache(1000)
 
@@ -3617,11 +3647,11 @@
 
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var FragmentFactory = __webpack_require__(26)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var FragmentFactory = __webpack_require__(25)
 	var isObject = _.isObject
 	var uid = 0
 
@@ -4220,17 +4250,17 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var compiler = __webpack_require__(19)
-	var templateParser = __webpack_require__(24)
-	var Fragment = __webpack_require__(27)
-	var Cache = __webpack_require__(12)
+	var _ = __webpack_require__(5)
+	var compiler = __webpack_require__(18)
+	var templateParser = __webpack_require__(23)
+	var Fragment = __webpack_require__(26)
+	var Cache = __webpack_require__(11)
 	var linkerCache = new Cache(5000)
 
 	/**
@@ -4285,11 +4315,11 @@
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var transition = __webpack_require__(14)
+	var _ = __webpack_require__(5)
+	var transition = __webpack_require__(13)
 
 	/**
 	 * Abstraction for a partially-compiled fragment.
@@ -4466,11 +4496,11 @@
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var FragmentFactory = __webpack_require__(26)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var FragmentFactory = __webpack_require__(25)
 
 	module.exports = {
 
@@ -4536,14 +4566,14 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var transition = __webpack_require__(14)
+	var _ = __webpack_require__(5)
+	var transition = __webpack_require__(13)
 
 	module.exports = {
 
@@ -4571,16 +4601,16 @@
 
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
 
 	var handlers = {
-	  text: __webpack_require__(31),
-	  radio: __webpack_require__(32),
-	  select: __webpack_require__(33),
-	  checkbox: __webpack_require__(34)
+	  text: __webpack_require__(30),
+	  radio: __webpack_require__(31),
+	  select: __webpack_require__(32),
+	  checkbox: __webpack_require__(33)
 	}
 
 	module.exports = {
@@ -4657,13 +4687,13 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	module.exports = {
 
@@ -4793,10 +4823,10 @@
 
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	module.exports = {
 
@@ -4833,10 +4863,10 @@
 
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	module.exports = {
 
@@ -4957,10 +4987,10 @@
 
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	module.exports = {
 
@@ -5025,10 +5055,10 @@
 
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
 
 	// keyCode aliases
 	var keyCodes = {
@@ -5152,13 +5182,13 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
 
 	// xlink
 	var xlinkNS = 'http://www.w3.org/1999/xlink'
@@ -5246,7 +5276,7 @@
 	  },
 
 	  // share object handler with v-bind:class
-	  handleObject: __webpack_require__(37).handleObject,
+	  handleObject: __webpack_require__(36).handleObject,
 
 	  handleSingle: function (attr, value) {
 	    if (inputProps[attr] && attr in this.el) {
@@ -5282,13 +5312,13 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 37 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 	var prefixes = ['-webkit-', '-moz-', '-ms-']
 	var camelPrefixes = ['Webkit', 'Moz', 'ms']
 	var importantRE = /!important;?$/
@@ -5398,10 +5428,10 @@
 
 
 /***/ },
-/* 38 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	module.exports = {
 
@@ -5431,13 +5461,13 @@
 
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {if (process.env.NODE_ENV !== 'production') {
 	  module.exports = {
 	    bind: function () {
-	      __webpack_require__(6).warn(
+	      __webpack_require__(5).warn(
 	        'v-ref:' + this.arg + ' must be used on a child ' +
 	        'component. Found on <' + this.el.tagName.toLowerCase() + '>.'
 	      )
@@ -5445,10 +5475,10 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -5462,21 +5492,21 @@
 
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports.style = __webpack_require__(37)
-	exports['class'] = __webpack_require__(42)
-	exports.component = __webpack_require__(43)
-	exports.prop = __webpack_require__(44)
-	exports.transition = __webpack_require__(50)
+	exports.style = __webpack_require__(36)
+	exports['class'] = __webpack_require__(41)
+	exports.component = __webpack_require__(42)
+	exports.prop = __webpack_require__(43)
+	exports.transition = __webpack_require__(49)
 
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 	var addClass = _.addClass
 	var removeClass = _.removeClass
 
@@ -5550,11 +5580,11 @@
 
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var templateParser = __webpack_require__(24)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var templateParser = __webpack_require__(23)
 
 	module.exports = {
 
@@ -5892,10 +5922,10 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// NOTE: the prop internal directive is compiled and linked
@@ -5903,9 +5933,9 @@
 	// The purpose is to make the initial prop values available
 	// inside `created` hooks and `data` functions.
 
-	var _ = __webpack_require__(6)
-	var Watcher = __webpack_require__(45)
-	var bindingModes = __webpack_require__(10)._propBindingModes
+	var _ = __webpack_require__(5)
+	var Watcher = __webpack_require__(44)
+	var bindingModes = __webpack_require__(9)._propBindingModes
 
 	module.exports = {
 
@@ -5965,14 +5995,14 @@
 
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var config = __webpack_require__(10)
-	var Dep = __webpack_require__(46)
-	var expParser = __webpack_require__(47)
-	var batcher = __webpack_require__(49)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var config = __webpack_require__(9)
+	var Dep = __webpack_require__(45)
+	var expParser = __webpack_require__(46)
+	var batcher = __webpack_require__(48)
 	var uid = 0
 
 	/**
@@ -6312,13 +6342,13 @@
 
 	module.exports = Watcher
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 	var uid = 0
 
 	/**
@@ -6382,12 +6412,12 @@
 
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var Path = __webpack_require__(48)
-	var Cache = __webpack_require__(12)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var Path = __webpack_require__(47)
+	var Cache = __webpack_require__(11)
 	var expressionCache = new Cache(1000)
 
 	var allowedKeywords =
@@ -6650,14 +6680,14 @@
 	    exp.slice(0, 5) !== 'Math.'
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var Cache = __webpack_require__(12)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var Cache = __webpack_require__(11)
 	var pathCache = new Cache(1000)
 	var identRE = exports.identRE = /^[$_a-zA-Z]+[\w$]*$/
 
@@ -7015,14 +7045,14 @@
 	  return true
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 49 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var config = __webpack_require__(10)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var config = __webpack_require__(9)
 
 	// we have two separate queues: one for directive updates
 	// and one for user watcher registered via $watch().
@@ -7127,14 +7157,14 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 50 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var Transition = __webpack_require__(51)
+	var _ = __webpack_require__(5)
+	var Transition = __webpack_require__(50)
 
 	module.exports = {
 
@@ -7156,11 +7186,11 @@
 
 
 /***/ },
-/* 51 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var queue = __webpack_require__(52)
+	var _ = __webpack_require__(5)
+	var queue = __webpack_require__(51)
 	var addClass = _.addClass
 	var removeClass = _.removeClass
 	var transitionEndEvent = _.transitionEndEvent
@@ -7529,10 +7559,10 @@
 
 
 /***/ },
-/* 52 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 	var queue = []
 	var queued = false
 
@@ -7570,17 +7600,17 @@
 
 
 /***/ },
-/* 53 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var dirParser = __webpack_require__(13)
-	var propDef = __webpack_require__(44)
-	var propBindingModes = __webpack_require__(10)._propBindingModes
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var dirParser = __webpack_require__(12)
+	var propDef = __webpack_require__(43)
+	var propBindingModes = __webpack_require__(9)._propBindingModes
 	var empty = {}
 
 	// regexes
-	var identRE = __webpack_require__(48).identRE
+	var identRE = __webpack_require__(47).identRE
 	var settablePathRE = /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*|\[[^\[\]]+\])*$/
 
 	/**
@@ -7786,14 +7816,14 @@
 	    : def
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 54 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var templateParser = __webpack_require__(24)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var templateParser = __webpack_require__(23)
 	var specialCharRE = /[^\w\-:\.]/
 
 	/**
@@ -7941,22 +7971,22 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports.slot = __webpack_require__(55)
+	exports.partial = __webpack_require__(56)
+
 
 /***/ },
 /* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports.slot = __webpack_require__(56)
-	exports.partial = __webpack_require__(57)
-
-
-/***/ },
-/* 56 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var _ = __webpack_require__(6)
-	var templateParser = __webpack_require__(24)
+	var _ = __webpack_require__(5)
+	var templateParser = __webpack_require__(23)
 
 	// This is the elementDirective that handles <content>
 	// transclusions. It relies on the raw content of an
@@ -8082,12 +8112,12 @@
 
 
 /***/ },
-/* 57 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var vIf = __webpack_require__(28)
-	var FragmentFactory = __webpack_require__(26)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var vIf = __webpack_require__(27)
+	var FragmentFactory = __webpack_require__(25)
 
 	module.exports = {
 
@@ -8129,13 +8159,13 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 58 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	/**
 	 * Stringify value.
@@ -8252,16 +8282,16 @@
 	 * Install special array filters
 	 */
 
-	_.extend(exports, __webpack_require__(59))
+	_.extend(exports, __webpack_require__(58))
 
 
 /***/ },
-/* 59 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var Path = __webpack_require__(48)
-	var toArray = __webpack_require__(25)._postProcess
+	var _ = __webpack_require__(5)
+	var Path = __webpack_require__(47)
+	var toArray = __webpack_require__(24)._postProcess
 
 	/**
 	 * Limit filter for arrays
@@ -8378,10 +8408,10 @@
 
 
 /***/ },
-/* 60 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var mergeOptions = __webpack_require__(6).mergeOptions
+	var mergeOptions = __webpack_require__(5).mergeOptions
 	var uid = 0
 
 	/**
@@ -8498,10 +8528,10 @@
 
 
 /***/ },
-/* 61 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
 	var inDoc = _.inDoc
 	var eventRE = /^v-on:|^@/
 
@@ -8665,17 +8695,17 @@
 	  this.$emit('hook:' + hook)
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 62 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var compiler = __webpack_require__(19)
-	var Observer = __webpack_require__(63)
-	var Dep = __webpack_require__(46)
-	var Watcher = __webpack_require__(45)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var compiler = __webpack_require__(18)
+	var Observer = __webpack_require__(62)
+	var Dep = __webpack_require__(45)
+	var Watcher = __webpack_require__(44)
 
 	/**
 	 * Setup the scope of an instance, which contains:
@@ -8913,15 +8943,15 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 63 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var Dep = __webpack_require__(46)
-	var arrayMethods = __webpack_require__(64)
+	var _ = __webpack_require__(5)
+	var Dep = __webpack_require__(45)
+	var arrayMethods = __webpack_require__(63)
 	var arrayKeys = Object.getOwnPropertyNames(arrayMethods)
 
 	/**
@@ -9128,10 +9158,10 @@
 
 
 /***/ },
-/* 64 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 	var arrayProto = Array.prototype
 	var arrayMethods = Object.create(arrayProto)
 
@@ -9224,12 +9254,12 @@
 
 
 /***/ },
-/* 65 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var Directive = __webpack_require__(66)
-	var compiler = __webpack_require__(19)
+	var _ = __webpack_require__(5)
+	var Directive = __webpack_require__(65)
+	var compiler = __webpack_require__(18)
 
 	/**
 	 * Transclude, compile and link element.
@@ -9445,12 +9475,12 @@
 
 
 /***/ },
-/* 66 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var Watcher = __webpack_require__(45)
-	var expParser = __webpack_require__(47)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var Watcher = __webpack_require__(44)
+	var expParser = __webpack_require__(46)
 	function noop () {}
 
 	/**
@@ -9769,13 +9799,13 @@
 
 	module.exports = Directive
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
 
 	/**
 	 * Apply a list of filter (descriptors) to a value.
@@ -9869,18 +9899,18 @@
 	  }
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 68 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var Watcher = __webpack_require__(45)
-	var Path = __webpack_require__(48)
-	var textParser = __webpack_require__(11)
-	var dirParser = __webpack_require__(13)
-	var expParser = __webpack_require__(47)
+	var _ = __webpack_require__(5)
+	var Watcher = __webpack_require__(44)
+	var Path = __webpack_require__(47)
+	var textParser = __webpack_require__(10)
+	var dirParser = __webpack_require__(12)
+	var expParser = __webpack_require__(46)
 	var filterRE = /[^|]\|[^|]/
 
 	/**
@@ -10052,11 +10082,11 @@
 
 
 /***/ },
-/* 69 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
-	var transition = __webpack_require__(14)
+	var _ = __webpack_require__(5)
+	var transition = __webpack_require__(13)
 
 	/**
 	 * Convenience on-instance nextTick. The callback is
@@ -10262,10 +10292,10 @@
 
 
 /***/ },
-/* 70 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(6)
+	var _ = __webpack_require__(5)
 
 	/**
 	 * Listen on the given `event` with `fn`.
@@ -10437,11 +10467,11 @@
 
 
 /***/ },
-/* 71 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(6)
-	var compiler = __webpack_require__(19)
+	/* WEBPACK VAR INJECTION */(function(process) {var _ = __webpack_require__(5)
+	var compiler = __webpack_require__(18)
 
 	/**
 	 * Set instance target element and kick off the compilation
@@ -10509,57 +10539,57 @@
 	  )
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 72 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _classCallCheck = __webpack_require__(73)['default'];
+	var _classCallCheck = __webpack_require__(72)['default'];
 
-	var _interopRequireDefault = __webpack_require__(74)['default'];
+	var _interopRequireDefault = __webpack_require__(73)['default'];
 
 	exports.__esModule = true;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
 	var _util2 = _interopRequireDefault(_util);
 
-	var _override = __webpack_require__(79);
+	var _override = __webpack_require__(78);
 
 	var _override2 = _interopRequireDefault(_override);
 
-	var _routeRecognizer = __webpack_require__(76);
+	var _routeRecognizer = __webpack_require__(75);
 
 	var _routeRecognizer2 = _interopRequireDefault(_routeRecognizer);
 
-	var _route = __webpack_require__(80);
+	var _route = __webpack_require__(79);
 
 	var _route2 = _interopRequireDefault(_route);
 
-	var _transition = __webpack_require__(90);
+	var _transition = __webpack_require__(89);
 
 	var _transition2 = _interopRequireDefault(_transition);
 
-	var _directivesView = __webpack_require__(100);
+	var _directivesView = __webpack_require__(99);
 
 	var _directivesView2 = _interopRequireDefault(_directivesView);
 
-	var _directivesLink = __webpack_require__(101);
+	var _directivesLink = __webpack_require__(100);
 
 	var _directivesLink2 = _interopRequireDefault(_directivesLink);
 
-	var _historyAbstract = __webpack_require__(102);
+	var _historyAbstract = __webpack_require__(101);
 
 	var _historyAbstract2 = _interopRequireDefault(_historyAbstract);
 
-	var _historyHash = __webpack_require__(103);
+	var _historyHash = __webpack_require__(102);
 
 	var _historyHash2 = _interopRequireDefault(_historyHash);
 
-	var _historyHtml5 = __webpack_require__(104);
+	var _historyHtml5 = __webpack_require__(103);
 
 	var _historyHtml52 = _interopRequireDefault(_historyHtml5);
 
@@ -11149,7 +11179,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 73 */
+/* 72 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11163,7 +11193,7 @@
 	exports.__esModule = true;
 
 /***/ },
-/* 74 */
+/* 73 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11177,12 +11207,12 @@
 	exports.__esModule = true;
 
 /***/ },
-/* 75 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _interopRequireDefault = __webpack_require__(74)['default'];
+	var _interopRequireDefault = __webpack_require__(73)['default'];
 
 	exports.__esModule = true;
 	exports.warn = warn;
@@ -11192,7 +11222,7 @@
 	exports.resolveAsyncComponent = resolveAsyncComponent;
 	exports.mapParams = mapParams;
 
-	var _routeRecognizer = __webpack_require__(76);
+	var _routeRecognizer = __webpack_require__(75);
 
 	var _routeRecognizer2 = _interopRequireDefault(_routeRecognizer);
 
@@ -11344,7 +11374,7 @@
 	}
 
 /***/ },
-/* 76 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {(function() {
@@ -11990,7 +12020,7 @@
 	    var $$route$recognizer$$default = $$route$recognizer$$RouteRecognizer;
 
 	    /* global define:true module:true window: true */
-	    if ("function" === 'function' && __webpack_require__(78)['amd']) {
+	    if ("function" === 'function' && __webpack_require__(77)['amd']) {
 	      !(__WEBPACK_AMD_DEFINE_RESULT__ = function() { return $$route$recognizer$$default; }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof module !== 'undefined' && module['exports']) {
 	      module['exports'] = $$route$recognizer$$default;
@@ -12000,10 +12030,10 @@
 	}).call(this);
 
 	//# sourceMappingURL=route-recognizer.js.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(77)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(76)(module)))
 
 /***/ },
-/* 77 */
+/* 76 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -12019,14 +12049,14 @@
 
 
 /***/ },
-/* 78 */
+/* 77 */
 /***/ function(module, exports) {
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
 
 /***/ },
-/* 79 */
+/* 78 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -12098,14 +12128,14 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 80 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _classCallCheck = __webpack_require__(73)["default"];
+	var _classCallCheck = __webpack_require__(72)["default"];
 
-	var _Object$freeze = __webpack_require__(81)["default"];
+	var _Object$freeze = __webpack_require__(80)["default"];
 
 	exports.__esModule = true;
 	var internalKeysRE = /^(component|subRoutes)$/;
@@ -12156,33 +12186,33 @@
 	module.exports = exports["default"];
 
 /***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(81), __esModule: true };
+
+/***/ },
 /* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(82), __esModule: true };
+	__webpack_require__(82);
+	module.exports = __webpack_require__(87).Object.freeze;
 
 /***/ },
 /* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(83);
-	module.exports = __webpack_require__(88).Object.freeze;
-
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// 19.1.2.5 Object.freeze(O)
-	var isObject = __webpack_require__(84);
+	var isObject = __webpack_require__(83);
 
-	__webpack_require__(85)('freeze', function($freeze){
+	__webpack_require__(84)('freeze', function($freeze){
 	  return function freeze(it){
 	    return $freeze && isObject(it) ? $freeze(it) : it;
 	  };
 	});
 
 /***/ },
-/* 84 */
+/* 83 */
 /***/ function(module, exports) {
 
 	module.exports = function(it){
@@ -12190,15 +12220,15 @@
 	};
 
 /***/ },
-/* 85 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
-	var $def  = __webpack_require__(86)
-	  , core  = __webpack_require__(88)
-	  , fails = __webpack_require__(89);
+	var $def  = __webpack_require__(85)
+	  , core  = __webpack_require__(87)
+	  , fails = __webpack_require__(88);
 	module.exports = function(KEY, exec){
-	  var $def = __webpack_require__(86)
+	  var $def = __webpack_require__(85)
 	    , fn   = (core.Object || {})[KEY] || Object[KEY]
 	    , exp  = {};
 	  exp[KEY] = exec(fn);
@@ -12206,11 +12236,11 @@
 	};
 
 /***/ },
-/* 86 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global    = __webpack_require__(87)
-	  , core      = __webpack_require__(88)
+	var global    = __webpack_require__(86)
+	  , core      = __webpack_require__(87)
 	  , PROTOTYPE = 'prototype';
 	var ctx = function(fn, that){
 	  return function(){
@@ -12258,7 +12288,7 @@
 	module.exports = $def;
 
 /***/ },
-/* 87 */
+/* 86 */
 /***/ function(module, exports) {
 
 	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -12267,14 +12297,14 @@
 	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 
 /***/ },
-/* 88 */
+/* 87 */
 /***/ function(module, exports) {
 
 	var core = module.exports = {version: '1.2.4'};
 	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ },
-/* 89 */
+/* 88 */
 /***/ function(module, exports) {
 
 	module.exports = function(exec){
@@ -12286,18 +12316,18 @@
 	};
 
 /***/ },
-/* 90 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _classCallCheck = __webpack_require__(73)['default'];
+	var _classCallCheck = __webpack_require__(72)['default'];
 
 	exports.__esModule = true;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
-	var _pipeline = __webpack_require__(91);
+	var _pipeline = __webpack_require__(90);
 
 	/**
 	 * A RouteTransition object manages the pipeline of a
@@ -12619,14 +12649,14 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 91 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _Object$keys = __webpack_require__(92)['default'];
+	var _Object$keys = __webpack_require__(91)['default'];
 
-	var _Object$create = __webpack_require__(97)['default'];
+	var _Object$create = __webpack_require__(96)['default'];
 
 	exports.__esModule = true;
 	exports.canReuse = canReuse;
@@ -12636,7 +12666,7 @@
 	exports.activate = activate;
 	exports.reuse = reuse;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
 	/**
 	 * Determine the reusability of an existing router view.
@@ -12942,43 +12972,43 @@
 	}
 
 /***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(92), __esModule: true };
+
+/***/ },
 /* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(93), __esModule: true };
+	__webpack_require__(93);
+	module.exports = __webpack_require__(87).Object.keys;
 
 /***/ },
 /* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(94);
-	module.exports = __webpack_require__(88).Object.keys;
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// 19.1.2.14 Object.keys(O)
-	var toObject = __webpack_require__(95);
+	var toObject = __webpack_require__(94);
 
-	__webpack_require__(85)('keys', function($keys){
+	__webpack_require__(84)('keys', function($keys){
 	  return function keys(it){
 	    return $keys(toObject(it));
 	  };
 	});
 
 /***/ },
-/* 95 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.1.13 ToObject(argument)
-	var defined = __webpack_require__(96);
+	var defined = __webpack_require__(95);
 	module.exports = function(it){
 	  return Object(defined(it));
 	};
 
 /***/ },
-/* 96 */
+/* 95 */
 /***/ function(module, exports) {
 
 	// 7.2.1 RequireObjectCoercible(argument)
@@ -12988,22 +13018,22 @@
 	};
 
 /***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(97), __esModule: true };
+
+/***/ },
 /* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(98), __esModule: true };
-
-/***/ },
-/* 98 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(99);
+	var $ = __webpack_require__(98);
 	module.exports = function create(P, D){
 	  return $.create(P, D);
 	};
 
 /***/ },
-/* 99 */
+/* 98 */
 /***/ function(module, exports) {
 
 	var $Object = Object;
@@ -13021,16 +13051,16 @@
 	};
 
 /***/ },
-/* 100 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
-	var _pipeline = __webpack_require__(91);
+	var _pipeline = __webpack_require__(90);
 
 	exports['default'] = function (Vue) {
 
@@ -13102,14 +13132,14 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 101 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
 	var trailingSlashRE = /\/$/;
 	var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g;
@@ -13242,16 +13272,16 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 102 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _classCallCheck = __webpack_require__(73)['default'];
+	var _classCallCheck = __webpack_require__(72)['default'];
 
 	exports.__esModule = true;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
 	var AbstractHistory = (function () {
 	  function AbstractHistory(_ref) {
@@ -13287,16 +13317,16 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 103 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _classCallCheck = __webpack_require__(73)['default'];
+	var _classCallCheck = __webpack_require__(72)['default'];
 
 	exports.__esModule = true;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
 	var HashHistory = (function () {
 	  function HashHistory(_ref) {
@@ -13356,16 +13386,16 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 104 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _classCallCheck = __webpack_require__(73)['default'];
+	var _classCallCheck = __webpack_require__(72)['default'];
 
 	exports.__esModule = true;
 
-	var _util = __webpack_require__(75);
+	var _util = __webpack_require__(74);
 
 	var hashRE = /#.*$/;
 
@@ -13449,562 +13479,1768 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 105 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(106)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(110)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue"], function () {
-	var newOptions = null
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
+	/**
+	 * Install plugin.
+	 */
+
+	function install(Vue) {
+
+	    var _ = __webpack_require__(105)(Vue);
+
+	    Vue.url = __webpack_require__(106)(_);
+	    Vue.http = __webpack_require__(107)(_);
+	    Vue.resource = __webpack_require__(111)(_);
+
+	    Object.defineProperties(Vue.prototype, {
+
+	        $url: {
+	            get: function () {
+	                return this._url || (this._url = _.options(Vue.url, this, this.$options.url));
+	            }
+	        },
+
+	        $http: {
+	            get: function () {
+	                return this._http || (this._http = _.options(Vue.http, this, this.$options.http));
+	            }
+	        },
+
+	        $resource: {
+	            get: function () {
+	                return Vue.resource.bind(this);
+	            }
+	        }
+
+	    });
 	}
+
+	if (window.Vue) {
+	    Vue.use(install);
+	}
+
+	module.exports = install;
+
+/***/ },
+/* 105 */
+/***/ function(module, exports) {
+
+	/**
+	 * Utility functions.
+	 */
+
+	module.exports = function (Vue) {
+
+	    var _ = Vue.util.extend({}, Vue.util);
+
+	    _.isString = function (value) {
+	        return typeof value === 'string';
+	    };
+
+	    _.isFunction = function (value) {
+	        return typeof value === 'function';
+	    };
+
+	    _.options = function (fn, obj, options) {
+
+	        options = options || {};
+
+	        if (_.isFunction(options)) {
+	            options = options.call(obj);
+	        }
+
+	        return _.extend(fn.bind({vm: obj, options: options}), fn, {options: options});
+	    };
+
+	    _.each = function (obj, iterator) {
+
+	        var i, key;
+
+	        if (typeof obj.length == 'number') {
+	            for (i = 0; i < obj.length; i++) {
+	                iterator.call(obj[i], obj[i], i);
+	            }
+	        } else if (_.isObject(obj)) {
+	            for (key in obj) {
+	                if (obj.hasOwnProperty(key)) {
+	                    iterator.call(obj[key], obj[key], key);
+	                }
+	            }
+	        }
+
+	        return obj;
+	    };
+
+	    _.extend = function (target) {
+
+	        var array = [], args = array.slice.call(arguments, 1), deep;
+
+	        if (typeof target == 'boolean') {
+	            deep = target;
+	            target = args.shift();
+	        }
+
+	        args.forEach(function (arg) {
+	            extend(target, arg, deep);
+	        });
+
+	        return target;
+	    };
+
+	    function extend(target, source, deep) {
+	        for (var key in source) {
+	            if (deep && (_.isPlainObject(source[key]) || _.isArray(source[key]))) {
+	                if (_.isPlainObject(source[key]) && !_.isPlainObject(target[key])) {
+	                    target[key] = {};
+	                }
+	                if (_.isArray(source[key]) && !_.isArray(target[key])) {
+	                    target[key] = [];
+	                }
+	                extend(target[key], source[key], deep);
+	            } else if (source[key] !== undefined) {
+	                target[key] = source[key];
+	            }
+	        }
+	    }
+
+	    return _;
+	};
+
 
 /***/ },
 /* 106 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
+	/**
+	 * Service for URL templating.
+	 */
 
-	// load the styles
-	var content = __webpack_require__(107);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(109)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	var ie = document.documentMode;
+	var el = document.createElement('a');
+
+	module.exports = function (_) {
+
+	    function Url(url, params) {
+
+	        var urlParams = {}, queryParams = {}, options = url, query;
+
+	        if (!_.isPlainObject(options)) {
+	            options = {url: url, params: params};
+	        }
+
+	        options = _.extend(true, {},
+	            Url.options, this.options, options
+	        );
+
+	        url = options.url.replace(/(\/?):([a-z]\w*)/gi, function (match, slash, name) {
+
+	            if (options.params[name]) {
+	                urlParams[name] = true;
+	                return slash + encodeUriSegment(options.params[name]);
+	            }
+
+	            return '';
+	        });
+
+	        if (_.isString(options.root) && !url.match(/^(https?:)?\//)) {
+	            url = options.root + '/' + url;
+	        }
+
+	        _.each(options.params, function (value, key) {
+	            if (!urlParams[key]) {
+	                queryParams[key] = value;
+	            }
+	        });
+
+	        query = Url.params(queryParams);
+
+	        if (query) {
+	            url += (url.indexOf('?') == -1 ? '?' : '&') + query;
+	        }
+
+	        return url;
+	    }
+
+	    /**
+	     * Url options.
+	     */
+
+	    Url.options = {
+	        url: '',
+	        root: null,
+	        params: {}
+	    };
+
+	    /**
+	     * Encodes a Url parameter string.
+	     *
+	     * @param {Object} obj
+	     */
+
+	    Url.params = function (obj) {
+
+	        var params = [];
+
+	        params.add = function (key, value) {
+
+	            if (_.isFunction (value)) {
+	                value = value();
+	            }
+
+	            if (value === null) {
+	                value = '';
+	            }
+
+	            this.push(encodeUriSegment(key) + '=' + encodeUriSegment(value));
+	        };
+
+	        serialize(params, obj);
+
+	        return params.join('&');
+	    };
+
+	    /**
+	     * Parse a URL and return its components.
+	     *
+	     * @param {String} url
+	     */
+
+	    Url.parse = function (url) {
+
+	        if (ie) {
+	            el.href = url;
+	            url = el.href;
+	        }
+
+	        el.href = url;
+
+	        return {
+	            href: el.href,
+	            protocol: el.protocol ? el.protocol.replace(/:$/, '') : '',
+	            port: el.port,
+	            host: el.host,
+	            hostname: el.hostname,
+	            pathname: el.pathname.charAt(0) === '/' ? el.pathname : '/' + el.pathname,
+	            search: el.search ? el.search.replace(/^\?/, '') : '',
+	            hash: el.hash ? el.hash.replace(/^#/, '') : ''
+	        };
+	    };
+
+	    function serialize(params, obj, scope) {
+
+	        var array = _.isArray(obj), plain = _.isPlainObject(obj), hash;
+
+	        _.each(obj, function (value, key) {
+
+	            hash = _.isObject(value) || _.isArray(value);
+
+	            if (scope) {
+	                key = scope + '[' + (plain || hash ? key : '') + ']';
+	            }
+
+	            if (!scope && array) {
+	                params.add(value.name, value.value);
+	            } else if (hash) {
+	                serialize(params, value, key);
+	            } else {
+	                params.add(key, value);
+	            }
+	        });
+	    }
+
+	    function encodeUriSegment(value) {
+
+	        return encodeUriQuery(value, true).
+	            replace(/%26/gi, '&').
+	            replace(/%3D/gi, '=').
+	            replace(/%2B/gi, '+');
+	    }
+
+	    function encodeUriQuery(value, spaces) {
+
+	        return encodeURIComponent(value).
+	            replace(/%40/gi, '@').
+	            replace(/%3A/gi, ':').
+	            replace(/%24/g, '$').
+	            replace(/%2C/gi, ',').
+	            replace(/%20/g, (spaces ? '%20' : '+'));
+	    }
+
+	    return _.url = Url;
+	};
+
 
 /***/ },
 /* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(108)();
-	// imports
+	/**
+	 * Service for sending network requests.
+	 */
 
+	var xhr = __webpack_require__(108);
+	var jsonp = __webpack_require__(110);
+	var Promise = __webpack_require__(109);
 
-	// module
-	exports.push([module.id, "body {\n  background-color: #e8e9eb; }\n", ""]);
+	module.exports = function (_) {
 
-	// exports
+	    var originUrl = _.url.parse(location.href);
+	    var jsonType = {'Content-Type': 'application/json;charset=utf-8'};
+
+	    function Http(url, options) {
+
+	        var promise;
+
+	        if (_.isPlainObject(url)) {
+	            options = url;
+	            url = '';
+	        }
+
+	        options = _.extend({url: url}, options);
+	        options = _.extend(true, {},
+	            Http.options, this.options, options
+	        );
+
+	        if (options.crossOrigin === null) {
+	            options.crossOrigin = crossOrigin(options.url);
+	        }
+
+	        options.method = options.method.toUpperCase();
+	        options.headers = _.extend({}, Http.headers.common,
+	            !options.crossOrigin ? Http.headers.custom : {},
+	            Http.headers[options.method.toLowerCase()],
+	            options.headers
+	        );
+
+	        if (_.isPlainObject(options.data) && /^(GET|JSONP)$/i.test(options.method)) {
+	            _.extend(options.params, options.data);
+	            delete options.data;
+	        }
+
+	        if (options.emulateHTTP && !options.crossOrigin && /^(PUT|PATCH|DELETE)$/i.test(options.method)) {
+	            options.headers['X-HTTP-Method-Override'] = options.method;
+	            options.method = 'POST';
+	        }
+
+	        if (options.emulateJSON && _.isPlainObject(options.data)) {
+	            options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+	            options.data = _.url.params(options.data);
+	        }
+
+	        if (_.isObject(options.data) && /FormData/i.test(options.data.toString())) {
+	            delete options.headers['Content-Type'];
+	        }
+
+	        if (_.isPlainObject(options.data)) {
+	            options.data = JSON.stringify(options.data);
+	        }
+
+	        promise = (options.method == 'JSONP' ? jsonp : xhr).call(this.vm, _, options);
+	        promise = extendPromise(promise.then(transformResponse, transformResponse), this.vm);
+
+	        if (options.success) {
+	            promise = promise.success(options.success);
+	        }
+
+	        if (options.error) {
+	            promise = promise.error(options.error);
+	        }
+
+	        return promise;
+	    }
+
+	    function extendPromise(promise, vm) {
+
+	        promise.success = function (fn) {
+
+	            return extendPromise(promise.then(function (response) {
+	                return fn.call(vm, response.data, response.status, response) || response;
+	            }), vm);
+
+	        };
+
+	        promise.error = function (fn) {
+
+	            return extendPromise(promise.then(undefined, function (response) {
+	                return fn.call(vm, response.data, response.status, response) || response;
+	            }), vm);
+
+	        };
+
+	        promise.always = function (fn) {
+
+	            var cb = function (response) {
+	                return fn.call(vm, response.data, response.status, response) || response;
+	            };
+
+	            return extendPromise(promise.then(cb, cb), vm);
+	        };
+
+	        return promise;
+	    }
+
+	    function transformResponse(response) {
+
+	        try {
+	            response.data = JSON.parse(response.responseText);
+	        } catch (e) {
+	            response.data = response.responseText;
+	        }
+
+	        return response.ok ? response : Promise.reject(response);
+	    }
+
+	    function crossOrigin(url) {
+
+	        var requestUrl = _.url.parse(url);
+
+	        return (requestUrl.protocol !== originUrl.protocol || requestUrl.host !== originUrl.host);
+	    }
+
+	    Http.options = {
+	        method: 'get',
+	        params: {},
+	        data: '',
+	        xhr: null,
+	        jsonp: 'callback',
+	        beforeSend: null,
+	        crossOrigin: null,
+	        emulateHTTP: false,
+	        emulateJSON: false
+	    };
+
+	    Http.headers = {
+	        put: jsonType,
+	        post: jsonType,
+	        patch: jsonType,
+	        delete: jsonType,
+	        common: {'Accept': 'application/json, text/plain, */*'},
+	        custom: {'X-Requested-With': 'XMLHttpRequest'}
+	    };
+
+	    ['get', 'put', 'post', 'patch', 'delete', 'jsonp'].forEach(function (method) {
+
+	        Http[method] = function (url, data, success, options) {
+
+	            if (_.isFunction(data)) {
+	                options = success;
+	                success = data;
+	                data = undefined;
+	            }
+
+	            return this(url, _.extend({method: method, data: data, success: success}, options));
+	        };
+	    });
+
+	    return _.http = Http;
+	};
 
 
 /***/ },
 /* 108 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
+	/**
+	 * XMLHttp request.
+	 */
 
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
+	var Promise = __webpack_require__(109);
+	var XDomain = window.XDomainRequest;
 
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
+	module.exports = function (_, options) {
+
+	    var request = new XMLHttpRequest(), promise;
+
+	    if (XDomain && options.crossOrigin) {
+	        request = new XDomainRequest(); options.headers = {};
+	    }
+
+	    if (_.isPlainObject(options.xhr)) {
+	        _.extend(request, options.xhr);
+	    }
+
+	    if (_.isFunction(options.beforeSend)) {
+	        options.beforeSend.call(this, request, options);
+	    }
+
+	    promise = new Promise(function (resolve, reject) {
+
+	        request.open(options.method, _.url(options), true);
+
+	        _.each(options.headers, function (value, header) {
+	            request.setRequestHeader(header, value);
+	        });
+
+	        var handler = function (event) {
+
+	            request.ok = event.type === 'load';
+
+	            if (request.ok && request.status) {
+	                request.ok = request.status >= 200 && request.status < 300;
+	            }
+
+	            (request.ok ? resolve : reject)(request);
+	        };
+
+	        request.onload = handler;
+	        request.onabort = handler;
+	        request.onerror = handler;
+
+	        request.send(options.data);
+	    });
+
+	    return promise;
 	};
 
 
 /***/ },
 /* 109 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
+	/**
+	 * Promises/A+ polyfill v1.1.0 (https://github.com/bramstein/promis)
+	 */
 
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
+	var RESOLVED = 0;
+	var REJECTED = 1;
+	var PENDING  = 2;
 
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	function Promise(executor) {
 
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+	    this.state = PENDING;
+	    this.value = undefined;
+	    this.deferred = [];
 
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
+	    var promise = this;
 
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
+	    try {
+	        executor(function (x) {
+	            promise.resolve(x);
+	        }, function (r) {
+	            promise.reject(r);
+	        });
+	    } catch (e) {
+	        promise.reject(e);
+	    }
 	}
 
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
+	Promise.reject = function (r) {
+	    return new Promise(function (resolve, reject) {
+	        reject(r);
+	    });
+	};
+
+	Promise.resolve = function (x) {
+	    return new Promise(function (resolve, reject) {
+	        resolve(x);
+	    });
+	};
+
+	Promise.all = function all(iterable) {
+	    return new Promise(function (resolve, reject) {
+	        var count = 0,
+	            result = [];
+
+	        if (iterable.length === 0) {
+	            resolve(result);
+	        }
+
+	        function resolver(i) {
+	            return function (x) {
+	                result[i] = x;
+	                count += 1;
+
+	                if (count === iterable.length) {
+	                    resolve(result);
+	                }
+	            };
+	        }
+
+	        for (var i = 0; i < iterable.length; i += 1) {
+	            iterable[i].then(resolver(i), reject);
+	        }
+	    });
+	};
+
+	Promise.race = function race(iterable) {
+	    return new Promise(function (resolve, reject) {
+	        for (var i = 0; i < iterable.length; i += 1) {
+	            iterable[i].then(resolve, reject);
+	        }
+	    });
+	};
+
+	var p = Promise.prototype;
+
+	p.resolve = function resolve(x) {
+	    var promise = this;
+
+	    if (promise.state === PENDING) {
+	        if (x === promise) {
+	            throw new TypeError('Promise settled with itself.');
+	        }
+
+	        var called = false;
+
+	        try {
+	            var then = x && x['then'];
+
+	            if (x !== null && typeof x === 'object' && typeof then === 'function') {
+	                then.call(x, function (x) {
+	                    if (!called) {
+	                        promise.resolve(x);
+	                    }
+	                    called = true;
+
+	                }, function (r) {
+	                    if (!called) {
+	                        promise.reject(r);
+	                    }
+	                    called = true;
+	                });
+	                return;
+	            }
+	        } catch (e) {
+	            if (!called) {
+	                promise.reject(e);
+	            }
+	            return;
+	        }
+	        promise.state = RESOLVED;
+	        promise.value = x;
+	        promise.notify();
+	    }
+	};
+
+	p.reject = function reject(reason) {
+	    var promise = this;
+
+	    if (promise.state === PENDING) {
+	        if (reason === promise) {
+	            throw new TypeError('Promise settled with itself.');
+	        }
+
+	        promise.state = REJECTED;
+	        promise.value = reason;
+	        promise.notify();
+	    }
+	};
+
+	p.notify = function notify() {
+	    var promise = this;
+
+	    async(function () {
+	        if (promise.state !== PENDING) {
+	            while (promise.deferred.length) {
+	                var deferred = promise.deferred.shift(),
+	                    onResolved = deferred[0],
+	                    onRejected = deferred[1],
+	                    resolve = deferred[2],
+	                    reject = deferred[3];
+
+	                try {
+	                    if (promise.state === RESOLVED) {
+	                        if (typeof onResolved === 'function') {
+	                            resolve(onResolved.call(undefined, promise.value));
+	                        } else {
+	                            resolve(promise.value);
+	                        }
+	                    } else if (promise.state === REJECTED) {
+	                        if (typeof onRejected === 'function') {
+	                            resolve(onRejected.call(undefined, promise.value));
+	                        } else {
+	                            reject(promise.value);
+	                        }
+	                    }
+	                } catch (e) {
+	                    reject(e);
+	                }
+	            }
+	        }
+	    });
+	};
+
+	p.catch = function (onRejected) {
+	    return this.then(undefined, onRejected);
+	};
+
+	p.then = function then(onResolved, onRejected) {
+	    var promise = this;
+
+	    return new Promise(function (resolve, reject) {
+	        promise.deferred.push([onResolved, onRejected, resolve, reject]);
+	        promise.notify();
+	    });
+	};
+
+	var queue = [];
+	var async = function (callback) {
+	    queue.push(callback);
+
+	    if (queue.length === 1) {
+	        async.async();
+	    }
+	};
+
+	async.run = function () {
+	    while (queue.length) {
+	        queue[0]();
+	        queue.shift();
+	    }
+	};
+
+	if (window.MutationObserver) {
+	    var el = document.createElement('div');
+	    var mo = new MutationObserver(async.run);
+
+	    mo.observe(el, {
+	        attributes: true
+	    });
+
+	    async.async = function () {
+	        el.setAttribute("x", 0);
+	    };
+	} else {
+	    async.async = function () {
+	        setTimeout(async.run);
+	    };
 	}
 
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-
-		update(obj);
-
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-
-	var replaceText = (function () {
-		var textStore = [];
-
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		var blob = new Blob([css], { type: "text/css" });
-
-		var oldSrc = linkElement.href;
-
-		linkElement.href = URL.createObjectURL(blob);
-
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
+	module.exports = window.Promise || Promise;
 
 
 /***/ },
 /* 110 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<router-view></router-view>";
+	/**
+	 * JSONP request.
+	 */
+
+	var Promise = __webpack_require__(109);
+
+	module.exports = function (_, options) {
+
+	    var callback = '_jsonp' + Math.random().toString(36).substr(2), response = {}, script, body;
+
+	    options.params[options.jsonp] = callback;
+
+	    if (_.isFunction(options.beforeSend)) {
+	        options.beforeSend.call(this, {}, options);
+	    }
+
+	    return new Promise(function (resolve, reject) {
+
+	        script = document.createElement('script');
+	        script.src = _.url(options);
+	        script.type = 'text/javascript';
+	        script.async = true;
+
+	        window[callback] = function (data) {
+	            body = data;
+	        };
+
+	        var handler = function (event) {
+
+	            delete window[callback];
+	            document.body.removeChild(script);
+
+	            if (event.type === 'load' && !body) {
+	                event.type = 'error';
+	            }
+
+	            response.ok = event.type !== 'error';
+	            response.status = response.ok ? 200 : 404;
+	            response.responseText = body ? body : event.type;
+
+	            (response.ok ? resolve : reject)(response);
+	        };
+
+	        script.onload = handler;
+	        script.onerror = handler;
+
+	        document.body.appendChild(script);
+	    });
+
+	};
+
 
 /***/ },
 /* 111 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(112)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(114)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./HomeView.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./HomeView.vue"], function () {
-	var newOptions = null
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./HomeView.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
-
-/***/ },
-/* 112 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(113);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(109)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./HomeView.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./HomeView.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 113 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(108)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".home {\n  max-width: 792px; }\n  .home img {\n    margin-top: 162px;\n    margin-bottom: 80px; }\n  .home .page-corner {\n    position: absolute;\n    right: 0;\n    top: 0;\n    width: 45px;\n    height: 45px;\n    border-left: solid 45px transparent;\n    border-top: solid 45px transparent; }\n    .home .page-corner:hover {\n      border-left: solid 45px transparent;\n      border-top: solid 45px #3f3a39;\n      cursor: pointer; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 114 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"home am-container am-text-center\"><img src=\"/title.png\" alt=\"个人博物馆\" class=\"am-center am-img-responsive\"/><p>物的意义由人来完整，<br/>人的志趣由物来体现。</p><p>Wù『个人博物馆』是一个新型的博物馆，讲述个人与物品的情感故事。<br/>人们建立自己的博物馆，浏览他人的博物馆。从而感知自身与他人的成长，了解物背后丰富的情感故事。</p><p>在这里，探索隐匿在时光里的珍贵物品，发现平凡中的感动，感受生活中的温热。</p><div v-link=\"{ path: '/login' }\" class=\"page-corner\"></div></div>";
+	/**
+	 * Service for interacting with RESTful services.
+	 */
 
-/***/ },
-/* 115 */
-/***/ function(module, exports, __webpack_require__) {
+	module.exports = function (_) {
 
-	__webpack_require__(116)
-	module.exports = __webpack_require__(118)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(119)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./LoginView.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./LoginView.vue","-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./LoginView.vue"], function () {
-	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./LoginView.vue")
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./LoginView.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	    function Resource(url, params, actions) {
 
-/***/ },
-/* 116 */
-/***/ function(module, exports, __webpack_require__) {
+	        var self = this, resource = {};
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
+	        actions = _.extend({},
+	            Resource.actions,
+	            actions
+	        );
 
-	// load the styles
-	var content = __webpack_require__(117);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(109)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./LoginView.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./LoginView.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	        _.each(actions, function (action, name) {
 
-/***/ },
-/* 117 */
-/***/ function(module, exports, __webpack_require__) {
+	            action = _.extend(true, {url: url, params: params || {}}, action);
 
-	exports = module.exports = __webpack_require__(108)();
-	// imports
+	            resource[name] = function () {
+	                return (self.$http || _.http)(opts(action, arguments));
+	            };
+	        });
 
+	        return resource;
+	    }
 
-	// module
-	exports.push([module.id, ".login {\n  margin-top: 162px; }\n", ""]);
+	    function opts(action, args) {
 
-	// exports
+	        var options = _.extend({}, action), params = {}, data, success, error;
 
+	        switch (args.length) {
 
-/***/ },
-/* 118 */
-/***/ function(module, exports) {
+	            case 4:
 
-	'use strict';
+	                error = args[3];
+	                success = args[2];
 
-	exports.__esModule = true;
-	exports['default'] = {
-	  data: function data() {
-	    return {
-	      username: '',
-	      password: '',
-	      usernameClass: '',
-	      passwordClass: ''
+	            case 3:
+	            case 2:
+
+	                if (_.isFunction(args[1])) {
+
+	                    if (_.isFunction(args[0])) {
+
+	                        success = args[0];
+	                        error = args[1];
+
+	                        break;
+	                    }
+
+	                    success = args[1];
+	                    error = args[2];
+
+	                } else {
+
+	                    params = args[0];
+	                    data = args[1];
+	                    success = args[2];
+
+	                    break;
+	                }
+
+	            case 1:
+
+	                if (_.isFunction(args[0])) {
+	                    success = args[0];
+	                } else if (/^(POST|PUT|PATCH)$/i.test(options.method)) {
+	                    data = args[0];
+	                } else {
+	                    params = args[0];
+	                }
+
+	                break;
+
+	            case 0:
+
+	                break;
+
+	            default:
+
+	                throw 'Expected up to 4 arguments [params, data, success, error], got ' + args.length + ' arguments';
+	        }
+
+	        options.data = data;
+	        options.params = _.extend({}, options.params, params);
+
+	        if (success) {
+	            options.success = success;
+	        }
+
+	        if (error) {
+	            options.error = error;
+	        }
+
+	        return options;
+	    }
+
+	    Resource.actions = {
+
+	        get: {method: 'GET'},
+	        save: {method: 'POST'},
+	        query: {method: 'GET'},
+	        update: {method: 'PUT'},
+	        remove: {method: 'DELETE'},
+	        delete: {method: 'DELETE'}
+
 	    };
-	  },
-	  methods: {
-	    focus: function focus(ele) {
-	      $(this.$el).find(ele)[0].focus();
-	    },
-	    valid: function valid() {
-	      var rtn = true;
 
-	      if (this.username === '') {
-	        rtn = false;
-	        this.usernameClass = 'am-form-error';
-	      } else {
-	        this.usernameClass = 'am-form-success';
+	    return _.resource = Resource;
+	};
+
+
+/***/ },
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Import(s)
+	 */
+
+	var validates = __webpack_require__(123)
+	var _ = __webpack_require__(124)
+
+
+	/**
+	 * Export(s)
+	 */
+
+	module.exports = install
+
+
+	/**
+	 * Install plugin
+	 */
+
+	function install (Vue, options) {
+	  options = options || {}
+	  var componentName = options.component = options.component || '$validator'
+	  var directiveName = options.directive = options.directive || 'validate'
+	  var path = Vue.parsers.path
+	  var util = Vue.util
+
+
+	  // custom validators merge strategy setting
+	  Vue.config.optionMergeStrategies.validator = function (parent, child, vm, k) {
+	    var validatorOptions = { validates: {}, namespace: {} }
+	    if (!parent && !child) {
+	      return validatorOptions
+	    } else if (!parent && child) {
+	      util.extend(validatorOptions['validates'], child['validates'])
+	      util.extend(validatorOptions['namespace'], child['namespace'])
+	      return validatorOptions
+	    } else if (parent && !child) {
+	      util.extend(validatorOptions['validates'], parent['validates'])
+	      util.extend(validatorOptions['namespace'], parent['namespace'])
+	      return validatorOptions
+	    } else if (parent && child) {
+	      var key
+	      if ('validates' in parent) {
+	        util.extend(validatorOptions['validates'], parent['validates'])
 	      }
-
-	      if (this.password === '') {
-	        rtn = false;
-	        this.passwordClass = 'am-form-error';
-	      } else {
-	        this.passwordClass = 'am-form-success';
+	      if ('namespace' in parent) {
+	        util.extend(validatorOptions['namespace'], parent['namespace'])
 	      }
-
-	      return rtn;
-	    },
-	    login: function login() {
-	      alert(this.username + ' ' + this.password);
+	      if ('validates' in child) {
+	        for (key in child['validates']) {
+	          if ('validates' in parent && !parent['validates'].hasOwnProperty(key)) {
+	            validatorOptions['validates'][key] = child['validates'][key]
+	          }
+	        }
+	      }
+	      if ('namespace' in child) {
+	        for (key in child['namespace']) {
+	          if ('namespace' in parent && !parent['namespace'].hasOwnProperty(key)) {
+	            validatorOptions['namespace'][key] = child['namespace'][key]
+	          }
+	        }
+	      }
+	      return validatorOptions
+	    } else {
+	      _.warn('unexpected validator option merge strategy')
+	      return validatorOptions
 	    }
 	  }
-	};
-	module.exports = exports['default'];
+
+
+	  function getVal (obj, keypath) {
+	    var ret = null
+	    try {
+	      ret = path.get(obj, keypath)
+	    } catch (e) { }
+	    return ret
+	  }
+
+
+	  Vue.directive(directiveName, {
+
+	    priority: 1024,
+
+	    bind: function () {
+	      var vm = this.vm
+	      var el = this.el
+	      var $validator = vm[componentName]
+	      var keypath = this._keypath = this._parseModelAttribute(el.getAttribute(Vue.config.prefix + 'model'))
+	      var validator = this.arg ? this.arg : this.expression
+	      var arg = this.arg ? this.expression : null
+
+	      var customs = _.getCustomValidators(vm.$options)
+	      if (!this._checkValidator(validator, validates, customs)) {
+	        _.warn("specified invalid '"
+	          + validator + "' validator at v-validate directive !! please check '"
+	          + validator + "' validator !!")
+	        this._ignore = true
+	        return
+	      }
+
+	      if (!$validator) {
+	        vm[componentName] = $validator = vm.$addChild(
+	          {}, // null option
+	          Vue.extend(__webpack_require__(125))
+	        )
+	      }
+
+	      var value = el.getAttribute('value')
+	      if (el.getAttribute('number') !== null) {
+	        value = util.toNumber(value)
+	      }
+	      this._init = value
+
+	      var validation = $validator._getValidationNamespace('validation')
+	      var init = value || vm.$get(keypath)
+	      var readyEvent = el.getAttribute('wait-for')
+
+	      if (readyEvent && !$validator._isRegistedReadyEvent(keypath)) {
+	        $validator._addReadyEvents(keypath, this._checkParam('wait-for'))
+	      }
+	      
+	      this._setupValidator($validator, keypath, validation, validator, el, arg, init)
+	    },
+
+	    update: function (val, old) {
+	      if (this._ignore) { return }
+
+	      var self = this
+	      var vm = this.vm
+	      var keypath = this._keypath
+	      var validator = this.arg ? this.arg : this.expression
+	      var $validator = vm[componentName]
+
+	      $validator._changeValidator(keypath, validator, val)
+	      if (!$validator._isRegistedReadyEvent(keypath)) { // normal
+	        this._updateValidator($validator, validator, keypath)
+	      } else { // wait-for
+	        vm.$once($validator._getReadyEvents(keypath), function (val) {
+	          $validator._setInitialValue(keypath, val)
+	          vm.$set(keypath, val)
+	          self._updateValidator($validator, validator, keypath)
+	        })
+	      }
+	    },
+
+	     
+	    unbind: function () {
+	      if (this._ignore) { return }
+
+	      var vm = this.vm
+	      var keypath = this._keypath
+	      var validator = this.arg ? this.arg : this.expression
+	      var $validator = vm[componentName]
+
+	      this._teardownValidator(vm, $validator, keypath, validator)
+	    },
+
+	    _parseModelAttribute: function (attr) {
+	      var res = Vue.parsers.directive.parse(attr)
+	      return res[0].arg ? res[0].arg : res[0].expression
+	    },
+
+	    _checkValidator: function (validator, validates, customs) {
+	      var items = Object.keys(validates).concat(Object.keys(customs))
+	      return items.some(function (item) {
+	        return item === validator
+	      })
+	    },
+
+	    _setupValidator: function ($validator, keypath, validation, validator, el, arg, init) {
+	      var vm = this.vm
+
+	      if (!getVal($validator[validation], keypath)) {
+	        $validator._defineModelValidationScope(keypath)
+	        if (el.tagName === 'INPUT' && el.type === 'radio') {
+	          if (getVal(vm, keypath) === init) {
+	            $validator._setInitialValue(keypath, init)
+	          }
+	        } else {
+	          $validator._setInitialValue(keypath, init)
+	        }
+	      }
+
+	      if (!getVal($validator[validation], [keypath, validator].join('.'))) {
+	        $validator._defineValidatorToValidationScope(keypath, validator)
+	        $validator._addValidator(keypath, validator, getVal(vm, arg) || arg)
+	      }
+	    },
+
+	    _updateValidator: function ($validator, validator, keypath) {
+	      var value = $validator.$get(keypath)
+	      var el = this.el
+
+	      if (this._init) {
+	        value = this._init
+	        delete this._init
+	      }
+
+	      if (el.tagName === 'INPUT' && el.type === 'radio') {
+	        if (value === $validator.$get(keypath)) {
+	          $validator._updateDirtyProperty(keypath, value)
+	        }
+	      } else {
+	        $validator._updateDirtyProperty(keypath, value)
+	      }
+
+	      $validator._doValidate(keypath, validator, $validator.$get(keypath))
+	    },
+
+	    _teardownValidator: function (vm, $validator, keypath, validator) {
+	      $validator._undefineValidatorToValidationScope(keypath, validator)
+	      $validator._undefineModelValidationScope(keypath, validator)
+	    }
+	  })
+	}
+
 
 /***/ },
-/* 119 */
+/* 123 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"login am-container\"><div class=\"am-u-sm-10 am-u-md-6 am-u-lg-4 am-u-sm-centered\"><h1 class=\"am-text-center\">物境未觉</h1><div class=\"am-form\"><div v-bind:class=\"usernameClass\" class=\"am-form-group\"><label>用户名</label><input type=\"text\" v-model=\"username\" v-on:keyup.enter=\"focus('input[type=password]')\" class=\"am-form-field\"/></div><div v-bind:class=\"passwordClass\" class=\"am-form-group\"><label>密码</label><input type=\"password\" v-model=\"password\" v-on:keyup.enter=\"focus('button')\" class=\"am-form-field\"/></div><div class=\"am-form-group\"><button v-on:click=\"valid() &amp;&amp; login()\" class=\"am-btn am-btn-primary am-btn-block\">登陆</button></div></div></div></div>";
+	/**
+	 * Fundamental validate functions
+	 */
+
+
+	/**
+	 * required
+	 *
+	 * This function validate whether the value has been filled out.
+	 *
+	 * @param val
+	 * @return {Boolean}
+	 */
+
+	function required (val) {
+	  if (Array.isArray(val)) {
+	    return val.length > 0
+	  } else if (typeof val === 'number') {
+	    return true
+	  } else if ((val !== null) && (typeof val === 'object')) {
+	    return Object.keys(val).length > 0
+	  } else {
+	    return !val
+	      ? false
+	      : true
+	  }
+	}
+
+
+	/**
+	 * pattern
+	 *
+	 * This function validate whether the value matches the regex pattern
+	 *
+	 * @param val
+	 * @param {String} pat
+	 * @return {Boolean}
+	 */
+
+	function pattern (val, pat) {
+	  if (typeof pat !== 'string') { return false }
+
+	  var match = pat.match(new RegExp('^/(.*?)/([gimy]*)$'))
+	  if (!match) { return false }
+
+	  return new RegExp(match[1], match[2]).test(val)
+	}
+
+
+	/**
+	 * minLength
+	 *
+	 * This function validate whether the minimum length of the string.
+	 *
+	 * @param {String} val
+	 * @param {String|Number} min
+	 * @return {Boolean}
+	 */
+
+	function minLength (val, min) {
+	  return typeof val === 'string' &&
+	    isInteger(min, 10) &&
+	    val.length >= parseInt(min, 10)
+	}
+
+
+	/**
+	 * maxLength
+	 *
+	 * This function validate whether the maximum length of the string.
+	 *
+	 * @param {String} val
+	 * @param {String|Number} max
+	 * @return {Boolean}
+	 */
+
+	function maxLength (val, max) {
+	  return typeof val === 'string' &&
+	    isInteger(max, 10) &&
+	    val.length <= parseInt(max, 10)
+	}
+
+
+	/**
+	 * min
+	 *
+	 * This function validate whether the minimum value of the numberable value.
+	 *
+	 * @param {*} val
+	 * @param {*} arg minimum
+	 * @return {Boolean}
+	 */
+
+	function min (val, arg) {
+	  return !isNaN(+(val)) && !isNaN(+(arg)) && (+(val) >= +(arg))
+	}
+
+
+	/**
+	 * max
+	 *
+	 * This function validate whether the maximum value of the numberable value.
+	 *
+	 * @param {*} val
+	 * @param {*} arg maximum
+	 * @return {Boolean}
+	 */
+
+	function max (val, arg) {
+	  return !isNaN(+(val)) && !isNaN(+(arg)) && (+(val) <= +(arg))
+	}
+
+
+	/**
+	 * isInteger
+	 *
+	 * This function check whether the value of the string is integer.
+	 *
+	 * @param {String} val
+	 * @return {Boolean}
+	 * @private
+	 */
+
+	function isInteger (val) {
+	  return /^(-?[1-9]\d*|0)$/.test(val)
+	}
+
+
+	/**
+	 * export(s)
+	 */
+	module.exports = {
+	  required: required,
+	  pattern: pattern,
+	  minLength: minLength,
+	  maxLength: maxLength,
+	  min: min,
+	  max: max
+	}
+
+
+/***/ },
+/* 124 */
+/***/ function(module, exports) {
+
+	/**
+	 * Utilties
+	 */
+
+
+	/**
+	 * warn
+	 *
+	 * @param {String} msg
+	 * @param {Error} [err]
+	 *
+	 */
+
+	exports.warn = function (msg, err) {
+	  if (window.console) {
+	    console.warn('[vue-validator] ' + msg)
+	    if (err) {
+	      console.warn(err.stack)
+	    }
+	  }
+	}
+
+	/**
+	 * Get target validatable object
+	 *
+	 * @param {Object} validation
+	 * @param {String} keypath
+	 * @return {Object} validatable object
+	 */
+
+	exports.getTarget = function (validation, keypath) {
+	  var last = validation
+	  var keys = keypath.split('.')
+	  var key, obj
+	  for (var i = 0; i < keys.length; i++) {
+	    key = keys[i]
+	    obj = last[key]
+	    last = obj
+	    if (!last) {
+	      break
+	    }
+	  }
+	  return last
+	}
+
+	/**
+	 * Get custom validators
+	 *
+	 * @param {Object} options
+	 * @return {Object}
+	 */
+
+	exports.getCustomValidators = function (options) {
+	  var opts = options
+	  var validators = {}
+	  var key
+	  var context
+	  do {
+	    if (opts['validator'] && opts['validator']['validates']) {
+	      for (key in opts['validator']['validates']) {
+	        if (!validators.hasOwnProperty(key)) {
+	          validators[key] = opts['validator']['validates'][key]
+	        }
+	      }
+	    }
+	    context = opts._context || opts._parent
+	    if (context) {
+	      opts = context.$options
+	    }
+	  } while (context || opts._parent)
+	  return validators
+	}
+
+
+/***/ },
+/* 125 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Import(s)
+	 */
+
+	var validates = __webpack_require__(123)
+	var _ = __webpack_require__(124)
+
+
+	/**
+	 * Export(s)
+	 */
+
+
+	/**
+	 * `v-validator` component with mixin
+	 */
+
+	module.exports = {
+	  inherit: true,
+
+	  created: function () {
+	    this._initValidationVariables()
+	    this._initOptions()
+	    this._mixinCustomValidates()
+	    this._defineProperties()
+	    this._defineValidationScope()
+	  },
+
+	  methods: {
+	    _getValidationNamespace: function (key) {
+	      return this._namespace[key]
+	    },
+
+	    _initValidationVariables: function () {
+	      this._validators = {}
+	      this._validates = {}
+	      this._initialValues = {}
+	      for (var key in validates) {
+	        this._validates[key] = validates[key]
+	      }
+	      this._validatorWatchers = {}
+	      this._readyEvents = {}
+	    },
+
+	    _initOptions: function () {
+	      this._namespace = getCustomNamespace(this.$options)
+	      this._namespace.validation = this._namespace.validation || 'validation'
+	      this._namespace.valid = this._namespace.valid || 'valid'
+	      this._namespace.invalid = this._namespace.invalid || 'invalid'
+	      this._namespace.dirty = this._namespace.dirty || 'dirty'
+	    },
+
+	    _mixinCustomValidates: function () {
+	      var customs = _.getCustomValidators(this.$options)
+	      for (var key in customs) {
+	        this._validates[key] = customs[key]
+	      }
+	    },
+
+	    _defineValidProperty: function (target, getter) {
+	      Object.defineProperty(target, this._getValidationNamespace('valid'), {
+	        enumerable: true,
+	        configurable: true,
+	        get: getter
+	      })
+	    },
+
+	    _undefineValidProperty: function (target) {
+	      delete target[this._getValidationNamespace('valid')]
+	    },
+
+	    _defineInvalidProperty: function (target) {
+	      var self = this
+	      Object.defineProperty(target, this._getValidationNamespace('invalid'), {
+	        enumerable: true,
+	        configurable: true,
+	        get: function () {
+	          return !target[self._getValidationNamespace('valid')]
+	        }
+	      })
+	    },
+
+	    _undefineInvalidProperty: function (target) {
+	      delete target[this._getValidationNamespace('invalid')]
+	    },
+
+	    _defineDirtyProperty: function (target, getter) {
+	      Object.defineProperty(target, this._getValidationNamespace('dirty'), {
+	        enumerable: true,
+	        configurable: true,
+	        get: getter
+	      })
+	    },
+
+	    _undefineDirtyProperty: function (target) {
+	      delete target[this._getValidationNamespace('dirty')]
+	    },
+
+	    _defineProperties: function () {
+	      var self = this
+
+	      var walk = function (obj, propName, namespaces) {
+	        var ret = false
+	        var keys = Object.keys(obj)
+	        var i = keys.length
+	        var key, last
+	        while (i--) {
+	          key = keys[i]
+	          last = obj[key]
+	          if (!(key in namespaces) && typeof last === 'object') {
+	            ret = walk(last, propName, namespaces)
+	            if ((propName === self._getValidationNamespace('valid') && !ret) ||
+	                (propName === self._getValidationNamespace('dirty') && ret)) {
+	              break
+	            }
+	          } else if (key === propName && typeof last !== 'object') {
+	            ret = last
+	            if ((key === self._getValidationNamespace('valid') && !ret) ||
+	                (key === self._getValidationNamespace('dirty') && ret)) {
+	              break
+	            }
+	          }
+	        }
+	        return ret
+	      }
+
+	      this._defineValidProperty(this.$parent, function () {
+	        var validationName = self._getValidationNamespace('validation')
+	        var validName = self._getValidationNamespace('valid')
+	        return walk(this[validationName], validName, self._namespace)
+	      })
+
+	      this._defineInvalidProperty(this.$parent)
+
+	      this._defineDirtyProperty(this.$parent, function () {
+	        var validationName = self._getValidationNamespace('validation')
+	        var dirtyName = self._getValidationNamespace('dirty')
+	        return walk(this[validationName], dirtyName, self._namespace)
+	      })
+	    },
+
+	    _undefineProperties: function () {
+	      this._undefineDirtyProperty(this.$parent)
+	      this._undefineInvalidProperty(this.$parent)
+	      this._undefineValidProperty(this.$parent)
+	    },
+
+	    _defineValidationScope: function () {
+	      this.$parent.$add(this._getValidationNamespace('validation'), {})
+	    },
+
+	    _undefineValidationScope: function () {
+	      var validationName = this._getValidationNamespace('validation')
+	      this.$parent.$delete(validationName)
+	    },
+
+	    _defineModelValidationScope: function (keypath) {
+	      var self = this
+	      var validationName = this._getValidationNamespace('validation')
+	      var dirtyName = this._getValidationNamespace('dirty')
+
+	      var keys = keypath.split('.')
+	      var last = this[validationName]
+	      var obj, key
+	      for (var i = 0; i < keys.length; i++) {
+	        key = keys[i]
+	        obj = last[key]
+	        if (!obj) {
+	          obj = {}
+	          last.$add(key, obj)
+	        }
+	        last = obj
+	      }
+	      last.$add(dirtyName, false)
+
+	      this._defineValidProperty(last, function () {
+	        var ret = true
+	        var validators = self._validators[keypath]
+	        var i = validators.length
+	        var validator
+	        while (i--) {
+	          validator = validators[i]
+	          if (last[validator.name]) {
+	            ret = false
+	            break
+	          }
+	        }
+	        return ret
+	      })
+	      this._defineInvalidProperty(last)
+	      
+	      this._validators[keypath] = []
+
+	      this._watchModel(keypath, function (val, old) {
+	        self._updateDirtyProperty(keypath, val)
+	        self._validators[keypath].forEach(function (validator) {
+	          self._doValidate(keypath, validator.name, val)
+	        })
+	      })
+	    },
+
+	    _undefineModelValidationScope: function (keypath, validator) {
+	      if (this.$parent) {
+	        var targetPath = [this._getValidationNamespace('validation'), keypath].join('.')
+	        var target = this.$parent.$get(targetPath)
+	        if (target && Object.keys(target).length === 3 &&
+	            this._getValidationNamespace('valid') in target &&
+	            this._getValidationNamespace('invalid') in target &&
+	            this._getValidationNamespace('dirty') in target) {
+	          this._unwatchModel(keypath)
+	          this._undefineDirtyProperty(target)
+	          this._undefineInvalidProperty(target)
+	          this._undefineValidProperty(target)
+	          removeValidationProperties(
+	            this.$parent.$get(this._getValidationNamespace('validation')),
+	            keypath
+	          )
+	        }
+	      }
+	    },
+
+	    _defineValidatorToValidationScope: function (keypath, validator) {
+	      var target = _.getTarget(this[this._getValidationNamespace('validation')], keypath)
+	      target.$add(validator, null)
+	    },
+
+	    _undefineValidatorToValidationScope: function (keypath, validator) {
+	      var validationName = this._getValidationNamespace('validation')
+	      if (this.$parent) {
+	        var targetPath = [validationName, keypath].join('.')
+	        var target = this.$parent.$get(targetPath)
+	        if (target) {
+	          target.$delete(validator)
+	        }
+	      }
+	    },
+
+	    _getInitialValue: function (keypath) {
+	      return this._initialValues[keypath]
+	    },
+
+	    _setInitialValue: function (keypath, val) {
+	      this._initialValues[keypath] = val
+	    },
+
+	    _addValidator: function (keypath, validator, arg) {
+	      this._validators[keypath].push({ name: validator, arg: arg })
+	    },
+
+	    _changeValidator: function (keypath, validator, arg) {
+	      var validators = this._validators[keypath]
+	      var i = validators.length
+	      while (i--) {
+	        if (validators[i].name === validator) {
+	          validators[i].arg = arg
+	          break
+	        }
+	      }
+	    },
+
+	    _findValidator: function (keypath, validator) {
+	      var found = null
+	      var validators = this._validators[keypath]
+	      var i = validators.length
+	      while (i--) {
+	        if (validators[i].name === validator) {
+	          found = validators[i]
+	          break
+	        }
+	      }
+	      return found
+	    },
+
+	    _watchModel: function (keypath, fn) {
+	      this._validatorWatchers[keypath] =
+	        this.$watch(keypath, fn, { deep: false, immediate: true })
+	    },
+
+	    _unwatchModel: function (keypath) {
+	      var unwatch = this._validatorWatchers[keypath]
+	      if (unwatch) {
+	        unwatch()
+	        delete this._validatorWatchers[keypath]
+	      }
+	    },
+	    
+	    _addReadyEvents: function (id, event) {
+	      this._readyEvents[id] = event
+	    },
+
+	    _getReadyEvents: function (id) {
+	      return this._readyEvents[id]
+	    },
+
+	    _isRegistedReadyEvent: function (id) {
+	      return id in this._readyEvents
+	    },
+
+	    _updateDirtyProperty: function (keypath, val) {
+	      var validationName = this._getValidationNamespace('validation')
+	      var dirtyName = this._getValidationNamespace('dirty')
+
+	      var target = _.getTarget(this[validationName], keypath)
+	      if (target) {
+	        target.$set(dirtyName, this._getInitialValue(keypath) !== val)
+	      }
+	    },
+
+	    _doValidate: function (keypath, validateName, val) {
+	      var validationName = this._getValidationNamespace('validation')
+
+	      var target = _.getTarget(this[validationName], keypath)
+	      var validator = this._findValidator(keypath, validateName)
+	      if (target && validator) {
+	        this._invokeValidator(
+	          this._validates[validateName],
+	          val, validator.arg,
+	          function (result) {
+	            target.$set(validateName, !result)
+	          })
+	      }
+	    },
+	    
+	    _invokeValidator: function (validator, val, arg, fn) {
+	      var future = validator.call(this, val, arg)
+	      if (typeof future === 'function') { // async
+	        if (future.resolved) {
+	          // cached
+	          fn(future.resolved)
+	        } else if (future.requested) {
+	          // pool callbacks
+	          future.pendingCallbacks.push(fn)
+	        } else {
+	          future.requested = true
+	          var fns = future.pendingCallbacks = [fn]
+	          future(function resolve () {
+	            future.resolved = true
+	            for (var i = 0, l = fns.length; i < l; i++) {
+	              fns[i](true)
+	            }
+	          }, function reject () {
+	            fn(false)
+	          })
+	        }
+	      } else { // sync
+	        fn(future)
+	      }
+	    }
+	  }
+	}
+
+	/**
+	 * Remove properties from target validation
+	 *
+	 * @param {Object} validation
+	 * @param {String} keypath
+	 */
+
+	function removeValidationProperties (validation, keypath) {
+	  var keys = keypath.split('.')
+	  var key, obj
+	  while (keys.length) {
+	    key = keys.pop()
+	    if (keys.length !== 0) {
+	      obj = _.getTarget(validation, keys.join('.'))
+	      obj.$delete(key)
+	    } else {
+	      validation.$delete(key)
+	    }
+	  }
+	}
+
+	/**
+	 * Get custom namespace
+	 *
+	 * @param {Object} options
+	 * @return {Object}
+	 */
+
+	function getCustomNamespace (options) {
+	  var namespace = {}
+	  var key
+	  var context
+	  do {
+	    if (options['validator'] && options['validator']['namespace']) {
+	      for (key in options['validator']['namespace']) {
+	        if (!namespace.hasOwnProperty(key)) {
+	          namespace[key] = options['validator']['namespace'][key]
+	        }
+	      }
+	    }
+	    context = options._context || options._parent
+	    if (context) {
+	      options = context.$options
+	    }
+	  } while (context || options._parent)
+	  return namespace
+	}
+
 
 /***/ }
 /******/ ]);
