@@ -15,9 +15,7 @@ module.exports = function(app) {
   };
 
   app.aliyun.oss.makeKey = function() {
-    var segs = [];
-    if (app.get('env') !== 'production')
-      segs.push(app.get('env'));
+    var segs = [app.get('env')];
     for (var k in arguments)
       segs.push(arguments[k].toString());
     return(segs.join('/'));
