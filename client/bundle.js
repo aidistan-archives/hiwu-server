@@ -2,9 +2,9 @@ webpackJsonp([0],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vue = __webpack_require__(9);
-	var Router = __webpack_require__(77);
-	var Resource = __webpack_require__(110);
+	var Vue = __webpack_require__(11);
+	var Router = __webpack_require__(79);
+	var Resource = __webpack_require__(112);
 
 	// Install router
 	Vue.use(Router);
@@ -16,19 +16,23 @@ webpackJsonp([0],[
 	router.map({
 	  '/': {
 	    name: 'home',
-	    component: __webpack_require__(118)
+	    component: __webpack_require__(120)
 	  },
 	  '/today': {
 	    name: 'today',
-	    component: __webpack_require__(124)
+	    component: __webpack_require__(126)
+	  },
+	  '/archive': {
+	    name: 'archive',
+	    component: __webpack_require__(141)
 	  },
 	  '/galleries/:id': {
 	    name: 'gallery',
-	    component: __webpack_require__(139)
+	    component: __webpack_require__(151)
 	  },
 	  '/items/:id': {
 	    name: 'item',
-	    component: __webpack_require__(149)
+	    component: __webpack_require__(161)
 	  }
 	});
 
@@ -40,7 +44,7 @@ webpackJsonp([0],[
 	  '*': '/'
 	});
 
-	router.start(__webpack_require__(154), '#app');
+	router.start(__webpack_require__(166), '#app');
 
 
 /***/ },
@@ -161,44 +165,33 @@ webpackJsonp([0],[
 /* 115 */,
 /* 116 */,
 /* 117 */,
-/* 118 */
+/* 118 */,
+/* 119 */,
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(119)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(123)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Home.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Home.vue"], function () {
-	var newOptions = null
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Home.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(121)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(125)
+
 
 /***/ },
-/* 119 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(120);
+	var content = __webpack_require__(122);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Home.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Home.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Home.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Home.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -208,10 +201,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 120 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -222,7 +215,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 121 */
+/* 123 */
 /***/ function(module, exports) {
 
 	/*
@@ -278,7 +271,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 122 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -532,51 +525,38 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 123 */
+/* 125 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"home\" class=\"am-container am-text-center\"><img src=\"/title.png\" alt=\"个人博物馆\" class=\"am-center am-img-responsive\"/><p>物的意义由人来完整，<br/>人的志趣由物来体现。</p><p>Wù『个人博物馆』是一个新型的博物馆，讲述个人与物品的情感故事。<br/>人们建立自己的博物馆，浏览他人的博物馆。从而感知自身与他人的成长，了解物背后丰富的情感故事。</p><p>在这里，探索隐匿在时光里的珍贵物品，发现平凡中的感动，感受生活中的温热。</p></div>";
 
 /***/ },
-/* 124 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(125)
-	module.exports = __webpack_require__(127)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(138)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Today.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Today.vue","-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Today.vue"], function () {
-	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Today.vue")
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Today.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(127)
+	module.exports = __webpack_require__(129)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(140)
+
 
 /***/ },
-/* 125 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(126);
+	var content = __webpack_require__(128);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Today.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Today.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Today.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Today.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -586,10 +566,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 126 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -600,7 +580,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 127 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -620,52 +600,39 @@ webpackJsonp([0],[
 	    });
 	  },
 	  components: {
-	    topbar: __webpack_require__(128),
-	    gallery: __webpack_require__(133)
+	    topbar: __webpack_require__(130),
+	    gallery: __webpack_require__(135)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 128 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(129)
-	module.exports = __webpack_require__(131)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(132)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Topbar.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Topbar.vue","-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Topbar.vue"], function () {
-	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Topbar.vue")
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Topbar.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(131)
+	module.exports = __webpack_require__(133)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(134)
+
 
 /***/ },
-/* 129 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(130);
+	var content = __webpack_require__(132);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Topbar.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Topbar.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Topbar.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Topbar.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -675,10 +642,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 130 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -689,7 +656,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 131 */
+/* 133 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -723,51 +690,38 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 132 */
+/* 134 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"topbar\"><div class=\"am-text-center\">{{ title }}</div><a v-show=\"leftLink\" v-link=\"leftLink\" class=\"left\"><div :class=\"['am-icon-' + leftIcon]\" class=\"am-text-lg\"></div></a><a v-show=\"rightLink\" v-link=\"rightLink\" class=\"right\"><div :class=\"['am-icon-' + rightIcon]\" class=\"am-text-lg\"></div></a><hr v-show=\"hasBorder\" class=\"am-margin-top-sm am-margin-bottom-sm\"/></div>";
 
 /***/ },
-/* 133 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(134)
-	module.exports = __webpack_require__(136)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(137)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Gallery.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Gallery.vue","-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Gallery.vue"], function () {
-	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Gallery.vue")
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Gallery.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(136)
+	module.exports = __webpack_require__(138)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(139)
+
 
 /***/ },
-/* 134 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(135);
+	var content = __webpack_require__(137);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -777,10 +731,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 135 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -791,7 +745,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 136 */
+/* 138 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -808,57 +762,44 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 137 */
+/* 139 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"gallery am-padding-sm\"><a v-link=\"{ name: 'gallery', params: { id: data.id } }\"><header class=\"am-cf am-margin-bottom-sm\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle am-fl am-margin-right\"/><div style=\"height: 45px;\" class=\"am-vertical-align am-fr\"><div class=\"am-vertical-align-middle\">{{ data.items.length }}</div></div><div style=\"height: 45px;\" class=\"am-vertical-align\"><div class=\"am-vertical-align-middle\">{{ data.hiwuUser.nickname }} 『{{ data.name }}』</div></div></header><div class=\"am-g am-g-collapse\"><div v-for=\"item in featureItems\" class=\"am-u-sm-4\"><a v-link=\"{ name: 'item', params: { id: item.id } }\"><img :src=\"item.photos[0].url\" style=\"padding: 1px;\" class=\"am-img-responsive\"/></a></div></div></a></div>";
 
 /***/ },
-/* 138 */
+/* 140 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"today\" class=\"am-margin-sm\"><topbar title=\"今日博物展\" left-link=\"/today\" left-icon=\"bars\" has-border=\"true\"></topbar><gallery v-for=\"gallery in data\" :data=\"gallery\"></gallery></div>";
+	module.exports = "<div id=\"today\" class=\"am-margin-sm\"><topbar title=\"今日博物展\" left-link=\"/archive\" left-icon=\"bars\" has-border=\"true\"></topbar><gallery v-for=\"entry in data\" :data=\"entry.gallery\"></gallery></div>";
 
 /***/ },
-/* 139 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(140)
-	module.exports = __webpack_require__(142)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(148)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Gallery.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Gallery.vue","-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Gallery.vue"], function () {
-	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Gallery.vue")
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Gallery.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(142)
+	module.exports = __webpack_require__(144)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(150)
+
 
 /***/ },
-/* 140 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(141);
+	var content = __webpack_require__(143);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Archive.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Archive.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -868,10 +809,164 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 141 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".archive-date {\n  color: #828383; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 144 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = {
+	  data: function data() {
+	    return {
+	      data: {}
+	    };
+	  },
+	  created: function created(done) {
+	    var self = this;
+
+	    self.$http.get('http://palace.server.hiwu.ren/api/Today/publicView', function (data, status, request) {
+	      self.data = data;
+	    });
+	  },
+	  components: {
+	    topbar: __webpack_require__(130),
+	    archiveLine: __webpack_require__(145)
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 145 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(146)
+	module.exports = __webpack_require__(148)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(149)
+
+
+/***/ },
+/* 146 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(147);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(124)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./ArchiveLine.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./ArchiveLine.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 147 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(123)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".archive-line {\n  background-color: #fff; }\n  .archive-line > a {\n    color: inherit; }\n  .archive-line header img {\n    max-height: 45px; }\n  .archive-line header .am-fr {\n    color: #828383; }\n\n.archive-line + .archive-line {\n  margin-top: 0.5em; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 148 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = {
+	  props: ['data'],
+	  computed: {
+	    featureItems: function featureItems() {
+	      return this.data.items.slice(0, 9);
+	    }
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 149 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"archive-line am-padding-sm\"><a v-link=\"{ name: 'gallery', params: { id: data.id } }\"><header class=\"am-cf\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle am-fl am-margin-right\"/><div style=\"height: 45px;\" class=\"am-vertical-align am-fr\"><div class=\"am-vertical-align-middle\">{{ data.items.length }}</div></div><div style=\"height: 45px;\" class=\"am-vertical-align\"><div class=\"am-vertical-align-middle\">{{ data.hiwuUser.nickname }} 『{{ data.name }}』</div></div></header></a></div>";
+
+/***/ },
+/* 150 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"archive\" class=\"am-margin-sm\"><topbar title=\"往期博物展\" left-link=\"/today\" has-border=\"true\"></topbar><div class=\"archive-date am-text-sm am-margin-bottom-xs\">2015年</div><archive-line v-for=\"entry in data\" :data=\"entry.gallery\"></archive-line></div>";
+
+/***/ },
+/* 151 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(152)
+	module.exports = __webpack_require__(154)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(160)
+
+
+/***/ },
+/* 152 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(153);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(124)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Gallery.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 153 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -882,7 +977,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 142 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -907,52 +1002,39 @@ webpackJsonp([0],[
 	    });
 	  },
 	  components: {
-	    topbar: __webpack_require__(128),
-	    item: __webpack_require__(143)
+	    topbar: __webpack_require__(130),
+	    item: __webpack_require__(155)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 143 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(144)
-	module.exports = __webpack_require__(146)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(147)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Item.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Item.vue","-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Item.vue"], function () {
-	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Item.vue")
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Item.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(156)
+	module.exports = __webpack_require__(158)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(159)
+
 
 /***/ },
-/* 144 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(145);
+	var content = __webpack_require__(157);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -962,10 +1044,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 145 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -976,7 +1058,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 146 */
+/* 158 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1011,57 +1093,44 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 147 */
+/* 159 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"item am-cf am-text-xs\"><a v-link=\"{ name: 'item', params: { id: data.id } }\"><img :src=\"data.photos[0].url\" class=\"am-img-responsive am-fl\"/><div :style=\"textStyle\" class=\"name am-fl\">{{ data.name }}</div><div :style=\"textStyle\" class=\"desc am-fl\">{{ short_desc }}</div></a></div>";
 
 /***/ },
-/* 148 */
+/* 160 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"gallery\" class=\"am-margin-sm\"><topbar :left-link=\"{ name: 'today' }\" class=\"am-margin-bottom\"></topbar><div class=\"am-g am-margin-bottom\"><div class=\"am-u-sm-3 am-u-sm-centered\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle am-center\"/></div></div><p class=\"am-text-lg am-text-center\">{{ data.hiwuUser.nickname }}『{{ data.name }}』</p><p class=\"am-text-xs\">{{ data.description }}</p><item v-for=\"item in data.items\" :data=\"item\"></item></div>";
 
 /***/ },
-/* 149 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(150)
-	module.exports = __webpack_require__(152)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(153)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Item.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Item.vue","-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Item.vue"], function () {
-	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Item.vue")
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Item.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(162)
+	module.exports = __webpack_require__(164)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(165)
+
 
 /***/ },
-/* 150 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(151);
+	var content = __webpack_require__(163);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Item.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1071,10 +1140,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 151 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -1085,7 +1154,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 152 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1122,56 +1191,43 @@ webpackJsonp([0],[
 	    });
 	  },
 	  components: {
-	    topbar: __webpack_require__(128)
+	    topbar: __webpack_require__(130)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 153 */
+/* 165 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"item\" class=\"am-margin-sm\"><topbar :title=\"data.name\" :left-link=\"{ name: 'gallery', params: { id: data.galleryId } }\" class=\"am-margin-bottom\"></topbar><div id=\"item-photo\"><img :src=\"data.photos[0].url\" class=\"am-img-responsive am-center\"/><div id=\"item-photo-above\" class=\"am-g am-margin-bottom-sm\"><div class=\"am-u-sm-2\"><div class=\"am-text-sm am-text-center\">{{ date }}<br/>{{ data.city }}</div></div><div class=\"am-u-sm-2\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-center\"/></div></div></div><div id=\"item-desc\" class=\"am-padding\"><h3>{{ data.name }}</h3><p class=\"am-text-xs\">{{ data.description }}</p><span class=\"am-icon-heart-o am-margin-right-sm\"></span><span class=\"am-margin-right\">{{ data.likes  }}</span><span class=\"am-icon-comment-o am-margin-right-sm\"></span><span>{{ data.comments.length }}</span><span class=\"am-icon-ellipsis-h am-fr\"></span></div><div id=\"item-comments\"><template v-for=\"comment in data.comments\">{{ comment }}</template></div></div>";
+	module.exports = "<div id=\"item\" class=\"am-margin-sm\"><topbar :title=\"data.name\" :left-link=\"{ name: 'gallery', params: { id: data.galleryId } }\" class=\"am-margin-bottom\"></topbar><div id=\"item-photo\"><img :src=\"data.photos[0].url\" class=\"am-img-responsive am-center\"/><div id=\"item-photo-above\" class=\"am-g am-margin-bottom-sm\"><div class=\"am-u-sm-2\"><div class=\"am-text-sm am-text-center\">{{ date }} <br/> {{ data.city }}</div></div><div class=\"am-u-sm-2\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-center\"/></div></div></div><div id=\"item-desc\" class=\"am-padding\"><h3>{{ data.name }}</h3><p class=\"am-text-xs\">{{ data.description }}</p><span class=\"am-icon-heart-o am-margin-right-sm\"></span><span class=\"am-margin-right\">{{ data.likes  }}</span><span class=\"am-icon-comment-o am-margin-right-sm\"></span><span>{{ data.comments.length }}</span><span class=\"am-icon-ellipsis-h am-fr\"></span></div><div id=\"item-comments\"><template v-for=\"comment in data.comments\">{{ comment }}</template></div></div>";
 
 /***/ },
-/* 154 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(155)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(157)
-	if (false) {
-	(function () {
-	var hotAPI = require("vue-hot-reload-api")
-	hotAPI.install(require("vue"))
-	if (!hotAPI.compatible) return
-	var id = "-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue"
-	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue"], function () {
-	var newOptions = null
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue")
-	hotAPI.update(id, newOptions, newTemplate)
-	})
-	})()
-	}
+	__webpack_require__(167)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(169)
+
 
 /***/ },
-/* 155 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(156);
+	var content = __webpack_require__(168);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(122)(content, {});
+	var update = __webpack_require__(124)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js!./../../node_modules/sass-loader/index.js!./../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1181,10 +1237,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 156 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(121)();
+	exports = module.exports = __webpack_require__(123)();
 	// imports
 
 
@@ -1195,7 +1251,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 157 */
+/* 169 */
 /***/ function(module, exports) {
 
 	module.exports = "<router-view></router-view>";
