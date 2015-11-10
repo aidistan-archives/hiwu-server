@@ -17,17 +17,18 @@ module.exports = function(Today) {
           }]
         }
       }
-    }, function(err, entries) {
-      var galleries = [];
+    }, function(err, _entries) {
+      var entries = [];
 
-      entries.forEach(function(entry) {
-        var gallery = entry.gallery();
+      _entries.forEach(function(entry) {
+        var gallery = entry.gallery(); // have to call gallery() explicitly
         if (gallery) {
-          galleries.push(gallery);
+          entry.gallery = gallery;
+          entries.push(entry);
         }
       });
 
-      cb(err, galleries);
+      cb(err, entries);
     });
   };
 
@@ -37,7 +38,7 @@ module.exports = function(Today) {
       description: 'Get Today\'s selected galleries.',
       accepts: [],
       returns: {
-        arg: 'galleries', type: ['Gallery'], root: true
+        arg: 'entries', type: ['Today'], root: true
       },
       http: {verb: 'get'}
     }

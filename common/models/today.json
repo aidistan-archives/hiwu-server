@@ -6,7 +6,20 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "date_y": {
+      "type": "number",
+      "default": 0
+    },
+    "date_m": {
+      "type": "number",
+      "default": 0
+    },
+    "date_d": {
+      "type": "number",
+      "default": 0
+    }
+  },
   "validations": [],
   "relations": {
     "gallery": {
