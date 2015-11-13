@@ -20,6 +20,10 @@
       "type": "string",
       "default": ""
     },
+    "unionid": {
+      "type": "string",
+      "default": ""
+    },
     "avatar": {
       "type": "string",
       "default": ""
@@ -109,6 +113,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "simpleLogin"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "codeLogin"
     },
     {
       "principalType": "ROLE",

@@ -1,5 +1,6 @@
-var multiparty = require('multiparty');
 var fs = require('fs');
+var https = require('https');
+var multiparty = require('multiparty');
 
 module.exports = function(HiwuUser) {
   HiwuUser.simpleLogin = function(username, include, cb) {
@@ -48,6 +49,50 @@ module.exports = function(HiwuUser) {
         arg: 'accessToken', type: 'object', root: true
       },
       http: {verb: 'post'}
+    }
+  );
+
+  HiwuUser.codeLogin = function(code, state, cb) {
+    https.get(
+      'https://api.weixin.qq.com/sns/oauth2/access_token?' +
+      'appid=wx92f55323cbadd8e8&secret=d4624c36b6795d1d99dcf0547af5443d&' +
+      'code=' + code + '&grant_type=authorization_code',
+      function(res) {
+        res.on('data', function(data) {
+          var unionid = JSON.parse(data).unionid;
+          if (unionid === undefined) return cb(new Error('Invalid code given'));
+
+          HiwuUser.find({
+            where: { unionid: unionid }
+          }, function(err, users) {
+            // TODO: If exist, then login
+            // TODO: if non-exist, then create and login
+            cb(err, users);
+          });
+        });
+        cb(null, {});
+      }
+    );
+  };
+
+  HiwuUser.remoteMethod(
+    'codeLogin',
+    {
+      description: 'Login a user with Weixin code.',
+      accepts: [
+        {
+          arg: 'code', type: 'string', required: true,
+          http: {source: 'query'}
+        },
+        {
+          arg: 'state', type: 'string',
+          http: {source: 'query' }
+        }
+      ],
+      returns: {
+        arg: 'accessToken', type: 'object', root: true
+      },
+      http: {verb: 'get'}
     }
   );
 
