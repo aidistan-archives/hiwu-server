@@ -62,12 +62,19 @@ module.exports = function(HiwuUser) {
           var unionid = JSON.parse(data).unionid;
           if (unionid === undefined) return cb(new Error('Invalid code given'));
 
-          HiwuUser.find({
+          HiwuUser.findOne({
             where: { unionid: unionid }
-          }, function(err, users) {
-            // TODO: If exist, then login
-            // TODO: if non-exist, then create and login
-            cb(err, users);
+          }, function(err, user) {
+            if (user) {
+              user.createAccessToken(1209600, null, cb);
+            } else {
+              HiwuUser.create({
+                username: 'Unamed', email: unionid + '@weixin.hiwu.ren', password: unionid
+              }, function(err, user) {
+                if (err) return cb(err);
+                user.createAccessToken(1209600, null, cb);
+              });
+            }
           });
         });
         cb(null, {});
