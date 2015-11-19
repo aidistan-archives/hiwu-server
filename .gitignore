@@ -1,9 +1,6 @@
 # Ignore node modules
 /node_modules
 
-# Ignore our seed data
-/seeds
-
 *.csv
 *.dat
 *.iml
