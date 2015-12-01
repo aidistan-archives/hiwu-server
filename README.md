@@ -26,8 +26,9 @@ API 基于主版本号进行路由，主版本号为 0 时保持默认值。
 
 目前支持下列登陆方法：
 
-- `login` : 使用用户的认证信息 (credentials) 登陆，如 `{ "email": "EMAIL", "password": "PASSWORD"}`；
-- `simpleLogin` : 使用用户名直接登陆，邮箱域为 `simple.hiwu.ren`（若该用户不存在则创建该用户）；
+- `login` : 使用用户的认证信息 (credentials) 登陆，格式为 `{ "email": "EMAIL", "password": "PASSWORD"}`；
+- `simpleLogin` : 使用用户名登陆，邮箱域为 `@example.com`（若该用户不存在则创建该用户）；
+- `codeLogin` : 使用微信登陆返回的 code 登陆，邮箱域为 `@weixin.qq.com`；
 
 ### 权限系统
 

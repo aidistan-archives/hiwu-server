@@ -7,22 +7,16 @@ module.exports = function(HiwuUser) {
     var self = this;
 
     self.login({
-      email: username + '@simple.hiwu.ren',
-      password: username
+      email: username + '@example.com', password: username
     }, include, function (err, token) {
       if (err) {
         self.create({
-          email: username + '@simple.hiwu.ren',
-          password: username,
-          nickname: username
+          email: username + '@example.com', password: username
         }, function (err, obj) {
           if (err) return cb(err);
           self.login({
-            email: username + '@simple.hiwu.ren',
-            password: username
-          }, include, function (err, token) {
-            cb(err, token);
-          });
+            email: username + '@example.com', password: username
+          }, include, cb);
         });
       }
       else {
@@ -52,7 +46,7 @@ module.exports = function(HiwuUser) {
     }
   );
 
-  HiwuUser.codeLogin = function(code, state, cb) {
+  HiwuUser.codeLogin = function(code, state, include, cb) {
     https.get(
       'https://api.weixin.qq.com/sns/oauth2/access_token?' +
       'appid=wx92f55323cbadd8e8&secret=d4624c36b6795d1d99dcf0547af5443d&' +
@@ -66,18 +60,22 @@ module.exports = function(HiwuUser) {
             where: { unionid: unionid }
           }, function(err, user) {
             if (user) {
-              user.createAccessToken(1209600, null, cb);
+              HiwuUser.login({
+                email: unionid + '@weixin.qq.com', password: unionid
+              }, include, cb);
             } else {
               HiwuUser.create({
-                username: 'Unamed', email: unionid + '@weixin.hiwu.ren', password: unionid
+                email: unionid + '@weixin.qq.com', password: unionid
               }, function(err, user) {
                 if (err) return cb(err);
-                user.createAccessToken(1209600, null, cb);
+
+                HiwuUser.login({
+                  email: unionid + '@weixin.qq.com', password: unionid
+                }, include, cb);
               });
             }
           });
         });
-        cb(null, {});
       }
     );
   };
@@ -93,6 +91,10 @@ module.exports = function(HiwuUser) {
         },
         {
           arg: 'state', type: 'string',
+          http: {source: 'query' }
+        },
+        {
+          arg: 'include', type: ['string'],
           http: {source: 'query' }
         }
       ],

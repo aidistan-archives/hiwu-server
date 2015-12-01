@@ -5,22 +5,16 @@
   "options": {
     "validateUpsert": true
   },
-  "hidden": [
-    "realm",
-    "username",
-    "email",
-    "credentials",
-    "challenges",
-    "emailVerified",
-    "verificationToken",
-    "status"
-  ],
   "properties": {
+    "unionid": {
+      "type": "string",
+      "default": ""
+    },
     "nickname": {
       "type": "string",
       "default": ""
     },
-    "unionid": {
+    "description": {
       "type": "string",
       "default": ""
     },
