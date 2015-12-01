@@ -2,6 +2,8 @@
   "apps": [{
     "name": "production",
     "script": "server/server.js",
+    "merge_logs": true,
+    "log_date_format": "YYYY-MM-DD HH:mm Z"
   }],
   "deploy": {
     "production": {

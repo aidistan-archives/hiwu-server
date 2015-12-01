@@ -1,20 +1,13 @@
 #!/usr/bin/env ruby
 
-def fetch_line
-  print '> '
-  line = gets.chomp
-  line.empty? ? nil : line
-end
-
-if ARGV[0] == '-h' || ARGV == '--help'
+if ARGV.empty? || ARGV[0] == '-h' || ARGV == '--help'
   puts 'This bin script will transform'
   puts '  bin/pm2-exec COMMAND'
   puts 'into'
-  puts '  pm2 deploy pm2.production.json production exec [COMMAND]'
+  puts '  pm2 deploy pm2.production.json production exec COMMAND'
 else
-  while line = fetch_line
-    cmd = "pm2 deploy pm2.production.json production exec #{line.inspect}"
-    puts "Command: #{cmd}"
-    system(cmd)
-  end
+  env = ARGV.shift
+  cmd = "pm2 deploy pm2.#{env}.json #{env} exec #{ARGV.join(' ').inspect}"
+  puts "Command: #{cmd}"
+  system(cmd)
 end

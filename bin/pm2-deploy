@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-if ARGV[0] == '-h' || ARGV == '--help'
+
+if ARGV.empty? || ARGV[0] == '-h' || ARGV == '--help'
   puts 'This bin script will transform'
   puts '  bin/pm2-deploy ENV [COMMAND]'
   puts 'into'
