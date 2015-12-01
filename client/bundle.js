@@ -2,9 +2,9 @@ webpackJsonp([0],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vue = __webpack_require__(11);
-	var Router = __webpack_require__(79);
-	var Resource = __webpack_require__(112);
+	var Vue = __webpack_require__(14);
+	var Router = __webpack_require__(82);
+	var Resource = __webpack_require__(115);
 
 	// Install router
 	Vue.use(Router);
@@ -16,19 +16,19 @@ webpackJsonp([0],[
 	router.map({
 	  '/': {
 	    name: 'home',
-	    component: __webpack_require__(120)
+	    component: __webpack_require__(123)
 	  },
 	  '/archive': {
 	    name: 'archive',
-	    component: __webpack_require__(126),
+	    component: __webpack_require__(129),
 	    subRoutes: {
 	      '/galleries/:gallery_id': {
 	        name: 'archive_gallery',
-	        component: __webpack_require__(141),
+	        component: __webpack_require__(144),
 	        subRoutes: {
 	          '/items/:item_id': {
 	            name: 'archive_gallery_item',
-	            component: __webpack_require__(151)
+	            component: __webpack_require__(154)
 	          }
 	        }
 	      }
@@ -36,37 +36,81 @@ webpackJsonp([0],[
 	  },
 	  '/today': {
 	    name: 'today',
-	    component: __webpack_require__(156),
+	    component: __webpack_require__(159),
 	    subRoutes: {
+	      '/login': {
+	        name: 'today_login',
+	        component: __webpack_require__(169)
+	      },
 	      '/galleries/:gallery_id': {
 	        name: 'today_gallery',
-	        component: __webpack_require__(141),
+	        component: __webpack_require__(144),
 	        subRoutes: {
 	          '/items/:item_id': {
 	            name: 'today_gallery_item',
-	            component: __webpack_require__(151)
+	            component: __webpack_require__(154)
 	          }
 	        }
 	      },
 	      '/items/:item_id': {
-	        name: 'archive_item',
-	        component: __webpack_require__(151)
+	        name: 'today_item',
+	        component: __webpack_require__(154)
+	      },
+	      '/me': {
+	        name: 'today_me',
+	        component: __webpack_require__(174)
 	      }
 	    }
 	  },
 	  '/galleries/:gallery_id': {
 	    name: 'gallery',
-	    component: __webpack_require__(141),
+	    component: __webpack_require__(144),
 	    subRoutes: {
 	      '/items/:item_id': {
 	        name: 'gallery_item',
-	        component: __webpack_require__(151)
+	        component: __webpack_require__(154)
 	      }
 	    }
 	  },
 	  '/items/:item_id': {
 	    name: 'item',
-	    component: __webpack_require__(151)
+	    component: __webpack_require__(154)
+	  },
+	  '/mine': {
+	    name: 'mine',
+	    component: __webpack_require__(182),
+	    subRoutes: {
+	      '/galleries/:gallery_id': {
+	        name: 'mine_gallery',
+	        component: __webpack_require__(144),
+	        subRoutes: {
+	          '/items/:item_id': {
+	            name: 'mine_gallery_item',
+	            component: __webpack_require__(154)
+	          }
+	        }
+	      },
+	      '/items/:item_id': {
+	        name: 'mine_item',
+	        component: __webpack_require__(154)
+	      },
+	      '/me': {
+	        name: 'mine_me',
+	        component: __webpack_require__(174)
+	      }
+	    }
+	  }
+	});
+
+	router.beforeEach(function(transition) {
+	  if (/^\/mine/.test(transition.to.path)) {
+	    if (router.app.userId) {
+	      transition.next();
+	    } else {
+	      transition.abort();
+	    }
+	  } else {
+	    transition.next();
 	  }
 	});
 
@@ -74,7 +118,7 @@ webpackJsonp([0],[
 	  '*': '/'
 	});
 
-	router.start(__webpack_require__(166), '#app');
+	router.start(__webpack_require__(216), '#app');
 
 
 /***/ },
@@ -197,11 +241,14 @@ webpackJsonp([0],[
 /* 117 */,
 /* 118 */,
 /* 119 */,
-/* 120 */
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(121)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(125)
+	__webpack_require__(124)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(128)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -218,16 +265,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 121 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(122);
+	var content = __webpack_require__(125);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -244,10 +291,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 122 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
@@ -258,7 +305,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 123 */
+/* 126 */
 /***/ function(module, exports) {
 
 	/*
@@ -314,7 +361,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 124 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -568,18 +615,18 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 125 */
+/* 128 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"home\" class=\"view am-container\"><div id=\"home-content\" class=\"am-text-center am-margin-sm\"><img src=\"/title.png\" alt=\"个人博物馆\" class=\"am-img-responsive am-center\"/><p>物的意义由人来完整，<br/>人的志趣由物来体现。</p><p>Wù『个人博物馆』是一个新型的博物馆，讲述个人与物品的情感故事。</p><p>人们建立自己的博物馆，浏览他人的博物馆。从而感知自身与他人的成长，了解物背后丰富的情感故事。</p><p>在这里，探索隐匿在时光里的珍贵物品，发现平凡中的感动，感受生活中的温热。</p></div><div id=\"home-corner\" v-link=\"{ name: 'today' }\"></div></div>";
 
 /***/ },
-/* 126 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(127)
-	module.exports = __webpack_require__(129)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(140)
+	__webpack_require__(130)
+	module.exports = __webpack_require__(132)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(143)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -596,16 +643,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 127 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(128);
+	var content = __webpack_require__(131);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -622,21 +669,21 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 128 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "#archive-content {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n.archive-date {\n  color: #828383; }\n", ""]);
+	exports.push([module.id, "#archive {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n.archive-date {\n  color: #828383; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 129 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -656,22 +703,22 @@ webpackJsonp([0],[
 	    });
 	  },
 	  ready: function ready() {
-	    $('#archive-content').height($(window).height() - $('#archive-topbar').outerHeight(true));
+	    $('#archive').height($(window).height());
 	  },
 	  components: {
-	    topbar: __webpack_require__(130),
-	    gallery: __webpack_require__(135)
+	    topbar: __webpack_require__(133),
+	    gallery: __webpack_require__(138)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 130 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(131)
-	module.exports = __webpack_require__(133)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(134)
+	__webpack_require__(134)
+	module.exports = __webpack_require__(136)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(137)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -688,16 +735,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 131 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(132);
+	var content = __webpack_require__(135);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -714,10 +761,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 132 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
@@ -728,7 +775,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 133 */
+/* 136 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -762,18 +809,18 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 134 */
+/* 137 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"topbar\" _v-0e36c12e=\"\"><div class=\"am-text-center am-padding-sm\" _v-0e36c12e=\"\">{{ title }}<a v-show=\"leftLink\" v-link=\"leftLink\" :class=\"['am-icon-' + leftIcon]\" class=\"am-fl\" _v-0e36c12e=\"\"></a><a v-show=\"rightLink\" v-link=\"rightLink\" :class=\"['am-icon-' + rightIcon]\" class=\"am-fr\" _v-0e36c12e=\"\"></a></div><hr v-show=\"hasBorder\" _v-0e36c12e=\"\"></div>";
 
 /***/ },
-/* 135 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(136)
-	module.exports = __webpack_require__(138)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(139)
+	__webpack_require__(139)
+	module.exports = __webpack_require__(141)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(142)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -790,16 +837,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 136 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(137);
+	var content = __webpack_require__(140);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -816,10 +863,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 137 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
@@ -830,7 +877,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 138 */
+/* 141 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -847,24 +894,24 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 139 */
+/* 142 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"gallery-line am-padding-horizontal-sm am-padding-vertical-xs\"><a v-link=\"link\"><header class=\"am-cf\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle am-fl am-margin-right\"/><div style=\"height: 45px;\" class=\"am-vertical-align am-fr\"><div class=\"am-vertical-align-middle\">{{ data.items.length }}</div></div><div style=\"height: 45px;\" class=\"am-vertical-align\"><div class=\"am-vertical-align-middle\">{{ data.hiwuUser.nickname }} 『{{ data.name }}』</div></div></header></a></div>";
 
 /***/ },
-/* 140 */
+/* 143 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"archive\" class=\"view\"><div id=\"archive-topbar\"><topbar title=\"往期博物展\" left-link=\"/today\" has-border=\"true\"></topbar></div><div id=\"archive-content\"><div class=\"archive-date am-text-sm am-margin-sm am-margin-bottom-xs\">2015年</div><gallery v-for=\"entry in data\" :data=\"entry.gallery\" :link=\"{ name: 'archive_gallery', params: { gallery_id: entry.gallery.id } }\" class=\"am-margin-sm\"></gallery></div><div id=\"archive-child\" class=\"view-wrapper\"><router-view></router-view></div></div>";
 
 /***/ },
-/* 141 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(142)
-	module.exports = __webpack_require__(144)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(150)
+	__webpack_require__(145)
+	module.exports = __webpack_require__(147)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(153)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -881,16 +928,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 142 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(143);
+	var content = __webpack_require__(146);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -907,10 +954,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 143 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
@@ -921,7 +968,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 144 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -938,17 +985,6 @@ webpackJsonp([0],[
 	      }
 	    };
 	  },
-	  computed: {
-	    leftLink: function leftLink() {
-	      var matched = this.$route.matched;
-	      if (matched.length > 1) {
-	        matched = matched[matched.length - 2];
-	        return { name: matched.handler.name, params: matched.params };
-	      } else {
-	        return '/';
-	      }
-	    }
-	  },
 	  created: function created(done) {
 	    var self = this;
 
@@ -960,19 +996,19 @@ webpackJsonp([0],[
 	    $('#gallery').height($(window).height());
 	  },
 	  components: {
-	    topbar: __webpack_require__(130),
-	    item: __webpack_require__(145)
+	    topbar: __webpack_require__(133),
+	    item: __webpack_require__(148)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 145 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(146)
-	module.exports = __webpack_require__(148)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(149)
+	__webpack_require__(149)
+	module.exports = __webpack_require__(151)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(152)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -989,16 +1025,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 146 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(147);
+	var content = __webpack_require__(150);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1015,10 +1051,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 147 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
@@ -1029,7 +1065,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 148 */
+/* 151 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1064,24 +1100,24 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 149 */
+/* 152 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"item-card am-cf am-text-xs\"><a v-link=\"link\"><img :src=\"data.photos[0].url\" class=\"am-img-responsive am-fl\"/><div :style=\"textStyle\" class=\"name am-fl\">{{ data.name }}</div><div :style=\"textStyle\" class=\"desc am-fl\">{{ short_desc }}</div></a></div>";
 
 /***/ },
-/* 150 */
+/* 153 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"gallery\" class=\"view\"><div id=\"gallery-topbar\"><topbar :left-link=\"leftLink\" class=\"am-margin-bottom\"></topbar></div><div id=\"gallery-header\" class=\"am-margin-sm\"><div class=\"am-g am-margin-bottom\"><div class=\"am-u-sm-3 am-u-sm-centered\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle am-center\"/></div></div><p class=\"am-text-lg am-text-center\">{{ data.hiwuUser.nickname }}『{{ data.name }}』</p><p class=\"am-text-xs\">{{ data.description }}</p></div><div id=\"gallery-items\"><item v-for=\"item in data.items\" :data=\"item\" :link=\"{ path: 'items/' + item.id, append: true }\" class=\"am-margin-sm\"></item></div><div id=\"gallery-child\" class=\"view-wrapper\"><router-view></router-view></div></div>";
+	module.exports = "<div id=\"gallery\" class=\"view\"><div id=\"gallery-topbar\"><topbar :left-link=\"{ path: '..' }\" class=\"am-margin-bottom\"></topbar></div><div id=\"gallery-header\" class=\"am-margin-sm\"><div class=\"am-g am-margin-bottom\"><div class=\"am-u-sm-3 am-u-sm-centered\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle am-center\"/></div></div><p class=\"am-text-lg am-text-center\">{{ data.hiwuUser.nickname }}『{{ data.name }}』</p><p class=\"am-text-xs\">{{ data.description }}</p></div><div id=\"gallery-items\"><item v-for=\"item in data.items\" :data=\"item\" :link=\"{ path: 'items/' + item.id, append: true }\" class=\"am-margin-sm\"></item></div><div id=\"gallery-child\" class=\"view-wrapper\"><router-view></router-view></div></div>";
 
 /***/ },
-/* 151 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(152)
-	module.exports = __webpack_require__(154)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(155)
+	__webpack_require__(155)
+	module.exports = __webpack_require__(157)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(158)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -1098,16 +1134,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 152 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(153);
+	var content = __webpack_require__(156);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1124,21 +1160,21 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 153 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "#item {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n#item-photo {\n  position: relative; }\n\n#item-photo-above {\n  position: absolute;\n  bottom: 0; }\n  #item-photo-above .am-text-sm {\n    color: #cccdce;\n    background-color: rgba(63, 58, 57, 0.4); }\n\n#item-desc {\n  background-color: #A0E7EB; }\n  #item-desc span {\n    color: #828383; }\n", ""]);
+	exports.push([module.id, "#item {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n#item-photo {\n  position: relative; }\n\n#item-photo-header {\n  position: absolute;\n  top: 0; }\n\n#item-photo-footer {\n  position: absolute;\n  bottom: 0; }\n  #item-photo-footer .am-text-sm {\n    color: #cccdce;\n    background-color: rgba(63, 58, 57, 0.4); }\n\n#item-desc {\n  background-color: #A0E7EB; }\n  #item-desc span {\n    color: #828383; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 154 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1157,15 +1193,6 @@ webpackJsonp([0],[
 	    };
 	  },
 	  computed: {
-	    leftLink: function leftLink() {
-	      var matched = this.$route.matched;
-	      if (matched.length > 1) {
-	        matched = matched[matched.length - 2];
-	        return { name: matched.handler.name, params: matched.params };
-	      } else {
-	        return '/';
-	      }
-	    },
 	    date: function date() {
 	      var date = '';
 	      if (this.data.date_y > 0) date += this.data.date_y;
@@ -1187,24 +1214,24 @@ webpackJsonp([0],[
 	    $('#item').height($(window).height());
 	  },
 	  components: {
-	    topbar: __webpack_require__(130)
+	    topbar: __webpack_require__(133)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 155 */
+/* 158 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"item\" class=\"view\"><div id=\"item-topbar\"><topbar :title=\"data.name\" :left-link=\"leftLink\"></topbar></div><div id=\"item-photo\" class=\"am-margin-horizontal-sm\"><img :src=\"data.photos[0].url\" class=\"am-img-responsive am-center\"/><div id=\"item-photo-above\" class=\"am-g am-margin-bottom-sm\"><div class=\"am-u-sm-2\"><div class=\"am-text-sm am-text-center\">{{ date }} <br/> {{ data.city }}</div></div><div class=\"am-u-sm-2\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-center\"/></div></div></div><div id=\"item-desc\" class=\"am-margin-horizontal-sm am-padding\"><h3>{{ data.name }}</h3><p class=\"am-text-xs\">{{ data.description }}</p><span class=\"am-icon-heart-o am-margin-right-sm\"></span><span class=\"am-margin-right\">{{ data.likes  }}</span><span class=\"am-icon-comment-o am-margin-right-sm\"></span><span>{{ data.comments.length }}</span><span class=\"am-icon-ellipsis-h am-fr\"></span></div><div id=\"item-comments\"><template v-for=\"comment in data.comments\">{{ comment | json }}</template></div></div>";
+	module.exports = "<div id=\"item\" class=\"view\"><div id=\"item-photo\" class=\"am-margin-horizontal-sm am-margin-top-sm\"><img :src=\"data.photos[0].url\" class=\"am-img-responsive am-center\"/><div id=\"item-photo-header\" class=\"am-g am-margin-top-sm\"><div class=\"am-u-sm-2\"><a v-link=\"{ path: '..' }\" class=\"am-icon-chevron-left am-link-muted\"></a></div></div><div id=\"item-photo-footer\" class=\"am-g am-margin-bottom-sm\"><div class=\"am-u-sm-2\"><div class=\"am-text-sm am-text-center\">{{ date }} <br/> {{ data.city }}</div></div><div class=\"am-u-sm-2\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle\"/></div></div></div><div id=\"item-desc\" class=\"am-margin-horizontal-sm am-padding\"><h3>{{ data.name }}</h3><p class=\"am-text-xs\">{{ data.description }}</p><span class=\"am-icon-heart-o am-margin-right-sm\"></span><span class=\"am-margin-right\">{{ data.likes  }}</span><span class=\"am-icon-comment-o am-margin-right-sm\"></span><span>{{ data.comments.length }}</span><span class=\"am-icon-ellipsis-h am-fr\"></span></div><div id=\"item-comments\" class=\"am-margin-sm\"><template v-for=\"comment in data.comments\"><span><strong>{{ comment.userId }}</strong>：{{ comment.content }}</span></template></div></div>";
 
 /***/ },
-/* 156 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(157)
-	module.exports = __webpack_require__(159)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(165)
+	__webpack_require__(160)
+	module.exports = __webpack_require__(162)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(168)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -1221,16 +1248,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 157 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(158);
+	var content = __webpack_require__(161);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1247,21 +1274,21 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 158 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "#today-galleries {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n", ""]);
+	exports.push([module.id, "#today {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n#today-topbar {\n  position: relative; }\n  #today-topbar a:last-child {\n    background: #F4D137;\n    position: absolute;\n    top: 0;\n    right: 0; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 159 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1273,6 +1300,11 @@ webpackJsonp([0],[
 	      data: {}
 	    };
 	  },
+	  computed: {
+	    rightLink: function rightLink() {
+	      return { name: this.$root.userId ? 'today_me' : 'today_login' };
+	    }
+	  },
 	  created: function created(done) {
 	    var self = this;
 
@@ -1281,22 +1313,22 @@ webpackJsonp([0],[
 	    });
 	  },
 	  ready: function ready() {
-	    $('#today-galleries').height($(window).height() - $('#today-topbar').outerHeight(true));
+	    $('#today').height($(window).height());
 	  },
 	  components: {
-	    topbar: __webpack_require__(130),
-	    gallery: __webpack_require__(160)
+	    topbar: __webpack_require__(133),
+	    gallery: __webpack_require__(163)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 160 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(161)
-	module.exports = __webpack_require__(163)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(164)
+	__webpack_require__(164)
+	module.exports = __webpack_require__(166)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(167)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
@@ -1313,16 +1345,16 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 161 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(162);
+	var content = __webpack_require__(165);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1339,10 +1371,10 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 162 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
@@ -1353,7 +1385,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 163 */
+/* 166 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1370,56 +1402,57 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 164 */
+/* 167 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"gallery-card am-padding-sm\"><a v-link=\"{ path: 'galleries/' + data.id, append: true }\"><header class=\"am-cf am-margin-bottom-sm\"><img :src=\"data.hiwuUser.avatar\" class=\"am-img-responsive am-circle am-fl am-margin-right\"/><div style=\"height: 45px;\" class=\"am-vertical-align am-fr\"><div class=\"am-vertical-align-middle\">{{ data.items.length }}</div></div><div style=\"height: 45px;\" class=\"am-vertical-align\"><div class=\"am-vertical-align-middle\">{{ data.hiwuUser.nickname }} 『{{ data.name }}』</div></div></header><div class=\"am-g am-g-collapse\"><div v-for=\"item in featureItems\" class=\"am-u-sm-4\"><a v-link=\"{ path: 'items/' + item.id, append: true }\"><img :src=\"item.photos[0].url\" style=\"padding: 1px;\" class=\"am-img-responsive\"/></a></div></div></a></div>";
 
 /***/ },
-/* 165 */
+/* 168 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"today\" class=\"view\"><div id=\"today-topbar\"><topbar title=\"今日博物展\" left-link=\"/archive\" left-icon=\"bars\" has-border=\"true\"></topbar></div><div id=\"today-galleries\"><gallery v-for=\"entry in data\" :data=\"entry.gallery\" class=\"am-margin-sm am-margin-bottom\"></gallery></div><div id=\"today-child\" class=\"view-wrapper\"><router-view></router-view></div></div>";
+	module.exports = "<div id=\"today\" class=\"view\"><div id=\"today-topbar\"><topbar title=\"每日博物展\" left-link=\"/archive\" left-icon=\"bars\" has-border=\"true\"></topbar><a v-link=\"rightLink\" class=\"am-round am-margin-sm\"><img src=\"/logo-48.png\" alt=\"登陆\" width=\"25.6\" height=\"25.6\"/></a></div><div id=\"today-galleries\"><gallery v-for=\"entry in data\" :data=\"entry.gallery\" class=\"am-margin-sm am-margin-bottom\"></gallery></div><div id=\"today-child\" class=\"view-wrapper\"><router-view></router-view></div></div>";
 
 /***/ },
-/* 166 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(167)
-	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(169)
+	__webpack_require__(170)
+	module.exports = __webpack_require__(172)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(173)
 	if (false) {
 	(function () {
 	var hotAPI = require("vue-hot-reload-api")
 	hotAPI.install(require("vue"))
 	if (!hotAPI.compatible) return
-	var id = "-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue"
+	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Login.vue"
 	hotAPI.createRecord(id, module.exports)
-	module.hot.accept(["-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue"], function () {
-	var newOptions = null
-	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue")
+	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Login.vue","-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Login.vue"], function () {
+	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Login.vue")
+	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Login.vue")
 	hotAPI.update(id, newOptions, newTemplate)
 	})
 	})()
 	}
 
 /***/ },
-/* 167 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(168);
+	var content = __webpack_require__(171);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(124)(content, {});
+	var update = __webpack_require__(127)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Login.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Login.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1429,21 +1462,1045 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 168 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(123)();
+	exports = module.exports = __webpack_require__(126)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: #e8e9eb; }\n\n.view {\n  background-color: #e8e9eb; }\n\n.view-wrapper {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%; }\n", ""]);
+	exports.push([module.id, "#login {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 169 */
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = {
+	  data: function data() {
+	    return {
+	      username: '',
+	      password: ''
+	    };
+	  },
+	  ready: function ready() {
+	    $('#login').height($(window).height());
+	  },
+	  methods: {
+	    login: function login() {
+	      if (this.username === '') return;
+
+	      var self = this;
+	      self.$http.post('http://palace.server.hiwu.ren/api/HiwuUsers/simpleLogin?username=' + self.username, function (data, status, request) {
+	        self.$root.login(data);
+	        self.$route.router.go({ name: 'today' });
+	      });
+	    }
+	  },
+	  components: {
+	    topbar: __webpack_require__(133)
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 173 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"login\" class=\"view\"><div id=\"login-topbar\"><topbar :left-link=\"{ path: '.' }\" left-icon=\"times\"></topbar></div><div class=\"am-g am-margin-top-xl am-padding-xl\"><div class=\"am-u-sm-6 am-u-sm-centered\"><img src=\"/logo-1024.png\" alt=\"物境未觉\" class=\"am-img-responsive am-center\"/></div></div><div class=\"am-g\"><div class=\"am-u-sm-10 am-u-sm-centered\"><form class=\"am-form\"><div class=\"am-form-group\"><input type=\"text\" v-model=\"username\" placeholder=\"用户名\"/></div><div class=\"am-form-group\"><input type=\"password\" v-model=\"password\" placeholder=\"密码\"/><a v-link=\"{ path: '.' }\"><div class=\"am-form-help am-text-right\">忘记密码</div></a></div><div class=\"am-form-group\"><a @click=\"login\" class=\"am-btn am-btn-primary am-btn-block\">登陆</a></div></form></div></div></div>";
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(175)
+	module.exports = __webpack_require__(177)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(181)
+	if (false) {
+	(function () {
+	var hotAPI = require("vue-hot-reload-api")
+	hotAPI.install(require("vue"))
+	if (!hotAPI.compatible) return
+	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Me.vue"
+	hotAPI.createRecord(id, module.exports)
+	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Me.vue","-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Me.vue"], function () {
+	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Me.vue")
+	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Me.vue")
+	hotAPI.update(id, newOptions, newTemplate)
+	})
+	})()
+	}
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(176);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(127)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Me.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Me.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(126)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#me {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n  #me a.am-link-muted {\n    cursor: pointer; }\n\n#me-basic a:first-child .am-vertical-align,\n#me-basic a:first-child .am-vertical-align-middle {\n  position: relative;\n  width: 100%; }\n\n#me-basic a:first-child img {\n  position: absolute;\n  top: 0;\n  right: 0; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	var querystring = __webpack_require__(178);
+
+	exports['default'] = {
+	  data: function data() {
+	    return {
+	      data: {},
+	      modalTitle: '',
+	      modalInput: ''
+	    };
+	  },
+	  created: function created(done) {
+	    var self = this;
+
+	    self.$http.get('http://palace.server.hiwu.ren/api/HiwuUsers/' + self.$root.userId + '?' + querystring.stringify({
+	      access_token: self.$root.accessToken
+	    }), function (data, status, request) {
+	      self.data = data;
+	    });
+	  },
+	  ready: function ready() {
+	    $('#me').height($(window).height());
+	  },
+	  methods: {
+	    promptNickname: function promptNickname() {
+	      var self = this;
+	      self.modalTitle = '更新昵称';
+	      self.modalInput = self.data.nickname;
+	      $('#me-prompt').modal({ onConfirm: function onConfirm() {
+	          self.$http.put('http://palace.server.hiwu.ren/api/HiwuUsers/' + self.$root.userId + '?' + querystring.stringify({
+	            access_token: self.$root.accessToken
+	          }), {
+	            nickname: self.modalInput
+	          }, function (data, status, request) {
+	            self.data = data;
+	          });
+	        } });
+	    },
+	    promptDescription: function promptDescription() {
+	      var self = this;
+	      self.modalTitle = '更新简介';
+	      self.modalInput = self.data.description;
+	      $('#me-prompt').modal({ onConfirm: function onConfirm() {
+	          self.$http.put('http://palace.server.hiwu.ren/api/HiwuUsers/' + self.$root.userId + '?' + querystring.stringify({
+	            access_token: self.$root.accessToken
+	          }), {
+	            description: self.modalInput
+	          }, function (data, status, request) {
+	            self.data = data;
+	          });
+	        } });
+	    },
+	    logout: function logout() {
+	      this.$root.logout();
+	      this.$route.router.go({ name: 'today' });
+	    }
+	  },
+	  components: {
+	    topbar: __webpack_require__(133),
+	    gallery: __webpack_require__(163)
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.decode = exports.parse = __webpack_require__(179);
+	exports.encode = exports.stringify = __webpack_require__(180);
+
+
+/***/ },
+/* 179 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	// If obj.hasOwnProperty has been overridden, then calling
+	// obj.hasOwnProperty(prop) will break.
+	// See: https://github.com/joyent/node/issues/1707
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
+	}
+
+	module.exports = function(qs, sep, eq, options) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  var obj = {};
+
+	  if (typeof qs !== 'string' || qs.length === 0) {
+	    return obj;
+	  }
+
+	  var regexp = /\+/g;
+	  qs = qs.split(sep);
+
+	  var maxKeys = 1000;
+	  if (options && typeof options.maxKeys === 'number') {
+	    maxKeys = options.maxKeys;
+	  }
+
+	  var len = qs.length;
+	  // maxKeys <= 0 means that we should not limit keys count
+	  if (maxKeys > 0 && len > maxKeys) {
+	    len = maxKeys;
+	  }
+
+	  for (var i = 0; i < len; ++i) {
+	    var x = qs[i].replace(regexp, '%20'),
+	        idx = x.indexOf(eq),
+	        kstr, vstr, k, v;
+
+	    if (idx >= 0) {
+	      kstr = x.substr(0, idx);
+	      vstr = x.substr(idx + 1);
+	    } else {
+	      kstr = x;
+	      vstr = '';
+	    }
+
+	    k = decodeURIComponent(kstr);
+	    v = decodeURIComponent(vstr);
+
+	    if (!hasOwnProperty(obj, k)) {
+	      obj[k] = v;
+	    } else if (isArray(obj[k])) {
+	      obj[k].push(v);
+	    } else {
+	      obj[k] = [obj[k], v];
+	    }
+	  }
+
+	  return obj;
+	};
+
+	var isArray = Array.isArray || function (xs) {
+	  return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+
+
+/***/ },
+/* 180 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	var stringifyPrimitive = function(v) {
+	  switch (typeof v) {
+	    case 'string':
+	      return v;
+
+	    case 'boolean':
+	      return v ? 'true' : 'false';
+
+	    case 'number':
+	      return isFinite(v) ? v : '';
+
+	    default:
+	      return '';
+	  }
+	};
+
+	module.exports = function(obj, sep, eq, name) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  if (obj === null) {
+	    obj = undefined;
+	  }
+
+	  if (typeof obj === 'object') {
+	    return map(objectKeys(obj), function(k) {
+	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+	      if (isArray(obj[k])) {
+	        return map(obj[k], function(v) {
+	          return ks + encodeURIComponent(stringifyPrimitive(v));
+	        }).join(sep);
+	      } else {
+	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+	      }
+	    }).join(sep);
+
+	  }
+
+	  if (!name) return '';
+	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+	         encodeURIComponent(stringifyPrimitive(obj));
+	};
+
+	var isArray = Array.isArray || function (xs) {
+	  return Object.prototype.toString.call(xs) === '[object Array]';
+	};
+
+	function map (xs, f) {
+	  if (xs.map) return xs.map(f);
+	  var res = [];
+	  for (var i = 0; i < xs.length; i++) {
+	    res.push(f(xs[i], i));
+	  }
+	  return res;
+	}
+
+	var objectKeys = Object.keys || function (obj) {
+	  var res = [];
+	  for (var key in obj) {
+	    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+	  }
+	  return res;
+	};
+
+
+/***/ },
+/* 181 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"me\" class=\"view\"><div id=\"me-topbar\"><topbar title=\"馆长设置\" :left-link=\"{ path: '.' }\" has-border=\"true\"></topbar></div><div id=\"me-basic\" class=\"am-panel am-margin-sm\"><div class=\"am-panel-bd\"><a class=\"am-link-muted\"><div style=\"height:48px\" class=\"am-vertical-align\"><div class=\"am-vertical-align-middle\"><span class=\"am-fl\">头像</span><i class=\"am-fr am-icon-angle-right am-icon-sm\"></i></div><img :src=\"data.avatar\" height=\"48\" width=\"48\" class=\"am-fr am-circle am-margin-right-xl\"/></div></a><hr/><a @click=\"promptNickname\" class=\"am-link-muted\"><div class=\"am-cf\"><span class=\"am-fl\">昵称</span><i class=\"am-fr am-icon-angle-right am-icon-sm\"></i><span class=\"am-fr am-margin-right-lg\">{{ data.nickname }}</span></div></a><hr/><a @click=\"promptDescription\" class=\"am-link-muted\"><div class=\"am-cf\"><span class=\"am-fl\">简介</span><i class=\"am-fr am-icon-angle-right am-icon-sm\"></i><span class=\"am-fr am-margin-right-lg\">{{ data.description }}</span></div></a></div></div><div id=\"me-more\" class=\"am-panel am-margin-sm\"><div class=\"am-panel-bd\"><a @click=\"logout\" class=\"am-link-muted\"><div>注销登陆</div></a></div></div><div id=\"me-prompt\" tabindex=\"-1\" class=\"am-modal am-modal-prompt\"><div class=\"am-modal-dialog\"><div class=\"am-modal-hd\">{{ modalTitle }}</div><div class=\"am-modal-bd\"><input type=\"text\" v-model=\"modalInput\" class=\"am-modal-prompt-input\"/></div><div class=\"am-modal-footer\"><span data-am-modal-cancel=\"data-am-modal-cancel\" class=\"am-modal-btn\">取消</span><span data-am-modal-confirm=\"data-am-modal-confirm\" class=\"am-modal-btn\">提交</span></div></div></div></div>";
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(183)
+	module.exports = __webpack_require__(185)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(215)
+	if (false) {
+	(function () {
+	var hotAPI = require("vue-hot-reload-api")
+	hotAPI.install(require("vue"))
+	if (!hotAPI.compatible) return
+	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Mine.vue"
+	hotAPI.createRecord(id, module.exports)
+	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Mine.vue","-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Mine.vue"], function () {
+	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./../node_modules/vue-loader/lib/selector.js?type=script&index=0!./Mine.vue")
+	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./../node_modules/vue-loader/lib/selector.js?type=template&index=0!./Mine.vue")
+	hotAPI.update(id, newOptions, newTemplate)
+	})
+	})()
+	}
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(184);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(127)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Mine.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/sass-loader/index.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Mine.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(126)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#mine {\n  overflow-x: hidden;\n  overflow-y: scroll; }\n\n#mine-topbar {\n  position: relative; }\n  #mine-topbar > a {\n    position: absolute;\n    top: 0;\n    right: 0; }\n    #mine-topbar > a > img {\n      background: #F4D137; }\n\n#mine-info {\n  cursor: pointer; }\n\n#mine-stat > span {\n  background-color: #fff; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _getIterator = __webpack_require__(186)['default'];
+
+	exports.__esModule = true;
+	var querystring = __webpack_require__(178);
+
+	exports['default'] = {
+	  data: function data() {
+	    return {
+	      data: {
+	        nickname: '',
+	        description: '',
+	        avatar: '',
+	        galleries: []
+	      }
+	    };
+	  },
+	  computed: {
+	    itemNum: function itemNum() {
+	      var num = 0;
+	      for (var _iterator = this.data.galleries, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _getIterator(_iterator);;) {
+	        var _ref;
+
+	        if (_isArray) {
+	          if (_i >= _iterator.length) break;
+	          _ref = _iterator[_i++];
+	        } else {
+	          _i = _iterator.next();
+	          if (_i.done) break;
+	          _ref = _i.value;
+	        }
+
+	        var gallery = _ref;
+
+	        num += gallery.items.length;
+	      }
+	      return num;
+	    }
+	  },
+	  created: function created(done) {
+	    var self = this;
+
+	    self.$http.get('http://palace.server.hiwu.ren/api/HiwuUsers/' + self.$root.userId + '?' + querystring.stringify({
+	      access_token: self.$root.accessToken,
+	      filter: JSON.stringify({
+	        include: {
+	          galleries: [{ items: ['photos'] }, 'hiwuUser']
+	        }
+	      })
+	    }), function (data, status, request) {
+	      self.data = data;
+	    });
+	  },
+	  ready: function ready() {
+	    $('#mine').height($(window).height());
+	  },
+	  components: {
+	    topbar: __webpack_require__(133),
+	    gallery: __webpack_require__(163)
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(187), __esModule: true };
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(188);
+	__webpack_require__(208);
+	module.exports = __webpack_require__(211);
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(189);
+	var Iterators = __webpack_require__(192);
+	Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var setUnscope = __webpack_require__(190)
+	  , step       = __webpack_require__(191)
+	  , Iterators  = __webpack_require__(192)
+	  , toIObject  = __webpack_require__(193);
+
+	// 22.1.3.4 Array.prototype.entries()
+	// 22.1.3.13 Array.prototype.keys()
+	// 22.1.3.29 Array.prototype.values()
+	// 22.1.3.30 Array.prototype[@@iterator]()
+	module.exports = __webpack_require__(196)(Array, 'Array', function(iterated, kind){
+	  this._t = toIObject(iterated); // target
+	  this._i = 0;                   // next index
+	  this._k = kind;                // kind
+	// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , kind  = this._k
+	    , index = this._i++;
+	  if(!O || index >= O.length){
+	    this._t = undefined;
+	    return step(1);
+	  }
+	  if(kind == 'keys'  )return step(0, index);
+	  if(kind == 'values')return step(0, O[index]);
+	  return step(0, [index, O[index]]);
+	}, 'values');
+
+	// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+	Iterators.Arguments = Iterators.Array;
+
+	setUnscope('keys');
+	setUnscope('values');
+	setUnscope('entries');
+
+/***/ },
+/* 190 */
+/***/ function(module, exports) {
+
+	module.exports = function(){ /* empty */ };
+
+/***/ },
+/* 191 */
+/***/ function(module, exports) {
+
+	module.exports = function(done, value){
+	  return {value: value, done: !!done};
+	};
+
+/***/ },
+/* 192 */
+/***/ function(module, exports) {
+
+	module.exports = {};
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// to indexed object, toObject with fallback for non-array-like ES3 strings
+	var IObject = __webpack_require__(194)
+	  , defined = __webpack_require__(106);
+	module.exports = function(it){
+	  return IObject(defined(it));
+	};
+
+/***/ },
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for non-array-like ES3 and non-enumerable old V8 strings
+	var cof = __webpack_require__(195);
+	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+	  return cof(it) == 'String' ? it.split('') : Object(it);
+	};
+
+/***/ },
+/* 195 */
+/***/ function(module, exports) {
+
+	var toString = {}.toString;
+
+	module.exports = function(it){
+	  return toString.call(it).slice(8, -1);
+	};
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var LIBRARY         = __webpack_require__(197)
+	  , $def            = __webpack_require__(96)
+	  , $redef          = __webpack_require__(198)
+	  , hide            = __webpack_require__(199)
+	  , has             = __webpack_require__(202)
+	  , SYMBOL_ITERATOR = __webpack_require__(203)('iterator')
+	  , Iterators       = __webpack_require__(192)
+	  , $iterCreate     = __webpack_require__(206)
+	  , setTag          = __webpack_require__(207)
+	  , getProto        = __webpack_require__(109).getProto
+	  , BUGGY           = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
+	  , FF_ITERATOR     = '@@iterator'
+	  , KEYS            = 'keys'
+	  , VALUES          = 'values';
+	var returnThis = function(){ return this; };
+	module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE){
+	  $iterCreate(Constructor, NAME, next);
+	  var getMethod = function(kind){
+	    if(!BUGGY && kind in proto)return proto[kind];
+	    switch(kind){
+	      case KEYS: return function keys(){ return new Constructor(this, kind); };
+	      case VALUES: return function values(){ return new Constructor(this, kind); };
+	    } return function entries(){ return new Constructor(this, kind); };
+	  };
+	  var TAG      = NAME + ' Iterator'
+	    , proto    = Base.prototype
+	    , _native  = proto[SYMBOL_ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
+	    , _default = _native || getMethod(DEFAULT)
+	    , methods, key;
+	  // Fix native
+	  if(_native){
+	    var IteratorPrototype = getProto(_default.call(new Base));
+	    // Set @@toStringTag to native iterators
+	    setTag(IteratorPrototype, TAG, true);
+	    // FF fix
+	    if(!LIBRARY && has(proto, FF_ITERATOR))hide(IteratorPrototype, SYMBOL_ITERATOR, returnThis);
+	  }
+	  // Define iterator
+	  if((!LIBRARY || FORCE) && (BUGGY || !(SYMBOL_ITERATOR in proto))){
+	    hide(proto, SYMBOL_ITERATOR, _default);
+	  }
+	  // Plug for library
+	  Iterators[NAME] = _default;
+	  Iterators[TAG]  = returnThis;
+	  if(DEFAULT){
+	    methods = {
+	      values:  DEFAULT == VALUES ? _default : getMethod(VALUES),
+	      keys:    IS_SET            ? _default : getMethod(KEYS),
+	      entries: DEFAULT != VALUES ? _default : getMethod('entries')
+	    };
+	    if(FORCE)for(key in methods){
+	      if(!(key in proto))$redef(proto, key, methods[key]);
+	    } else $def($def.P + $def.F * BUGGY, NAME, methods);
+	  }
+	  return methods;
+	};
+
+/***/ },
+/* 197 */
+/***/ function(module, exports) {
+
+	module.exports = true;
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(199);
+
+/***/ },
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $          = __webpack_require__(109)
+	  , createDesc = __webpack_require__(200);
+	module.exports = __webpack_require__(201) ? function(object, key, value){
+	  return $.setDesc(object, key, createDesc(1, value));
+	} : function(object, key, value){
+	  object[key] = value;
+	  return object;
+	};
+
+/***/ },
+/* 200 */
+/***/ function(module, exports) {
+
+	module.exports = function(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	};
+
+/***/ },
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Thank's IE8 for his funny defineProperty
+	module.exports = !__webpack_require__(99)(function(){
+	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 202 */
+/***/ function(module, exports) {
+
+	var hasOwnProperty = {}.hasOwnProperty;
+	module.exports = function(it, key){
+	  return hasOwnProperty.call(it, key);
+	};
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var store  = __webpack_require__(204)('wks')
+	  , uid    = __webpack_require__(205)
+	  , Symbol = __webpack_require__(97).Symbol;
+	module.exports = function(name){
+	  return store[name] || (store[name] =
+	    Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
+	};
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global = __webpack_require__(97)
+	  , SHARED = '__core-js_shared__'
+	  , store  = global[SHARED] || (global[SHARED] = {});
+	module.exports = function(key){
+	  return store[key] || (store[key] = {});
+	};
+
+/***/ },
+/* 205 */
+/***/ function(module, exports) {
+
+	var id = 0
+	  , px = Math.random();
+	module.exports = function(key){
+	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+	};
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $          = __webpack_require__(109)
+	  , descriptor = __webpack_require__(200)
+	  , setTag     = __webpack_require__(207)
+	  , IteratorPrototype = {};
+
+	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+	__webpack_require__(199)(IteratorPrototype, __webpack_require__(203)('iterator'), function(){ return this; });
+
+	module.exports = function(Constructor, NAME, next){
+	  Constructor.prototype = $.create(IteratorPrototype, {next: descriptor(1, next)});
+	  setTag(Constructor, NAME + ' Iterator');
+	};
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var def = __webpack_require__(109).setDesc
+	  , has = __webpack_require__(202)
+	  , TAG = __webpack_require__(203)('toStringTag');
+
+	module.exports = function(it, tag, stat){
+	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+	};
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $at  = __webpack_require__(209)(true);
+
+	// 21.1.3.27 String.prototype[@@iterator]()
+	__webpack_require__(196)(String, 'String', function(iterated){
+	  this._t = String(iterated); // target
+	  this._i = 0;                // next index
+	// 21.1.5.2.1 %StringIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , index = this._i
+	    , point;
+	  if(index >= O.length)return {value: undefined, done: true};
+	  point = $at(O, index);
+	  this._i += point.length;
+	  return {value: point, done: false};
+	});
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// true  -> String#at
+	// false -> String#codePointAt
+	var toInteger = __webpack_require__(210)
+	  , defined   = __webpack_require__(106);
+	module.exports = function(TO_STRING){
+	  return function(that, pos){
+	    var s = String(defined(that))
+	      , i = toInteger(pos)
+	      , l = s.length
+	      , a, b;
+	    if(i < 0 || i >= l)return TO_STRING ? '' : undefined;
+	    a = s.charCodeAt(i);
+	    return a < 0xd800 || a > 0xdbff || i + 1 === l
+	      || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+	        ? TO_STRING ? s.charAt(i) : a
+	        : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+	  };
+	};
+
+/***/ },
+/* 210 */
+/***/ function(module, exports) {
+
+	// 7.1.4 ToInteger
+	var ceil  = Math.ceil
+	  , floor = Math.floor;
+	module.exports = function(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	};
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var anObject = __webpack_require__(212)
+	  , get      = __webpack_require__(213);
+	module.exports = __webpack_require__(98).getIterator = function(it){
+	  var iterFn = get(it);
+	  if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
+	  return anObject(iterFn.call(it));
+	};
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(94);
+	module.exports = function(it){
+	  if(!isObject(it))throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var classof   = __webpack_require__(214)
+	  , ITERATOR  = __webpack_require__(203)('iterator')
+	  , Iterators = __webpack_require__(192);
+	module.exports = __webpack_require__(98).getIteratorMethod = function(it){
+	  if(it != undefined)return it[ITERATOR]
+	    || it['@@iterator']
+	    || Iterators[classof(it)];
+	};
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// getting tag from 19.1.3.6 Object.prototype.toString()
+	var cof = __webpack_require__(195)
+	  , TAG = __webpack_require__(203)('toStringTag')
+	  // ES3 wrong here
+	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
+
+	module.exports = function(it){
+	  var O, T, B;
+	  return it === undefined ? 'Undefined' : it === null ? 'Null'
+	    // @@toStringTag case
+	    : typeof (T = (O = Object(it))[TAG]) == 'string' ? T
+	    // builtinTag case
+	    : ARG ? cof(O)
+	    // ES3 arguments fallback
+	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+	};
+
+/***/ },
+/* 215 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"mine\" class=\"view\"><div id=\"mine-topbar\" class=\"am-padding-sm\"><a v-link=\"{ name: 'today' }\"><img src=\"/logo-48.png\" alt=\"今日博物展\" width=\"25.6\" height=\"25.6\" class=\"am-margin-sm am-round\"/></a><div id=\"mine-info\" v-link=\"{ path: 'me', append: true }\" class=\"am-cf\"><img :src=\"data.avatar\" height=\"48\" class=\"am-circle am-fl am-margin-right\"/><div class=\"am-text-lg\">{{ data.nickname }}</div><div class=\"am-text-xs\">{{ data.description }}</div></div><div id=\"mine-stat\" class=\"am-margin-top\"><span class=\"am-margin-vertical am-padding-xs am-padding-horizontal am-round am-text-sm\"><span>{{ data.galleries.length }} 长廊</span><span class=\"am-margin-right-lg\"></span><span>{{ itemNum }} 物品</span></span></div></div><div id=\"mine-galleries\"><gallery v-for=\"gallery in data.galleries\" :data=\"gallery\" class=\"am-margin-sm am-margin-bottom\"></gallery></div><div id=\"mine-child\" class=\"view-wrapper\"><router-view></router-view></div></div>";
+
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(217)
+	module.exports = __webpack_require__(219)
+	;(typeof module.exports === "function" ? module.exports.options : module.exports).template = __webpack_require__(220)
+	if (false) {
+	(function () {
+	var hotAPI = require("vue-hot-reload-api")
+	hotAPI.install(require("vue"))
+	if (!hotAPI.compatible) return
+	var id = "-!babel?optional[]=runtime&loose=all&nonStandard=false!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./App.vue"
+	hotAPI.createRecord(id, module.exports)
+	module.hot.accept(["-!babel?optional[]=runtime&loose=all&nonStandard=false!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./App.vue","-!vue-html!template-html?raw&engine=jade!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue"], function () {
+	var newOptions = require("-!babel?optional[]=runtime&loose=all&nonStandard=false!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./App.vue")
+	var newTemplate = require("-!vue-html!template-html?raw&engine=jade!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./App.vue")
+	hotAPI.update(id, newOptions, newTemplate)
+	})
+	})()
+	}
+
+/***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(218);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(127)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-rewriter.js!./node_modules/sass-loader/index.js!./node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue", function() {
+				var newContent = require("!!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-rewriter.js!./node_modules/sass-loader/index.js!./node_modules/vue-loader/lib/selector.js?type=style&index=0!./App.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(126)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "body {\n  background-color: #e8e9eb; }\n\n.view {\n  background-color: #e8e9eb; }\n\n.view-wrapper {\n  position: absolute;\n  top: 0;\n  width: 100%;\n  left: 0; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 219 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = {
+	  data: function data() {
+	    return {
+	      userId: null,
+	      accessToken: null
+	    };
+	  },
+	  ready: function ready() {
+	    this.userId = this.getCookie('userId');
+	    this.accessToken = this.getCookie('accessToken');
+	  },
+	  methods: {
+	    login: function login(accessToken) {
+	      this.userId = accessToken.userId;
+	      this.setCookie('userId', accessToken.userId, 30);
+	      this.accessToken = accessToken.id;
+	      this.setCookie('accessToken', accessToken.id, 30);
+	    },
+	    logout: function logout() {
+	      this.userId = null;
+	      this.setCookie('userId', '', 0);
+	      this.accessToken = null;
+	      this.setCookie('accessToken', '', 0);
+	    },
+	    setCookie: function setCookie(name, value, expireDate) {
+	      var exdate = new Date();
+	      exdate.setDate(exdate.getDate() + expireDate);
+	      document.cookie = name + '=' + escape(value) + (expireDate == null ? '' : ';expires=' + exdate.toGMTString());
+	    },
+	    getCookie: function getCookie(name) {
+	      if (document.cookie.length > 0) {
+	        var start = document.cookie.indexOf(name + '=');
+	        if (start !== -1) {
+	          start = start + name.length + 1;
+	          var end = document.cookie.indexOf(';', start);
+	          if (end === -1) end = document.cookie.length;
+	          return unescape(document.cookie.substring(start, end));
+	        }
+	      }
+	      return null;
+	    }
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 220 */
 /***/ function(module, exports) {
 
 	module.exports = "<router-view></router-view>";

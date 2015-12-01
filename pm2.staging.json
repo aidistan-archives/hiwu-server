@@ -9,7 +9,7 @@
     "staging": {
       "user": "root",
       "host": "palace.server.hiwu.ren",
-      "ref": "origin/master",
+      "ref": "origin/develop",
       "repo": "git@github.com:hiwu/hiwu-server.git",
       "path": "/var/www/staging",
       "post-deploy": "cnpm install ; pm2 startOrRestart pm2.staging.json --env staging",
