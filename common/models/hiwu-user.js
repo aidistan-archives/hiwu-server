@@ -82,9 +82,11 @@ module.exports = function(HiwuUser) {
               }, function(err, user) {
                 if (err) return cb(err);
 
-                HiwuUser.login({
-                  email: uid + '@weixin.qq.com', password: uid
-                }, include, cb);
+                user.updateAvatarByUrl(data.headimgurl, function(err, user) {
+                  HiwuUser.login({
+                    email: uid + '@weixin.qq.com', password: uid
+                  }, include, cb);
+                });
               });
             }); });
           }
@@ -147,22 +149,24 @@ module.exports = function(HiwuUser) {
               access_token: data.access_token,
               uid: data.uid
             }), function(res) {
-              var data = '';
+              var data = [];
 
-              res.on('data', function(chunk) { data += chunk; });
+              res.on('data', function(chunk) { data.push(chunk); });
               res.on('end',  function() {
-                data = JSON.parse(data);
+                data = JSON.parse(Buffer.concat(data));
 
                 // Create the non-existing user
                 HiwuUser.create({
                   email: uid + '@weibo.com', password: uid,
-                  nickname: data.screen_name, avatar: data.avatar_hd, wb_uid: uid
+                  nickname: data.screen_name, avatar: data.avatar_large, wb_uid: uid
                 }, function(err, user) {
                   if (err) return cb(err);
 
-                  HiwuUser.login({
-                    email: uid + '@weibo.com', password: uid
-                  }, include, cb);
+                  user.updateAvatarByUrl(data.avatar_hd, function(err, user) {
+                    HiwuUser.login({
+                      email: uid + '@weibo.com', password: uid
+                    }, include, cb);
+                  });
                 });
               });
             });
@@ -193,7 +197,35 @@ module.exports = function(HiwuUser) {
     }
   );
 
-  HiwuUser.prototype.updateAvatar = function(req, cb) {
+  HiwuUser.prototype.updateAvatarByUrl = function(url, cb) {
+    var self = this;
+
+    http.get(url, function(res) {
+      var data = [];
+      var oss  = HiwuUser.app.aliyun.oss;
+
+      res.on('data', function(chunk) { data.push(chunk); });
+      res.on('end',  function() {
+        // Save the avatar
+        oss.putObject({
+          Bucket: 'hiwu',
+          Key: oss.makeKey('avatar', self.id),
+          Body: Buffer.concat(data),
+          ContentType: res.headers['content-type']
+        }, function (err, data) {
+          if (err) {
+            console.log('Failed to upload to Aliyun OSS:', err);
+          }
+        });
+
+        // Update the avatar url
+        self.updateAttribute('avatar', oss.makeUrl('avatar', self.id), cb);
+      });
+    });
+  };
+
+  HiwuUser.prototype.updateAvatar =
+  HiwuUser.prototype.updateAvatarByFile = function(req, cb) {
     var self = this;
 
     new multiparty.Form().parse(req, function(err, data, files) {
