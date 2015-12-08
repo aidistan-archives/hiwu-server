@@ -1,4 +1,6 @@
 var fs = require('fs');
+var qs = require('querystring');
+var http  = require('http');
 var https = require('https');
 var multiparty = require('multiparty');
 
@@ -46,52 +48,59 @@ module.exports = function(HiwuUser) {
     }
   );
 
-  HiwuUser.codeLogin = function(code, state, include, cb) {
+  HiwuUser.weixinLogin = function(code, include, cb) {
     https.get(
-      'https://api.weixin.qq.com/sns/oauth2/access_token?' +
-      'appid=wx92f55323cbadd8e8&secret=d4624c36b6795d1d99dcf0547af5443d&' +
-      'code=' + code + '&grant_type=authorization_code',
-      function(res) {
-        res.on('data', function(data) {
-          var unionid = JSON.parse(data).unionid;
-          if (unionid === undefined) return cb(new Error('Invalid code given'));
+      'https://api.weixin.qq.com/sns/oauth2/access_token?' + qs.stringify({
+        appid: 'wx92f55323cbadd8e8',
+        secret: 'd4624c36b6795d1d99dcf0547af5443d',
+        grant_type: 'authorization_code',
+        code: code
+      }), function(res) { res.on('data', function(data) {
+        data = JSON.parse(data);
+        var uid = data.unionid;
+        if (uid === undefined) return cb(new Error('Invalid code given'));
 
-          HiwuUser.findOne({
-            where: { unionid: unionid }
-          }, function(err, user) {
-            if (user) {
-              HiwuUser.login({
-                email: unionid + '@weixin.qq.com', password: unionid
-              }, include, cb);
-            } else {
+        HiwuUser.findOne({
+          where: { wx_uid: uid }
+        }, function(err, user) {
+          if (user) {
+            HiwuUser.login({
+              email: uid + '@weixin.qq.com', password: uid
+            }, include, cb);
+          } else {
+            // Fetch user info from Weixin
+            https.get('https://api.weixin.qq.com/sns/userinfo?' + qs.stringify({
+              access_token: data.access_token,
+              openid: data.openid
+            }), function(res) { res.on('data', function(data) {
+              data = JSON.parse(data);
+
+              // Create the non-existing user
               HiwuUser.create({
-                email: unionid + '@weixin.qq.com', password: unionid
+                email: uid + '@weixin.qq.com', password: uid,
+                nickname: data.nickname, avatar: data.headimgurl, wx_uid: uid
               }, function(err, user) {
                 if (err) return cb(err);
 
                 HiwuUser.login({
-                  email: unionid + '@weixin.qq.com', password: unionid
+                  email: uid + '@weixin.qq.com', password: uid
                 }, include, cb);
               });
-            }
-          });
+            }); });
+          }
         });
-      }
+      }); }
     );
   };
 
   HiwuUser.remoteMethod(
-    'codeLogin',
+    'weixinLogin',
     {
       description: 'Login a user with Weixin code.',
       accepts: [
         {
           arg: 'code', type: 'string', required: true,
           http: {source: 'query'}
-        },
-        {
-          arg: 'state', type: 'string',
-          http: {source: 'query' }
         },
         {
           arg: 'include', type: ['string'],
@@ -101,22 +110,100 @@ module.exports = function(HiwuUser) {
       returns: {
         arg: 'accessToken', type: 'object', root: true
       },
-      http: {verb: 'get'}
+      http: {verb: 'post'}
+    }
+  );
+
+  HiwuUser.weiboLogin = function(code, include, cb) {
+    var options = {
+      hostname: 'api.weibo.com',
+      port: 443,
+      path: '/oauth2/access_token?' + qs.stringify({
+        client_id: '3167931574',
+        client_secret: '0615faed88913d1755cd6d85729d0860',
+        grant_type: 'authorization_code',
+        redirect_uri: 'http://hiwu.ren',
+        code: code
+      }),
+      method: 'POST'
+    };
+
+    https.request(options, function(res) {
+      res.on('data', function(data) {
+        data = JSON.parse(data);
+        var uid = data.uid;
+        if (uid === undefined) return cb(new Error('Invalid code given'));
+
+        HiwuUser.findOne({
+          where: { wb_uid: uid }
+        }, function(err, user) {
+          if (user) {
+            HiwuUser.login({
+              email: uid + '@weibo.com', password: uid
+            }, include, cb);
+          } else {
+            // Fetch user info from Weibo
+            https.get('https://api.weibo.com/2/users/show.json?' + qs.stringify({
+              access_token: data.access_token,
+              uid: data.uid
+            }), function(res) {
+              var data = '';
+
+              res.on('data', function(chunk) { data += chunk; });
+              res.on('end',  function() {
+                data = JSON.parse(data);
+
+                // Create the non-existing user
+                HiwuUser.create({
+                  email: uid + '@weibo.com', password: uid,
+                  nickname: data.screen_name, avatar: data.avatar_hd, wb_uid: uid
+                }, function(err, user) {
+                  if (err) return cb(err);
+
+                  HiwuUser.login({
+                    email: uid + '@weibo.com', password: uid
+                  }, include, cb);
+                });
+              });
+            });
+          }
+        });
+      });
+    }).end();
+  };
+
+  HiwuUser.remoteMethod(
+    'weiboLogin',
+    {
+      description: 'Login a user with Weibo code.',
+      accepts: [
+        {
+          arg: 'code', type: 'string', required: true,
+          http: {source: 'query'}
+        },
+        {
+          arg: 'include', type: ['string'],
+          http: {source: 'query' }
+        }
+      ],
+      returns: {
+        arg: 'accessToken', type: 'object', root: true
+      },
+      http: {verb: 'post'}
     }
   );
 
   HiwuUser.prototype.updateAvatar = function(req, cb) {
+    var self = this;
+
     new multiparty.Form().parse(req, function(err, data, files) {
       if (err) return cb(err);
 
-      req.remotingContext.instance.updateAttributes(data, function(err, user) {
+      self.updateAttributes(data, function(err, user) {
         if (err) return cb(err);
 
         var oss  = HiwuUser.app.aliyun.oss;
         var file = files.avatar[0];
-
-        // Update the avatar url
-        user.updateAttribute('avatar', oss.makeUrl('avatar', user.id));
 
         // Save the avatar
         oss.putObject({
@@ -134,7 +221,8 @@ module.exports = function(HiwuUser) {
             fs.unlink(files[i][j].path, function (err) { if (err) throw err; });
         });
 
-        cb(err, user);
+        // Update the avatar url
+        user.updateAttribute('avatar', oss.makeUrl('avatar', user.id), cb);
       });
     });
   };

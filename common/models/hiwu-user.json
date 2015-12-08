@@ -6,10 +6,6 @@
     "validateUpsert": true
   },
   "properties": {
-    "unionid": {
-      "type": "string",
-      "default": ""
-    },
     "nickname": {
       "type": "string",
       "default": ""
@@ -19,6 +15,14 @@
       "default": ""
     },
     "avatar": {
+      "type": "string",
+      "default": ""
+    },
+    "wx_uid": {
+      "type": "string",
+      "default": ""
+    },
+    "wb_uid": {
       "type": "string",
       "default": ""
     }
@@ -112,7 +116,13 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "codeLogin"
+      "property": "weixinLogin"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "weiboLogin"
     },
     {
       "principalType": "ROLE",

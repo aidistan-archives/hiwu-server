@@ -67,10 +67,12 @@ module.exports = function(Item) {
   Item.disableRemoteMethod('__create__photos', false);
 
   Item.prototype.createPhoto = function(req, cb) {
+    var self = this;
+
     new multiparty.Form().parse(req, function(err, data, files) {
       if (err) return cb(err);
 
-      data.itemId = req.remotingContext.instance.id;
+      data.itemId = self.id;
       Item.app.models.Photo.create(data, function(err, photo) {
         if (err) return cb(err);
 
