@@ -1,6 +1,8 @@
 {
   "name": "Like",
   "base": "PersistedModel",
+  "properties": {},
+  "validations": [],
   "relations": {
     "liker": {
       "type": "belongsTo",
@@ -12,5 +14,7 @@
       "model": "Item",
       "foreignKey": "itemId"
     }
-  }
+  },
+  "acls": [],
+  "methods": {}
 }

@@ -1,6 +1,8 @@
 {
   "name": "CollectionItem",
   "base": "PersistedModel",
+  "properties": {},
+  "validations": [],
   "relations": {
     "collection": {
       "type": "belongsTo",
@@ -12,5 +14,7 @@
       "model": "Item",
       "foreignKey": "itemId"
     }
-  }
+  },
+  "acls": [],
+  "methods": {}
 }

@@ -11,6 +11,7 @@
       "required": true
     }
   },
+  "validations": [],
   "relations": {
     "hiwuUser": {
       "type": "belongsTo",
@@ -32,5 +33,7 @@
       "model": "Comment",
       "foreignKey": "commentId"
     }
-  }
+  },
+  "acls": [],
+  "methods": {}
 }
