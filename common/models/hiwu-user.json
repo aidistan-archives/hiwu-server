@@ -129,6 +129,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "publicView"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "jianliao"
     }
   ],
   "methods": {}
