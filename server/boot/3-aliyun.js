@@ -21,9 +21,30 @@ module.exports = function(app) {
     return(segs.join('/'));
   };
 
-  app.aliyun.oss.makeUrl = function() {
+  app.aliyun.oss.makeInternalUrl = function() {
+    return(
+      'http://oss-cn-beijing-internal.aliyuncs.com' +
+      app.aliyun.oss.makeKey.apply(this, arguments)
+    );
+  };
+
+  app.aliyun.oss.makeExternalUrl = function() {
     return(
       'http://hiwu.oss-cn-beijing.aliyuncs.com/' +
+      app.aliyun.oss.makeKey.apply(this, arguments)
+    );
+  };
+
+  app.aliyun.oss.makeCdnUrl = function() {
+    return(
+      'http://oss.hiwu.ren/' +
+      app.aliyun.oss.makeKey.apply(this, arguments)
+    );
+  };
+
+  app.aliyun.oss.makeImgUrl = function() {
+    return(
+      'http://img.hiwu.ren/' +
       app.aliyun.oss.makeKey.apply(this, arguments)
     );
   };

@@ -79,9 +79,6 @@ module.exports = function(Item) {
         var oss  = Item.app.aliyun.oss;
         var file = files.data[0];
 
-        // Update the url
-        photo.updateAttribute('url', oss.makeUrl('photo', photo.id));
-
         // Save the image
         oss.putObject({
           Bucket: 'hiwu',
@@ -100,7 +97,8 @@ module.exports = function(Item) {
             });
         });
 
-        cb(err, photo);
+        // Update the url
+        photo.updateAttribute('url', oss.makeImgUrl('photo', photo.id), cb);
       });
     });
   };

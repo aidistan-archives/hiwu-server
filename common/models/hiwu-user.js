@@ -299,7 +299,7 @@ module.exports = function(HiwuUser) {
         });
 
         // Update the avatar url
-        self.updateAttribute('avatar', oss.makeUrl('avatar', self.id), cb);
+        self.updateAttribute('avatar', oss.makeImgUrl('avatar', self.id), cb);
       });
     });
   };
@@ -334,7 +334,7 @@ module.exports = function(HiwuUser) {
         });
 
         // Update the avatar url
-        user.updateAttribute('avatar', oss.makeUrl('avatar', user.id), cb);
+        user.updateAttribute('avatar', oss.makeImgUrl('avatar', user.id), cb);
       });
     });
   };
