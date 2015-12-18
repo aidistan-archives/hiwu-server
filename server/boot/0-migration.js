@@ -12,7 +12,7 @@ module.exports = function(app, cb) {
       autoupdate();
     }
     else if (app.get('env') === 'production') {
-      automigrate();
+      autoupdate();
     } else {
       cb();
     }
