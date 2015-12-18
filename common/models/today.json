@@ -46,5 +46,8 @@
       "property": "publicView"
     }
   ],
-  "methods": {}
+  "methods": {},
+  "scope": {
+    "order": ["date_y DESC", "date_m DESC", "date_d DESC"]
+  }
 }
