@@ -26,6 +26,10 @@
       "type": "number",
       "default": 0
     },
+    "country": {
+      "type": "string",
+      "default": ""
+    },
     "city": {
       "type": "string",
       "default": ""
