@@ -9,6 +9,7 @@
   },
   "main": "server/server.js",
   "scripts": {
+    "dev": "pm2-dev run server/server.js",
     "pretest": "jshint ."
   },
   "dependencies": {
