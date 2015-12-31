@@ -1,21 +1,2 @@
 # Ignore node modules
 /node_modules
-
-*.csv
-*.dat
-*.iml
-*.log
-*.out
-*.pid
-*.seed
-*.sublime-*
-*.swo
-*.swp
-*.tgz
-*.xml
-.DS_Store
-.idea
-.project
-.strong-pm
-# coverage
-# npm-debug.log
