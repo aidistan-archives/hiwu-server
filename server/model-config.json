@@ -69,7 +69,7 @@
     "dataSource": "db",
     "public": false
   },
-  "Today": {
+  "SelectedGallery": {
     "dataSource": "db",
     "public": true
   }

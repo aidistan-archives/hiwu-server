@@ -1,6 +1,5 @@
 {
-  "name": "Today",
-  "plural": "Today",
+  "name": "SelectedGallery",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

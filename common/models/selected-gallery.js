@@ -1,6 +1,6 @@
-module.exports = function(Today) {
-  Today.publicView = function(cb) {
-    Today.find({
+module.exports = function(SelectedGallery) {
+  SelectedGallery.publicView = function(cb) {
+    SelectedGallery.find({
       include: {
         relation: 'gallery',
         scope: {
@@ -32,13 +32,13 @@ module.exports = function(Today) {
     });
   };
 
-  Today.remoteMethod(
+  SelectedGallery.remoteMethod(
     'publicView',
     {
       description: 'Get Today\'s selected galleries.',
       accepts: [],
       returns: {
-        arg: 'entries', type: ['Today'], root: true
+        arg: 'entries', type: ['SelectedGallery'], root: true
       },
       http: {verb: 'get'}
     }
