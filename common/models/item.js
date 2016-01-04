@@ -1,8 +1,8 @@
 var async = require('async');
+var crypto = require('crypto');
 var fs = require('fs');
 var loopback = require('loopback');
 var multiparty = require('multiparty');
-
 
 module.exports = function(Item) {
   // Wrap the built-in `create` method to add userId attribute
@@ -78,12 +78,15 @@ module.exports = function(Item) {
 
         var oss  = Item.app.aliyun.oss;
         var file = files.data[0];
+        var body = fs.readFileSync(file.path);
+        var hash = crypto.createHash('md5').update(body).digest('hex');
+        var name = photo.id + '_' + hash;
 
         // Save the image
         oss.putObject({
           Bucket: 'hiwu',
-          Key: oss.makeKey('photo', photo.id),
-          Body: fs.readFileSync(file.path),
+          Key: oss.makeKey('photo', name),
+          Body: body,
           ContentType: file.headers['content-type'],
         }, function (err, data) {
           if (err) {
@@ -98,7 +101,7 @@ module.exports = function(Item) {
         });
 
         // Update the url
-        photo.updateAttribute('url', oss.makeImgUrl('photo', photo.id), cb);
+        photo.updateAttribute('url', oss.makeImgUrl('photo', name), cb);
       });
     });
   };

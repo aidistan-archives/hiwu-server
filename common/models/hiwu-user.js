@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 var fs = require('fs');
 var qs = require('querystring');
 var http  = require('http');
@@ -286,11 +287,15 @@ module.exports = function(HiwuUser) {
 
       res.on('data', function(chunk) { data.push(chunk); });
       res.on('end',  function() {
+        var body = Buffer.concat(data);
+        var hash = crypto.createHash('md5').update(body).digest('hex');
+        var name = self.id + '_' + hash;
+
         // Save the avatar
         oss.putObject({
           Bucket: 'hiwu',
-          Key: oss.makeKey('avatar', self.id),
-          Body: Buffer.concat(data),
+          Key: oss.makeKey('avatar', name),
+          Body: body,
           ContentType: res.headers['content-type']
         }, function (err, data) {
           if (err) {
@@ -299,7 +304,7 @@ module.exports = function(HiwuUser) {
         });
 
         // Update the avatar url
-        self.updateAttribute('avatar', oss.makeImgUrl('avatar', self.id), cb);
+        self.updateAttribute('avatar', oss.makeImgUrl('avatar', name), cb);
       });
     });
   };
@@ -316,12 +321,15 @@ module.exports = function(HiwuUser) {
 
         var oss  = HiwuUser.app.aliyun.oss;
         var file = files.avatar[0];
+        var body = fs.readFileSync(file.path);
+        var hash = crypto.createHash('md5').update(body).digest('hex');
+        var name = self.id + '_' + hash;
 
         // Save the avatar
         oss.putObject({
           Bucket: 'hiwu',
-          Key: oss.makeKey('avatar', user.id),
-          Body: fs.readFileSync(file.path),
+          Key: oss.makeKey('avatar', name),
+          Body: body,
           ContentType: file.headers['content-type'],
         }, function (err, data) {
           if (err) {
@@ -334,7 +342,7 @@ module.exports = function(HiwuUser) {
         });
 
         // Update the avatar url
-        user.updateAttribute('avatar', oss.makeImgUrl('avatar', user.id), cb);
+        user.updateAttribute('avatar', oss.makeImgUrl('avatar', name), cb);
       });
     });
   };
