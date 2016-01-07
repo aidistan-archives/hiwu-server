@@ -26,14 +26,7 @@ app.start = function() {
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
-boot(app, {
-  appRootDir: __dirname,
-  components: app.get('env') === 'production' ? {} : {
-    'loopback-component-explorer': {
-      'mountPath': '/explorer'
-    }
-  }
-}, function(err) {
+boot(app, { appRootDir: __dirname, }, function(err) {
   if (err) throw err;
 
   // start the server if `$ node server.js`
