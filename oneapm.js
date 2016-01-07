@@ -5,10 +5,7 @@
  * description of configuration variables and their potential values.
  */
 exports.config = {
-  app_name : ['Hiwu'],
-  browser_monitoring : {
-    enable : false
-  },
+  app_name : [],
   license_key : 'DFsJBwEEUQc4b85BSlZBXwgeWk32e0EOVBkBAlQFF8f84VcKGQJcHgYF3d24Uw0YAgNIAgw=',
   logging : {
     /**
@@ -24,12 +21,11 @@ exports.config = {
 };
 
 if (process.env.NODE_ENV === 'staging') {
-  exports.config.app_name = ['Hiwu (staging)'];
+  exports.config.app_name.push('Hiwu (staging)');
 }
 else if (process.env.NODE_ENV === 'production') {
-  // Nothing to do
+  exports.config.app_name.push('Hiwu');
 }
 else {
-  exports.config.app_name = ['Hiwu (development)'];
-  exports.config.logging.level = 'trace';
+  exports.config.app_name.push('Hiwu (development)');
 }

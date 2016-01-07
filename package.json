@@ -4,8 +4,8 @@
   "description": "Hiwu API server",
   "license": "MIT",
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "git",
+    "url": "https://github.com/hiwu/hiwu-server"
   },
   "main": "server/server.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "async": "^1.5.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "ejs": "^2.3.4",
     "loopback": "^2.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.1.0",
