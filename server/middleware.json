@@ -27,17 +27,7 @@
       "params": "$!../client"
     }
   },
-  "final:before": {
-    "./middleware/spa": {
-      "params": {
-        "history": true
-      }
-    }
-  },
   "final": {
-    "loopback#urlNotFound": {}
-  },
-  "final:after": {
-    "loopback#errorHandler": {}
+    "./middleware/client": {}
   }
 }
