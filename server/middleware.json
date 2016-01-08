@@ -12,8 +12,10 @@
     }
   },
   "session": {
+    "loopback#context": {}
   },
   "auth": {
+    "loopback#token": {}
   },
   "parse": {
   },
