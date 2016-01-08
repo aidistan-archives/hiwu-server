@@ -16,7 +16,8 @@ module.exports = function(SelectedGallery) {
             }
           }]
         }
-      }
+      },
+      order: ["date_y DESC", "date_m DESC", "date_d DESC"]
     }, function(err, _entries) {
       var entries = [];
 
