@@ -316,34 +316,30 @@ module.exports = function(HiwuUser) {
     new multiparty.Form().parse(req, function(err, data, files) {
       if (err) return cb(err);
 
-      self.updateAttributes(data, function(err, user) {
-        if (err) return cb(err);
+      var oss  = HiwuUser.app.aliyun.oss;
+      var file = files.data[0];
+      var body = fs.readFileSync(file.path);
+      var hash = crypto.createHash('md5').update(body).digest('hex');
+      var name = self.id + '_' + hash;
 
-        var oss  = HiwuUser.app.aliyun.oss;
-        var file = files.avatar[0];
-        var body = fs.readFileSync(file.path);
-        var hash = crypto.createHash('md5').update(body).digest('hex');
-        var name = self.id + '_' + hash;
+      // Save the avatar
+      oss.putObject({
+        Bucket: 'hiwu',
+        Key: oss.makeKey('avatar', name),
+        Body: body,
+        ContentType: file.headers['content-type'],
+      }, function (err, data) {
+        if (err) {
+          console.log('Failed to upload to Aliyun OSS:', err);
+        }
 
-        // Save the avatar
-        oss.putObject({
-          Bucket: 'hiwu',
-          Key: oss.makeKey('avatar', name),
-          Body: body,
-          ContentType: file.headers['content-type'],
-        }, function (err, data) {
-          if (err) {
-            console.log('Failed to upload to Aliyun OSS:', err);
-          }
-
-          // Cleanup after uploading
-          for (var i in files) for (var j in files[i])
-            fs.unlink(files[i][j].path, function (err) { if (err) throw err; });
-        });
-
-        // Update the avatar url
-        user.updateAttribute('avatar', oss.makeImgUrl('avatar', name), cb);
+        // Cleanup after uploading
+        for (var i in files) for (var j in files[i])
+          fs.unlink(files[i][j].path, function (err) { if (err) throw err; });
       });
+
+      // Update the avatar url
+      self.updateAttribute('avatar', oss.makeImgUrl('avatar', name), cb);
     });
   };
 
