@@ -1,6 +1,4 @@
 {
-  "initial:before": {
-  },
   "initial": {
     "compression": {},
     "cors": {
@@ -30,6 +28,6 @@
     }
   },
   "final": {
-    "./middleware/client": {}
+    "./middlewares/client": {}
   }
 }
