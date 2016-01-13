@@ -18,19 +18,7 @@ module.exports = function(SelectedGallery) {
         }
       },
       order: ["date_y DESC", "date_m DESC", "date_d DESC"]
-    }, function(err, _entries) {
-      var entries = [];
-
-      _entries.forEach(function(entry) {
-        var gallery = entry.gallery(); // have to call gallery() explicitly
-        if (gallery) {
-          entry.gallery = gallery;
-          entries.push(entry);
-        }
-      });
-
-      cb(err, entries);
-    });
+    }, cb);
   };
 
   SelectedGallery.remoteMethod(
