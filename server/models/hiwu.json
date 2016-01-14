@@ -1,0 +1,11 @@
+{
+  "name": "Hiwu",
+  "plural": "Hiwu",
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ]
+}

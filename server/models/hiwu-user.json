@@ -109,6 +109,12 @@
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "create"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "simpleLogin"
     },
@@ -129,12 +135,6 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "publicView"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "jianliao"
     }
   ],
   "methods": {}

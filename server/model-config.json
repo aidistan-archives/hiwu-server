@@ -33,6 +33,10 @@
     "dataSource": "db",
     "public": false
   },
+  "Hiwu": {
+    "dataSource": null,
+    "public": true
+  },
   "HiwuUser": {
     "dataSource": "db",
     "public": true

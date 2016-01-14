@@ -15,11 +15,12 @@
   "auth": {
     "loopback#token": {}
   },
-  "parse": {
-  },
+  "parse": {},
   "routes": {
     "loopback#rest": {
-      "paths": ["${restApiRoot}"]
+      "paths": [
+        "${restApiRoot}"
+      ]
     }
   },
   "files": {
