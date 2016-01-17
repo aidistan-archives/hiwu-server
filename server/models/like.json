@@ -4,12 +4,12 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "liker": {
+    "hiwuUser": {
       "type": "belongsTo",
       "model": "HiwuUser",
       "foreignKey": "userId"
     },
-    "like": {
+    "item": {
       "type": "belongsTo",
       "model": "Item",
       "foreignKey": "itemId"

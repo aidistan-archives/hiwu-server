@@ -61,7 +61,8 @@
       "type": "hasMany",
       "model": "HiwuUser",
       "foreignKey": "itemId",
-      "through": "Like"
+      "through": "Like",
+      "keyThrough": "userId"
     },
     "comments": {
       "type": "hasMany",

@@ -43,7 +43,8 @@
       "type": "hasMany",
       "model": "Item",
       "foreignKey": "userId",
-      "through": "Like"
+      "through": "Like",
+      "keyThrough": "itemId"
     }
   },
   "acls": [
