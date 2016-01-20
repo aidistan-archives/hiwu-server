@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var fs = require('fs');
 var http  = require('http');
 var https = require('https');
+var loopback = require('loopback');
 var multiparty = require('multiparty');
 var qs = require('querystring');
 
@@ -261,6 +262,23 @@ module.exports = function(HiwuUser) {
       }
     ],
     returns: {arg: 'hiwuUser', type: 'HiwuUser', root: true},
+    isStatic: false
+  });
+
+  HiwuUser.prototype.renew = function(cb) {
+    this.accessTokens.create({ ttl: 1209600 }, function(err, accessToken) {
+      if (err) return cb(err);
+
+      HiwuUser.logout(loopback.getCurrentContext().get('accessToken').id, function(err) {
+        if (err) { cb(err); } else { cb(null, accessToken); }
+      });
+    });
+  };
+
+  HiwuUser.remoteMethod('renew', {
+    description: 'Renew the access token of this user.',
+    returns: {arg: 'accessToken', type: 'AccessToken', root: true},
+    http: {verb: 'get', path: '/renew'},
     isStatic: false
   });
 
