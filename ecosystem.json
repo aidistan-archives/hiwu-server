@@ -1,0 +1,32 @@
+{
+  "apps": [{
+    "name": "hiwu-server",
+    "script": "server/server.js",
+    "merge_logs": true,
+    "log_date_format": "YYYY-MM-DD HH:mm Z"
+  }],
+  "deploy" : {
+    "staging": {
+      "user": "root",
+      "host": "palace.server.hiwu.ren",
+      "ref": "origin/develop",
+      "repo": "git@github.com:hiwu/hiwu-server.git",
+      "path": "/var/www/hiwu-server",
+      "post-deploy": "cnpm install ; pm2 startOrRestart ecosystem.json --env staging",
+      "env": {
+        "NODE_ENV": "staging"
+      }
+    },
+    "production": {
+      "user": "root",
+      "host": "muses.server.hiwu.ren",
+      "ref": "origin/master",
+      "repo": "git@github.com:hiwu/hiwu-server.git",
+      "path": "/var/www/hiwu-server",
+      "post-deploy": "cnpm install ; pm2 startOrRestart ecosystem.json --env production",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
