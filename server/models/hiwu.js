@@ -55,7 +55,16 @@ module.exports = function(Hiwu) {
         email: obj.email
       });
       options.path = '/v2/services/webhook/7442dd3fc7f9321951ade0cd7a31efe2af0ce5ee';
-    } else { return cb(null, {}); }
+    } else if (channel === 'feedback') {
+      if (
+        !isPrensent(obj.title) || !isPrensent(obj.description)
+      ) { return cb(null, {}); }
+
+      msg.title = obj.title;
+      msg.text = obj.description;
+      options.path = '/v2/services/webhook/4cf6679d598a47ee6dd853be77ee08e5d3168608';
+    }
+    else { return cb(null, {}); }
 
     var req = https.request(options, function(res) {
       var data = [];
