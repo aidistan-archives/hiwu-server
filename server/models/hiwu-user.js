@@ -173,8 +173,14 @@ module.exports = function(HiwuUser) {
     }).end();
   };
 
-  HiwuUser.weiboLogin = function(appid, code, include, cb) {
-    HiwuUser.weiboAccessToken(appid, code, function(data) {
+  HiwuUser.weiboLogin = function(appid, code, include, data, cb) {
+    if (code === 'skipped') {
+      login(data);
+    } else {
+      HiwuUser.weiboAccessToken(appid, code, login);
+    }
+
+    function login(data) {
       var uid = data.uid;
       if (uid === undefined) return cb(new Error('Invalid code given'));
 
@@ -214,7 +220,7 @@ module.exports = function(HiwuUser) {
           });
         }
       });
-    });
+    }
   };
 
   HiwuUser.remoteMethod('weiboLogin', {
@@ -231,6 +237,10 @@ module.exports = function(HiwuUser) {
       {
         arg: 'include', type: ['string'],
         http: {source: 'query' }
+      },
+      {
+        arg: 'data', type: 'object', require: false,
+        http: {source: 'body'}
       }
     ],
     returns: {
