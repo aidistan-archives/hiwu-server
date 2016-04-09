@@ -87,7 +87,7 @@ module.exports = function(Hiwu) {
   };
 
   Hiwu.remoteMethod('jianliao', {
-    description: 'Send a message to the given Jianliao channel',
+    description: '[Deprecated] Send a message to the given Jianliao channel',
     accepts: [
       {
         arg: 'channel', type: 'string',
@@ -97,6 +97,33 @@ module.exports = function(Hiwu) {
         arg: 'object', type: 'object',
         http: {source: 'body' },
         default: JSON.stringify({title: '', description: ''}, null, 2)
+      }
+    ],
+    returns: {
+      arg: 'return', type: 'object', root: true
+    }
+  });
+
+  Hiwu.mail = function(group, obj, cb) {
+    Hiwu.app.email.send({
+      from:    '物境未觉<no-reply@hiwu.ren>',
+      to:      group + '@hiwu.ren',
+      subject: obj.subject,
+      text:    obj.content
+    }, function(err) { cb(err); });
+  }
+
+  Hiwu.remoteMethod('mail', {
+    description: 'Send an email to the given group',
+    accepts: [
+      {
+        arg: 'group', type: 'string',
+        http: {source: 'query'}, required: true
+      },
+      {
+        arg: 'objet', type: 'object',
+        http: {source: 'body' },
+        default: JSON.stringify( {subject: '', content: ''} )
       }
     ],
     returns: {
