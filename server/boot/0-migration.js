@@ -24,10 +24,10 @@ module.exports = function(app, cb) {
 
   function autoupdate() {
     db.isActual(function(err, actual) {
-      if (!actual) {
-        db.autoupdate(cb);
-      } else {
+      if (actual) {
         cb();
+      } else {
+        db.autoupdate(cb);
       }
     });
   }
