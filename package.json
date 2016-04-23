@@ -9,10 +9,7 @@
   },
   "main": "server/server.js",
   "scripts": {
-    "dev": "pm2-dev run server/server.js",
-    "pretest": "jshint .",
-    "deploy-staging": "pm2 deploy staging",
-    "deploy-production": "pm2 deploy production"
+    "dev": "pm2-dev run ecosystem.json"
   },
   "dependencies": {
     "aliyun-sdk": "^1.5.7",

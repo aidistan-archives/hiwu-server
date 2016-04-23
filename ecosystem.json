@@ -2,6 +2,11 @@
   "apps": [{
     "name": "hiwu-server",
     "script": "server/server.js",
+    "ignore_watch": [
+      ".git",
+      "node_modules",
+      "server/memory.db.json"
+    ],
     "merge_logs": true,
     "log_date_format": "YYYY-MM-DD HH:mm Z"
   }],
