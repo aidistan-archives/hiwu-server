@@ -131,7 +131,16 @@ module.exports = function(HiwuUser) {
       var uid = data.unionid;
       if (uid === undefined) return cb(new Error('Invalid code given'));
 
-      self.updateAttribute('wx_uid', uid, cb);
+      HiwuUser.findOne({
+        where: { wx_uid: uid }
+      }, function(err, user) {
+        if (user) {
+          return cb(new Error('Weixin user exists'));
+        }
+        else {
+          self.updateAttribute('wx_uid', uid, cb);
+        }
+      });
     });
   };
 
@@ -252,10 +261,19 @@ module.exports = function(HiwuUser) {
     var self = this;
 
     HiwuUser.weiboAccessToken(appid, code, function(data) {
-      var uid = data.unionid;
+      var uid = data.uid;
       if (uid === undefined) return cb(new Error('Invalid code given'));
 
-      self.updateAttribute('wb_uid', uid, cb);
+      HiwuUser.findOne({
+        where: { wb_uid: uid }
+      }, function(err, user) {
+        if (user) {
+          return cb(new Error('Weibo user exists'));
+        }
+        else {
+          self.updateAttribute('wb_uid', uid, cb);
+        }
+      });
     });
   };
 
