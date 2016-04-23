@@ -56,12 +56,6 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "DENY",
-      "property": "deleteById"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$owner",
       "permission": "ALLOW",
       "property": "bindWeixin"
     },
