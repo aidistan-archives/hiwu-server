@@ -1,3 +1,3 @@
-module.exports = function(CollectionItem) {
+module.exports = function (CollectionItem) {
 
-};
+}

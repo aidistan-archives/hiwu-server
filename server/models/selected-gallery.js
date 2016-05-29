@@ -1,5 +1,5 @@
-module.exports = function(SelectedGallery) {
-  SelectedGallery.publicView = function(cb) {
+module.exports = function (SelectedGallery) {
+  SelectedGallery.publicView = function (cb) {
     SelectedGallery.find({
       include: {
         relation: 'gallery',
@@ -17,9 +17,9 @@ module.exports = function(SelectedGallery) {
           }]
         }
       },
-      order: ["date_y DESC", "date_m DESC", "date_d DESC"]
-    }, cb);
-  };
+      order: ['date_y DESC', 'date_m DESC', 'date_d DESC']
+    }, cb)
+  }
 
   SelectedGallery.remoteMethod(
     'publicView',
@@ -31,5 +31,5 @@ module.exports = function(SelectedGallery) {
       },
       http: {verb: 'get'}
     }
-  );
-};
+  )
+}
