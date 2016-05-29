@@ -1,6 +1,7 @@
 var oneapm = require('oneapm')
 var loopback = require('loopback')
 var boot = require('loopback-boot')
+
 var app = module.exports = loopback()
 
 // Setup the view render
@@ -9,7 +10,7 @@ app.set('views', './client')
 app.set('view engine', 'ejs')
 
 app.start = function () {
-  // start the web server
+  // Start the web server
   return app.listen(function () {
     app.emit('started')
     console.log('Environment: %s', app.get('env'))
