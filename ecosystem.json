@@ -17,7 +17,7 @@
       "ref": "origin/develop",
       "repo": "git@github.com:hiwu/hiwu-server.git",
       "path": "/var/www/hiwu-server",
-      "post-deploy": "cnpm install ; pm2 startOrRestart ecosystem.json --env staging",
+      "post-deploy": "npm install --registry=https://registry.npm.taobao.org --production; pm2 startOrRestart ecosystem.json --env staging",
       "env": {
         "NODE_ENV": "staging"
       }
@@ -28,7 +28,7 @@
       "ref": "origin/master",
       "repo": "git@github.com:hiwu/hiwu-server.git",
       "path": "/var/www/hiwu-server",
-      "post-deploy": "cnpm install ; pm2 startOrRestart ecosystem.json --env production",
+      "post-deploy": "npm install --registry=https://registry.npm.taobao.org --production; pm2 startOrRestart ecosystem.json --env production",
       "env": {
         "NODE_ENV": "production"
       }
