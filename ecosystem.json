@@ -5,7 +5,7 @@
     "ignore_watch": [
       ".git",
       "node_modules",
-      "server/memory.db.json"
+      "client"
     ],
     "merge_logs": true,
     "log_date_format": "YYYY-MM-DD HH:mm Z"
