@@ -1,41 +1,35 @@
-var fs = require('fs');
+require('shelljs/global')
+var fs = require('fs')
 
-task('default', ['client:build', 'client:copy', 'client:inject']);
+task('default', ['client:build', 'client:copy', 'client:inject'])
 
-namespace('client', function() {
-  desc('Build bundle files');
-  task('build', {async: true}, function(done) {
-    var cwd = process.cwd();
+namespace('client', function () {
+  desc('Build bundle files')
+  task('build', {async: true}, function () {
+    var cwd = process.cwd()
 
-    process.chdir('../hiwu-web/');
+    process.chdir('../hiwu-web/')
     jake.exec('npm run build', {printStdout: true}, function () {
-      process.chdir(cwd);
-      complete();
-    });
-  });
+      process.chdir(cwd)
+      complete()
+    })
+  })
 
-  desc('Copy static files to /client');
-  task('copy', function() {
-    fs.readdirSync('client').forEach(function(filename) {
-      fs.unlink('client/' + filename);
-    });
+  desc('Copy static files to /client')
+  task('copy', function () {
+    rm('-rf', 'client/')
+    cp('-R', '../hiwu-web/dist', 'client')
+  })
 
-    fs.readdirSync('../hiwu-web/static').forEach(function(filename) {
-      fs.writeFileSync(
-        'client/' + filename, fs.readFileSync('../hiwu-web/static/' + filename)
-      );
-    });
-  });
-
-  desc('Inject OneAPM Bi agent');
-  task('inject', function() {
+  desc('Inject OneAPM Bi agent')
+  task('inject', function () {
     fs.writeFileSync('client/index.ejs',
       fs.readFileSync('client/index.html', { encoding: 'utf-8' })
         .replace(
-          '<!-- OneAPM Bi agent placeholder -->',
+          '<script src="OneAPM Bi agent placeholder"></script>',
           '<%- oneapm.getBrowserTimingHeader() %>'
         )
-    );
-    fs.unlink('client/index.html');
-  });
-});
+    )
+    fs.unlink('client/index.html')
+  })
+})
