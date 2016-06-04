@@ -1,11 +1,15 @@
 {
   "name": "Hiwu",
   "plural": "Hiwu",
+  "properties": {},
+  "validations": [],
+  "relations": {},
   "acls": [
     {
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW"
     }
-  ]
+  ],
+  "methods": {}
 }
