@@ -38,7 +38,7 @@ webpack(webpackConfig, function (err, stats) {
   fs.writeFileSync('dist/index.ejs',
     fs.readFileSync('dist/index.html', { encoding: 'utf-8' })
       .replace(
-        '<script src="OneAPM Bi agent placeholder"></script>',
+        '<meta name=oneapm-bi content=placeholder>',
         '<%- oneapm.getBrowserTimingHeader() %>'
       )
   )
