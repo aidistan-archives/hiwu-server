@@ -6,7 +6,7 @@ var app = module.exports = loopback()
 
 // Setup the view render
 app.locals.oneapm = oneapm
-app.set('views', './client')
+app.set('views', './client/dist')
 app.set('view engine', 'ejs')
 
 app.start = function () {

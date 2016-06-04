@@ -1,0 +1,15 @@
+// Colors
+$primary:      #fbcf7f;
+$grey-darker:  #101010;
+$grey-dark:    #303030;
+$grey:         #808080;
+$grey-light:   #cecece;
+$grey-lighter: #efefef;
+
+// Medias
+$small-up:     unquote("only screen");
+$small-only:   unquote("only screen and (max-width: 640px)");
+$medium-up:    unquote("only screen and (min-width: 641px)");
+$medium-only:  unquote("only screen and (min-width: 641px) and (max-width: 1024px)");
+$large-up:     unquote("only screen and (min-width: 1025px)");
+$large-only:   unquote("only screen and (min-width: 1025px)");
