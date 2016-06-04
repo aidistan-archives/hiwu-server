@@ -47,7 +47,7 @@ export default {
         comments: []
       },
       photo: '',
-      likeImage: require('assets/like.png')
+      likeImage: require('assets/icon-like.png')
     }
   },
   computed: {

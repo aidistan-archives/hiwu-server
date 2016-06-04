@@ -22,7 +22,7 @@
 export default {
   data: function () {
     return {
-      topbar: { leftImage: require('assets/archive.png') },
+      topbar: { leftImage: require('assets/icon-archive.png') },
       data: null
     }
   },
