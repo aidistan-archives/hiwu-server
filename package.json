@@ -1,6 +1,6 @@
 {
   "name": "hiwu-server",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "Hiwu server",
   "main": "server/server.js",
   "scripts": {
